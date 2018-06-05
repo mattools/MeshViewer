@@ -1,0 +1,58 @@
+classdef SubdivideMesh < mv.gui.Plugin
+% Smooth the current mesh
+%
+%   Class SubdivideMesh
+%
+%   Example
+%   SubdivideMesh
+%
+%   See also
+%
+
+% ------
+% Author: David Legland
+% e-mail: david.legland@inra.fr
+% Created: 2018-06-05,    using Matlab 9.4.0.813654 (R2018a)
+% Copyright 2018 INRA - BIA-BIBS.
+
+
+%% Properties
+properties
+end % end properties
+
+
+%% Constructor
+methods
+    function this = SubdivideMesh(varargin)
+    % Constructor for SubdivideMesh class
+    end
+end % end constructors
+
+
+%% Methods
+methods
+    function run(this, frame, src, evt) %#ok<INUSL>
+        
+        meshList = frame.scene.meshHandleList;
+        if length(meshList) < 1
+            return;
+        end
+       
+        mh = meshList{1};
+        v = mh.mesh.vertices;
+        f = mh.mesh.faces;
+        
+        % subdivides the mesh and replaces the original one
+        [v, f] = subdivideMesh(v, f, 2);
+        
+        % update mesh
+        mh.mesh.vertices = v;
+        mh.mesh.faces = f;
+        
+        updateDisplay(frame);
+        
+    end
+end % end methods
+
+end % end classdef
+
