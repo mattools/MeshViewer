@@ -24,7 +24,7 @@ end % end properties
 %% Constructor
 methods
     function this = OpenFileOFF(varargin)
-    % Constructor for SayHello class
+    % Constructor for the OpenFileOFF class
     end
 end % end constructors
 
@@ -34,19 +34,28 @@ methods
     function run(this, frame, src, evt) %#ok<INUSL>
        
         % Opens a dialog to choose a mesh file
-        [fileName, filePath] = uigetfile('*.off', 'Read OFF Mesh file');
+        pattern = fullfile(frame.gui.lastPathOpen, '*.off');
+        [fileName, filePath] = uigetfile(pattern, 'Read OFF Mesh file');
         
         % check if cancel
         if fileName == 0
             return;
         end
         
+        % setup last path used for opening
+        frame.gui.lastPathOpen = filePath;
+        
         % read the mesh contained in the selected file
+        fprintf('Reading off file...');
         [v, f] = readMesh_off(fullfile(filePath, fileName));
+        fprintf(' (done)\n');
+        
+        % Create mesh data structure
         mesh = TriMesh(v, f);
         
         % creates new frame
-        addNewMeshFrame(frame.gui, mesh);
+        [path, baseName] = fileparts(fileName); %#ok<ASGLU>
+        addNewMeshFrame(frame.gui, mesh, baseName);
     end
 end % end methods
 

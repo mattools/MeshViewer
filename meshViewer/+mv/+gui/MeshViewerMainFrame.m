@@ -24,7 +24,8 @@ properties
     % list of handles to the various gui items
     handles;
     
-    % the scence displayed by this frame
+    % the scene displayed by this frame
+    % Contains a collection of meshes.
     scene;
 %     
 %     % the set of mouse listeners.
@@ -34,10 +35,11 @@ properties
 %     % the currently selected tool
 %     currentTool = [];
 %     
-    % the set of selected meshes, stored as a cell array
+    % the set of selected meshes, stored as an index array
     selectedMeshes = [];
     
 %     % remember where files were loaded and saved
+%     % (to be done in MeshViewerGUI)
 %     lastOpenPath = '.';
 %     lastSavePath = '.';
     

@@ -21,6 +21,11 @@ properties
     % application
     app;
     
+    % remember where files were loaded
+    lastPathOpen = '.';
+
+    % remember where files were saved
+    lastPathSave = '.';
 end 
 
 %% Constructor
@@ -44,15 +49,29 @@ methods
     function frame = addNewMeshFrame(this, mesh, varargin)
         % Create a new frame from the specified mesh
         
-       % encapsualte the mesh into MeshHandle
-       mh = mv.app.MeshHandle(mesh, '[NoName]');
-       
-       % creates a new scene contnaining the mesh
-       scene = mv.app.Scene();
-       scene.addMeshHandle(mh);
-       
-       % creates the new frame
-       frame = mv.gui.MeshViewerMainFrame(this, scene);
+        % ensure second input argument is of class 'MeshHandle'
+        if ~isa(mesh, 'mv.app.MeshHandle')
+            if ~isa(mesh, 'TriMesh')
+                error('Requires either a MeshHandle or a TriMesh');
+            end
+            
+            % Checks if mesh name was specified
+            if isempty(varargin)
+                name = '[NoName]';
+            else
+                name = varargin{1};
+            end
+            
+            % encapsulate the mesh into MeshHandle
+            mh = mv.app.MeshHandle(mesh, name);
+        end
+        
+        % creates a new scene contnaining the mesh
+        scene = mv.app.Scene();
+        scene.addMeshHandle(mh);
+        
+        % creates the new frame
+        frame = mv.gui.MeshViewerMainFrame(this, scene);
     end
     
     function exit(this) %#ok<MANU>
