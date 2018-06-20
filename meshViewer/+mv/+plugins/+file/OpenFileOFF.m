@@ -47,8 +47,10 @@ methods
         
         % read the mesh contained in the selected file
         fprintf('Reading off file...');
+        tic;
         [v, f] = readMesh_off(fullfile(filePath, fileName));
-        fprintf(' (done)\n');
+        t = toc;
+        fprintf(' (done in %8.3f ms)\n', t*1000);
         
         % Create mesh data structure
         mesh = TriMesh(v, f);

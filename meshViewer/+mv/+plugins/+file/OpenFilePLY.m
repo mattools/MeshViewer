@@ -34,23 +34,30 @@ methods
     function run(this, frame, src, evt) %#ok<INUSL>
        
         % Opens a dialog to choose a mesh file
-        [fileName, filePath] = uigetfile('*.ply', 'Read PLY Mesh file');
+        pattern = fullfile(frame.gui.lastPathOpen, '*.ply');
+        [fileName, filePath] = uigetfile(pattern, 'Read PLY Mesh file');
         
         % check if cancel
         if fileName == 0
             return;
         end
         
+        % setup last path used for opening
+        frame.gui.lastPathOpen = filePath;
+        
         % read the mesh contained in the selected file
+        fprintf('Reading ply file...');
         tic;
         [v, f] = readMesh_ply(fullfile(filePath, fileName));
         t = toc;
-        disp(sprintf('read mesh: %8.3f ms', t*1000));
+        fprintf(' (done in %8.3f ms)\n', t*1000);
+%        disp(sprintf('read mesh: %8.3f ms', t*1000));
 
+        % Create mesh data structure
         tic;
         mesh = TriMesh(v, f);
         t = toc;
-        disp(sprintf('create mesh: %8.3f ms', t*1000));
+        fprintf('  create mesh: %8.3f ms', t*1000);
 
         % creates new frame
         addNewMeshFrame(frame.gui, mesh);
