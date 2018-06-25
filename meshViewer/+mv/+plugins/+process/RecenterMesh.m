@@ -33,22 +33,24 @@ end % end constructors
 methods
     function run(this, frame, src, evt) %#ok<INUSL>
         
-        meshList = frame.scene.meshHandleList;
+        meshList =  selectedMeshHandleList(frame);
         if length(meshList) < 1
             return;
         end
        
-        mh = meshList{1};
-        v = mh.mesh.vertices;
-        % recenter by removing the mean
-        v = bsxfun(@minus, v, mean(v, 1));
-        
-        % update mesh
-        mh.mesh.vertices = v;
+        for iMesh = 1:length(meshList)
+            mh = meshList{iMesh};
+            v = mh.mesh.vertices;
+            % recenter by removing the mean
+            v = bsxfun(@minus, v, mean(v, 1));
+            
+            % update mesh
+            mh.mesh.vertices = v;
+        end
         
         updateDisplay(frame);
-        
     end
+    
 end % end methods
 
 end % end classdef

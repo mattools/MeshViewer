@@ -33,25 +33,28 @@ end % end constructors
 methods
     function run(this, frame, src, evt) %#ok<INUSL>
         
-        meshList = frame.scene.meshHandleList;
+        meshList =  selectedMeshHandleList(frame);
         if length(meshList) < 1
             return;
         end
-       
-        mh = meshList{1};
-        v = mh.mesh.vertices;
-        f = mh.mesh.faces;
         
-        % recenter by removing the mean
-        [v, f] = smoothMesh(v, f);
-        
-        % update mesh
-        mh.mesh.vertices = v;
-        mh.mesh.faces = f;
+        for iMesh = 1:length(meshList)
+            % get data for current mesh
+            mh = meshList{iMesh};
+            v = mh.mesh.vertices;
+            f = mh.mesh.faces;
+            
+            % smooth current mesh
+            [v, f] = smoothMesh(v, f);
+            
+            % update mesh
+            mh.mesh.vertices = v;
+            mh.mesh.faces = f;
+        end
         
         updateDisplay(frame);
-        
     end
+    
 end % end methods
 
 end % end classdef

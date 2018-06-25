@@ -33,25 +33,28 @@ end % end constructors
 methods
     function run(this, frame, src, evt) %#ok<INUSL>
         
-        meshList = frame.scene.meshHandleList;
+        meshList =  selectedMeshHandleList(frame);
         if length(meshList) < 1
             return;
         end
        
-        mh = meshList{1};
-        v = mh.mesh.vertices;
-        f = mh.mesh.faces;
-        
-        % subdivides the mesh and replaces the original one
-        [v, f] = subdivideMesh(v, f, 2);
-        
-        % update mesh
-        mh.mesh.vertices = v;
-        mh.mesh.faces = f;
+        for iMesh = 1:length(meshList)
+            % get data for current mesh
+            mh = meshList{iMesh};
+            v = mh.mesh.vertices;
+            f = mh.mesh.faces;
+            
+            % subdivides the mesh and replaces the original one
+            [v, f] = subdivideMesh(v, f, 2);
+            
+            % update mesh
+            mh.mesh.vertices = v;
+            mh.mesh.faces = f;
+        end
         
         updateDisplay(frame);
-        
     end
+    
 end % end methods
 
 end % end classdef

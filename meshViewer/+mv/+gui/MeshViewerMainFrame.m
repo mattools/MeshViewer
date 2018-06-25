@@ -101,8 +101,9 @@ methods
             % Edit Menu Definition 
             
             editMenu = uimenu(hf, 'Label', '&Edit');
-            addPlugin(editMenu, mv.plugins.edit.SayHello(), 'Say Hello');
+%             addPlugin(editMenu, mv.plugins.edit.SayHello(), 'Say Hello');
             addPlugin(editMenu, mv.plugins.edit.DuplicateMesh(), 'Duplicate');
+            addPlugin(editMenu, mv.plugins.edit.RenameMesh(), 'Rename');
             addPlugin(editMenu, mv.plugins.edit.PrintMeshInfo(), 'Mesh Info', true);
             addPlugin(editMenu, mv.plugins.edit.PrintMeshList(), 'Print Mesh List', true);
             
@@ -224,6 +225,27 @@ methods
     
 end % end constructors
 
+%% Getters
+methods
+    function handleList = selectedMeshHandleList(this)
+        % returns the list of selected mesh handles
+        
+        handleList = {};
+        
+        inds = this.selectedMeshIndices;
+        if isempty(inds)
+            return;
+        end
+        
+        handleList = this.scene.meshHandleList;
+        if length(handleList) < max(inds)
+            error('Wrong index for mesh handle selection');
+        end
+        
+        handleList = handleList(inds);
+    end
+end
+
 
 %% Widget callbacks
 methods
@@ -245,8 +267,8 @@ methods
             tic;
             h = drawMesh(mesh.vertices, mesh.faces);
 %             h = patch('vertices', mesh.vertices, 'faces', mesh.faces);
-            t = toc;
-            disp(sprintf('disp mesh: %8.3f ms', t*1000));
+%             t = toc;
+%             disp(sprintf('disp mesh: %8.3f ms', t*1000));
             mh.handles.patch = h;
             
             bbox = mergeBoxes3d(bbox, boundingBox3d(mesh.vertices));
@@ -304,7 +326,7 @@ methods
 %         disp('end of update Display');
     end
     
-    function updateMeshSelectionDisplay(this)
+    function updateMeshSelectionDisplay(this) %#ok<MANU>
         % update the selected state of each shape
         
 %         % extract the list of handles in current axis
@@ -370,16 +392,14 @@ end
 
 methods
     function onMeshListModified(this, varargin)
+        % when user click on panel containing list of mesh handles,
+        % determines which names are selected and updates index of mesh
+        % handles accordingly
         
-        disp('mesh list updated');
+        disp('mesh selection list updated');
         
-%         inds = get(this.handles.shapeList, 'Value');
-%         if isempty(inds)
-%             return;
-%         end
-        
-%         this.selectedMeshes = this.doc.shapes(inds);
-%         updateMeshSelectionDisplay(this);
+        inds = get(this.handles.shapeList, 'Value');
+        this.selectedMeshIndices = inds;
     end
 end
 

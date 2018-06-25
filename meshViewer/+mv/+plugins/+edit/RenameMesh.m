@@ -1,10 +1,10 @@
-classdef DuplicateMesh < mv.gui.Plugin
+classdef RenameMesh < mv.gui.Plugin
 % Duplicates the current mesh into the current frame(deep copy)
 %
-%   Class DuplicateMesh
+%   Class RenameMesh
 %
 %   Example
-%   DuplicateMesh
+%   RenameMesh
 %
 %   See also
 %
@@ -23,8 +23,8 @@ end % end properties
 
 %% Constructor
 methods
-    function this = DuplicateMesh(varargin)
-    % Constructor for DuplicateMesh class
+    function this = RenameMesh(varargin)
+    % Constructor for RenameMesh class
     end
 end % end constructors
 
@@ -38,22 +38,27 @@ methods
         if length(meshList) < 1
             return;
         end
+        if length(meshList) > 1
+            error('Can not rename more than one mesh');
+        end
        
-        for iMesh = 1:length(meshList)
-            mh = meshList{iMesh};
-            v = mh.mesh.vertices;
-            f = mh.mesh.faces;
-            
-            % creates a new mesh instance
-            mesh = TriMesh(v, f);
-            mh = createMeshHandle(frame.scene, mesh, mh.id);
-            
-            % add new mesh to the current scene
-            frame.scene.addMeshHandle(mh);
+        mh = meshList{1};
+        id = mh.id;
+        
+        newName = getNextFreeName(frame.scene, id);
+        answers = inputdlg('New Name', 'Rename Mesh', 1, {newName});
+        if isempty(answers)
+            return;
         end
         
+        newName = answers{1};
+        if hasMeshWithName(frame.scene, newName)
+            warning(['Name: ' newName ' already exists within scene']);
+            return;
+        end
+        mh.id = newName;
+        
         updateMeshList(frame);
-        updateDisplay(frame);
     end
     
 end % end methods

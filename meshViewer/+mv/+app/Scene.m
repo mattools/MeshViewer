@@ -18,7 +18,7 @@ classdef Scene < handle
 
 %% Properties
 properties
-    % set of mesh handles managed by this application
+    % set of mesh handles within this scene, as a cell array
     meshHandleList;
     
     axisLinesVisible = true;
@@ -101,23 +101,58 @@ methods
             name = varargin{2};
         end
 
+        % choose a unique name
+        name = getNextFreeName(this, name);
+
+        % encapsulate the mesh into MeshHandle
+        mh = mv.app.MeshHandle(mesh, name);
+        
+
+%         % ensure the name associated to the mesh handle is unique for the
+%         % scene
+%         if hasMeshWithName(this, name)
+%             % remove trailing digits if any
+%             baseName = removeTrailingDigits(name);
+%             pattern = '%s-%d';
+%             index = 1;
+%             
+%             name = sprintf(pattern, baseName, index);
+%             while hasMeshWithName(this, name)
+%                 index = index + 1;
+%                 name = sprintf(pattern, baseName, index);
+%             end
+%         end
+%         
+%         % encapsulate the mesh into MeshHandle
+%         mh = mv.app.MeshHandle(mesh, name);
+%         
+%         function name = removeTrailingDigits(name)
+%             while ismember(name(end), '1234567890')
+%                 name(end) = [];
+%             end
+%             if name(end) == '-'
+%                 name(end) = [];
+%             end
+%         end
+    end
+    
+    function newName = getNextFreeName(this, baseName)
         % ensure the name associated to the mesh handle is unique for the
         % scene
-        if hasMeshWithName(this, name)
+        
+        newName = baseName;
+        if hasMeshWithName(this, newName)
             % remove trailing digits if any
-            baseName = removeTrailingDigits(name);
+            newName = removeTrailingDigits(newName);
             pattern = '%s-%d';
             index = 1;
             
-            name = sprintf(pattern, baseName, index);
-            while hasMeshWithName(this, name)
+            newName = sprintf(pattern, newName, index);
+            while hasMeshWithName(this, newName)
                 index = index + 1;
-                name = sprintf(pattern, baseName, index);
+                newName = sprintf(pattern, newName, index);
             end
         end
-        
-        % encapsulate the mesh into MeshHandle
-        mh = mv.app.MeshHandle(mesh, name);
         
         function name = removeTrailingDigits(name)
             while ismember(name(end), '1234567890')

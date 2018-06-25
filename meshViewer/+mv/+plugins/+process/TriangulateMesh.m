@@ -33,17 +33,22 @@ end % end constructors
 methods
     function run(this, frame, src, evt) %#ok<INUSL>
         
-        meshList = frame.scene.meshHandleList;
+        meshList =  selectedMeshHandleList(frame);
         if length(meshList) < 1
             return;
         end
        
         % triangulate the faces
-        mh = meshList{1};
-        tri = triangulateFaces(mh.mesh.faces);
-        
-        % update mesh
-        mh.mesh.faces = tri;
+        for iMesh = 1:length(meshList)
+            % get data for current mesh
+            mh = meshList{iMesh};
+            
+            % compute new face indices
+            tri = triangulateFaces(mh.mesh.faces);
+            
+            % update mesh
+            mh.mesh.faces = tri;
+        end
         
         updateDisplay(frame);
     end
