@@ -1,5 +1,5 @@
 classdef DuplicateMesh < mv.gui.Plugin
-% Duplicates the current mesh into a new frame (deep copy)
+% Duplicates the current mesh into the current frame(deep copy)
 %
 %   Class DuplicateMesh
 %
@@ -33,18 +33,26 @@ end % end constructors
 methods
     function run(this, frame, src, evt) %#ok<INUSL>
         
+        % get current mesh
         meshList = frame.scene.meshHandleList;
         if length(meshList) < 1
             return;
         end
        
+        % creates a new mesh instance
         mh = meshList{1};
         v = mh.mesh.vertices;
         f = mh.mesh.faces;
-        
         mesh = TriMesh(v, f);
-        addNewMeshFrame(frame.gui, mesh);
+        
+        % add new mesh to the current scene
+        mh = createMeshHandle(frame.scene, mesh, mh.id);
+        frame.scene.addMeshHandle(mh);
+
+        updateMeshList(frame);
+        updateDisplay(frame);
     end
+    
 end % end methods
 
 end % end classdef

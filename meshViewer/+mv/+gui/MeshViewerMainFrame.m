@@ -231,7 +231,7 @@ methods
     function updateDisplay(this)
         % refresh document display: clear axis, draw each shape, udpate axis
         
-%         disp('update Display');
+        disp('update Display');
         
         % clear axis
         ax = this.handles.mainAxis;
@@ -307,22 +307,22 @@ methods
     function updateMeshSelectionDisplay(this)
         % update the selected state of each shape
         
-        % extract the list of handles in current axis
-        ax = this.handles.mainAxis;
-        children = get(ax, 'Children');
-        
-        % iterate over children
-        for i = 1:length(children)
-            % Extract shape referenced by current handle, if any
-            shape = get(children(i), 'UserData');
-            
-            % update selection state of current shape
-            if any(shape == this.selectedMeshes)
-                set(children(i), 'Selected', 'on');
-            else
-                set(children(i), 'Selected', 'off');
-            end
-        end
+%         % extract the list of handles in current axis
+%         ax = this.handles.mainAxis;
+%         children = get(ax, 'Children');
+%         
+%         % iterate over children
+%         for i = 1:length(children)
+%             % Extract shape referenced by current handle, if any
+%             shape = get(children(i), 'UserData');
+%             
+%             % update selection state of current shape
+%             if any(shape == this.selectedMeshIndices)
+%                 set(children(i), 'Selected', 'on');
+%             else
+%                 set(children(i), 'Selected', 'off');
+%             end
+%         end
         
     end
     
@@ -337,7 +337,7 @@ methods
     function updateMeshList(this)
         % Refresh the shape tree when a shape is added or removed
 
-%         disp('update shape list');
+        disp('update shape list');
         
         nMeshes = length(this.scene.meshHandleList);
         shapeNames = cell(nMeshes, 1);

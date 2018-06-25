@@ -65,6 +65,80 @@ methods
         b = ~isempty(this.meshHandleList);
     end
     
+    function mh = createMeshHandle(this, varargin)
+        % Return a formatted mesh handle or empty
+        %
+        % Usages
+        %   createMeshHandle(gui)
+        %   createMeshHandle(gui, mesh)
+        %   createMeshHandle(gui, mesh, initName)
+        %
+        % mesh: an instance of TriMesh or MeshHandle
+        % initName: initial proposal for name. If already exists within the
+        %   scene, appends a suffix
+        
+        % special case of no mesh
+        if isempty(varargin)
+            mh = [];
+            return;
+        end
+        
+        % check mesh is already mesh handle
+        mesh = varargin{1};
+        if isa(mesh, 'mv.app.MeshHandle')
+            mh = mesh;
+            return;
+        end
+        
+        if ~isa(mesh, 'TriMesh')
+            error('Requires either a MeshHandle or a TriMesh');
+        end
+        
+        % Checks if mesh name was specified
+        if length(varargin) < 2
+            name = '[NoName]';
+        else
+            name = varargin{2};
+        end
+
+        % ensure the name associated to the mesh handle is unique for the
+        % scene
+        if hasMeshWithName(this, name)
+            % remove trailing digits if any
+            baseName = removeTrailingDigits(name);
+            pattern = '%s-%d';
+            index = 1;
+            
+            name = sprintf(pattern, baseName, index);
+            while hasMeshWithName(this, name)
+                index = index + 1;
+                name = sprintf(pattern, baseName, index);
+            end
+        end
+        
+        % encapsulate the mesh into MeshHandle
+        mh = mv.app.MeshHandle(mesh, name);
+        
+        function name = removeTrailingDigits(name)
+            while ismember(name(end), '1234567890')
+                name(end) = [];
+            end
+            if name(end) == '-'
+                name(end) = [];
+            end
+        end
+    end
+    
+    function tf = hasMeshWithName(this, name)
+        tf = false;
+        for i = 1:length(this.meshHandleList)
+            mh = this.meshHandleList{i};
+            if strcmp(mh.id, name)
+                tf = true;
+                return;
+            end
+        end
+    end
 end
 
 end % end classdef
