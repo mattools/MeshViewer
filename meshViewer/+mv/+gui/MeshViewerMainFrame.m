@@ -36,12 +36,7 @@ properties
 %     currentTool = [];
 %     
     % the set of selected meshes, stored as an index array
-    selectedMeshes = [];
-    
-%     % remember where files were loaded and saved
-%     % (to be done in MeshViewerGUI)
-%     lastOpenPath = '.';
-%     lastSavePath = '.';
+    selectedMeshIndices = [];
     
 end % end properties
 
@@ -94,10 +89,10 @@ methods
             % File Menu Definition 
             
             fileMenu = uimenu(hf, 'Label', '&Files');
-            uimenu(fileMenu, 'Label', 'New...');
-            addPlugin(fileMenu, mv.plugins.file.CreateIcosahedron(), 'Create Icosahedron');
+            addPlugin(fileMenu, mv.plugins.file.CreateNewSceneFrame(), 'New Empty Scene');
             addPlugin(fileMenu, mv.plugins.file.OpenFileOFF(), 'Open OFF File...');
             addPlugin(fileMenu, mv.plugins.file.OpenFilePLY(), 'Open PLY File...');
+            addPlugin(fileMenu, mv.plugins.file.CreateIcosahedron(), 'Create Icosahedron');
             uimenu(fileMenu, 'Label', 'Save', 'Separator', 'on');
             addPlugin(fileMenu, mv.plugins.file.CloseCurrentFrame(), 'Close', true);
             addPlugin(fileMenu, mv.plugins.file.Quit(), 'Quit');
@@ -186,7 +181,7 @@ methods
                 'Position', [0 0 1 1] );
             
                         
-            docInfoPanel.Heights = [-1 -1];
+            docInfoPanel.Heights = [-2 -1];
             
             this.handles.docInfoPanel = docInfoPanel;
             this.handles.displayOptionsPanel = displayOptionsPanel;
@@ -346,21 +341,16 @@ methods
         nMeshes = length(this.scene.meshHandleList);
         shapeNames = cell(nMeshes, 1);
         inds = [];
-%         for i = 1:nMeshes
-%             shape = this.doc.shapes(i);
-%             
-%             % create name for current shape
-%             name = shape.name;
-%             if isempty(shape.name)
-%                 name = ['(' class(shape.geometry) ')'];
-%             end
-%             shapeNames{i} = name;
-%             
-%             % create the set of selected indices
-%             if any(shape == this.selectedShapes)
-%                 inds = [inds i]; %#ok<AGROW>
-%             end
-%         end
+        for i = 1:nMeshes
+            mh = this.scene.meshHandleList{i};
+
+            % create name for current shape
+            name = mh.id;
+            if isempty(mh.id)
+                name = ['(' class(shape.geometry) ')'];
+            end
+            shapeNames{i} = name;
+        end
 
         % avoid empty indices, causing problems to gui...
         if nMeshes > 0 && isempty(inds)

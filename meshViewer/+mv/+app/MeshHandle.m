@@ -25,7 +25,7 @@ properties
     mesh;
     
     % handles to the graphical object(s) used  to display the mesh
-    % sub strctures: 
+    % sub structures: 
     % * patch
     % * vertices
     handles;

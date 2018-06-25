@@ -46,32 +46,55 @@ end % construction function
 
 %% General methods
 methods
-    function frame = addNewMeshFrame(this, mesh, varargin)
-        % Create a new frame from the specified mesh
+    function frame = addNewMeshFrame(this, varargin)
+        % Create a new frame, eventually containing the specified mesh
+        %
+        % usage:
+        %   frame = addNewMeshFrame(gui);
+        %   frame = addNewMeshFrame(gui, mesh);
         
-        % ensure second input argument is of class 'MeshHandle'
-        if ~isa(mesh, 'mv.app.MeshHandle')
+        % create mesh handle from input arguments
+        mh = createMeshHandle(varargin{:});
+        
+        % creates a new scene containing the mesh
+        scene = mv.app.Scene();
+        if ~isempty(mh)
+            scene.addMeshHandle(mh);
+        end
+        
+        % creates the new frame
+        frame = mv.gui.MeshViewerMainFrame(this, scene);
+        
+        function mh = createMeshHandle(varargin)
+            % parses the input arguments and return a formatted mesh handle
+            
+            % special case of no mesh
+            if isempty(varargin)
+                mh = [];
+                return;
+            end
+            
+            % check mesh is already mesh handle
+            mesh = varargin{1};
+            if isa(mesh, 'mv.app.MeshHandle')
+                mh = mesh;
+                return;
+            end
+            
             if ~isa(mesh, 'TriMesh')
                 error('Requires either a MeshHandle or a TriMesh');
             end
             
             % Checks if mesh name was specified
-            if isempty(varargin)
+            if length(varargin) < 2
                 name = '[NoName]';
             else
-                name = varargin{1};
+                name = varargin{2};
             end
             
             % encapsulate the mesh into MeshHandle
             mh = mv.app.MeshHandle(mesh, name);
         end
-        
-        % creates a new scene contnaining the mesh
-        scene = mv.app.Scene();
-        scene.addMeshHandle(mh);
-        
-        % creates the new frame
-        frame = mv.gui.MeshViewerMainFrame(this, scene);
     end
     
     function exit(this) %#ok<MANU>
