@@ -111,6 +111,7 @@ methods
             
             processMenu = uimenu(hf, 'Label', '&Process');
             addPlugin(processMenu, mv.plugins.process.RecenterMesh(), 'Recenter');
+            addPlugin(processMenu, mv.plugins.process.TriangulateMesh(), 'Triangulate');
             addPlugin(processMenu, mv.plugins.process.SmoothMesh(), 'Smooth');
             addPlugin(processMenu, mv.plugins.process.SubdivideMesh(), 'Subdivide');
             addPlugin(processMenu, mv.plugins.process.CheckMeshAdjacentFaces(), 'Check Adjacent Faces', true);
