@@ -59,8 +59,12 @@ methods
         t = toc;
         fprintf('  create mesh: %8.3f ms', t*1000);
 
-        % creates new frame
-        addNewMeshFrame(frame.gui, mesh);
+        [path, name] = fileparts(fileName); %#ok<ASGLU>
+        mh = createMeshHandle(frame.scene, mesh, name);
+        frame.scene.addMeshHandle(mh);
+     
+        updateDisplay(frame);
+        updateMeshList(frame);
     end
 end % end methods
 

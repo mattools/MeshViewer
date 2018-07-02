@@ -54,11 +54,15 @@ methods
         
         % Create mesh data structure
         mesh = TriMesh(v, f);
-        
-        % creates new frame
-        [path, baseName] = fileparts(fileName); %#ok<ASGLU>
-        addNewMeshFrame(frame.gui, mesh, baseName);
+
+        [path, name] = fileparts(fileName); %#ok<ASGLU>
+        mh = createMeshHandle(frame.scene, mesh, name);
+        frame.scene.addMeshHandle(mh);
+     
+        updateDisplay(frame);
+        updateMeshList(frame);
     end
+    
 end % end methods
 
 end % end classdef
