@@ -21,6 +21,9 @@ properties
     % set of mesh handles managed by this application
     meshHandleList;
     
+    % the set of display options for the scene, as a struct
+    displayOptions;
+    
 end % end properties
 
 
@@ -29,6 +32,8 @@ methods
     function this = MeshViewerScene(varargin)
     % Constructor for MeshViewerApp class
 
+        this.displayOptions = struct(...
+            'boundingBox', [ -1 1  -1 1  -1 1] );
     end
 
 end % end constructors

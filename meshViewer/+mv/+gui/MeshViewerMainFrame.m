@@ -114,6 +114,7 @@ methods
             addPlugin(editMenu, mv.plugins.edit.RemoveMesh(), 'Remove Selection');
             addPlugin(editMenu, mv.plugins.edit.PrintMeshInfo(), 'Mesh Info', true);
             addPlugin(editMenu, mv.plugins.edit.PrintMeshList(), 'Print Mesh List', true);
+            addPlugin(editMenu, mv.plugins.edit.PrintAxisProperties(), 'Print Axis Properties', true);
             
             
            % Process Menu Definition 
@@ -206,12 +207,17 @@ methods
             ax = axes('parent', container, ...
                 'ActivePositionProperty', 'outerposition', ...
                 'units', 'normalized', ...
-                'dataAspectRatio', [1 1 1], ...
                 'position', [0 0 1 1], ...
+            	'XLim', [-1 1], ...
+            	'YLim', [-1 1], ...
+            	'ZLim', [-1 1], ...
+                'dataAspectRatio', [1 1 1], ...
             	'XTick', [], ...
             	'YTick', [], ...
+            	'ZTick', [], ...
             	'Box', 'off');
-            axis(ax, 'tight' );
+            axis(ax, 'equal');
+            axis(ax, [-1 1 -1 1 -1 1]);
 
             % keep widgets handles
             this.handles.mainAxis = ax;
@@ -268,7 +274,7 @@ methods
         cla(ax);
         hold on;
                     
-        bbox = [0 1 0 1 0 1];
+        bbox = this.scene.displayOptions.boundingBox;
         for i = 1:length(this.scene.meshHandleList)
             mh = this.scene.meshHandleList{i};
             mesh = mh.mesh;
@@ -288,7 +294,7 @@ methods
         view(3);
 
         % initialize line handles for axis lines
-        if this.scene.axisLinesVisible
+        if this.scene.displayOptions.axisLinesVisible
             hLx = drawLine3d([0 0 0  1 0 0], 'k');
             hLy = drawLine3d([0 0 0  0 1 0], 'k');
             hLZ = drawLine3d([0 0 0  0 0 1], 'k');

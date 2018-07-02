@@ -21,7 +21,11 @@ properties
     % set of mesh handles within this scene, as a cell array
     meshHandleList;
     
-    axisLinesVisible = true;
+    % the set of display options for the scene, as a struct.
+    % Used to initialize the axis.
+    displayOptions;
+    
+%     axisLinesVisible = true;
 end % end properties
 
 
@@ -30,6 +34,9 @@ methods
     function this = Scene(varargin)
     % Constructor for Scene class
 
+        this.displayOptions = struct(...
+            'boundingBox', [ -1 1  -1 1  -1 1], ...
+            'axisLinesVisible', true);
     end
 
 end % end constructors
@@ -106,39 +113,10 @@ methods
 
         % encapsulate the mesh into MeshHandle
         mh = mv.app.MeshHandle(mesh, name);
-        
-
-%         % ensure the name associated to the mesh handle is unique for the
-%         % scene
-%         if hasMeshWithName(this, name)
-%             % remove trailing digits if any
-%             baseName = removeTrailingDigits(name);
-%             pattern = '%s-%d';
-%             index = 1;
-%             
-%             name = sprintf(pattern, baseName, index);
-%             while hasMeshWithName(this, name)
-%                 index = index + 1;
-%                 name = sprintf(pattern, baseName, index);
-%             end
-%         end
-%         
-%         % encapsulate the mesh into MeshHandle
-%         mh = mv.app.MeshHandle(mesh, name);
-%         
-%         function name = removeTrailingDigits(name)
-%             while ismember(name(end), '1234567890')
-%                 name(end) = [];
-%             end
-%             if name(end) == '-'
-%                 name(end) = [];
-%             end
-%         end
     end
     
     function newName = getNextFreeName(this, baseName)
-        % ensure the name associated to the mesh handle is unique for the
-        % scene
+        % ensure the name associated to the mesh handle is unique for the scene
         
         newName = baseName;
         if hasMeshWithName(this, newName)
