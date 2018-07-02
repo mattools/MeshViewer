@@ -1,10 +1,10 @@
-classdef TranslateMesh < mv.gui.Plugin
+classdef UniformScalingMesh < mv.gui.Plugin
 % Smooth the current mesh
 %
-%   Class TranslateMesh
+%   Class UniformScalingMesh
 %
 %   Example
-%   TranslateMesh
+%   UniformScalingMesh
 %
 %   See also
 %
@@ -23,8 +23,8 @@ end % end properties
 
 %% Constructor
 methods
-    function this = TranslateMesh(varargin)
-    % Constructor for TranslateMesh class
+    function this = UniformScalingMesh(varargin)
+    % Constructor for UniformScalingMesh class
     end
 end % end constructors
 
@@ -39,23 +39,18 @@ methods
         end
         
         % create dialog for choosing translation paraemters
-        gd = GenericDialog('Translation');
-        addNumericField(gd, 'X-Shift', 0, 2);
-        addNumericField(gd, 'Y-Shift', 0, 2);
-        addNumericField(gd, 'Z-Shift', 0, 2);
+        gd = GenericDialog('Scaling');
+        addNumericField(gd, 'Factor', 1, 2);
         showDialog(gd);
         if wasCanceled(gd)
             return;
         end
-        
+            
         % parse user choices
-        shifts = zeros(1, 3);
-        for i = 1:3
-            shifts(i) = getNextNumber(gd);
-        end
+        ratio = getNextNumber(gd);
         
         % create translation matrix
-        mat = createTranslation3d(shifts);
+        mat = createScaling3d(ratio);
         
         % apply translation matrix to each selected mesh
         for iMesh = 1:length(meshList)

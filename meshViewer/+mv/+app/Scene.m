@@ -42,6 +42,33 @@ methods
 end % end constructors
 
 
+%% General use methods
+methods
+    function bbox = updateBoundingBox(this)
+        % recomputes the bounding box from the list of meshes
+
+        % default bounding box
+        bbox = [-1 1  -1 1  -1 1];
+        
+        % if scene containes meshes, recomputes bounding boxes as the
+        % enclosing box of all meshes
+        nMeshes = length(this.meshHandleList);
+        if nMeshes > 0
+            % use initial infinite bounds
+            bbox = [inf -inf  inf -inf  inf -inf];
+            
+            % compute bounding box that encloses all meshes
+            for iMesh = 1:nMeshes
+                mh = this.meshHandleList{iMesh};
+                bbox = mergeBoxes3d(bbox, boundingBox3d(mh.mesh.vertices));
+            end
+        end
+        
+        % update bbox
+        this.displayOptions.boundingBox = bbox;
+    end
+end
+
 %% Management of mesh handles
 methods
     function addMeshHandle(this, mh)

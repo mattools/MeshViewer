@@ -61,6 +61,7 @@ methods
         this.handles.figure = fig;
         
         updateDisplay(this);
+        updateMeshList(this);
         updateTitle(this);
         
         % setup listeners associated to the figure
@@ -121,7 +122,9 @@ methods
             
             processMenu = uimenu(hf, 'Label', '&Process');
             addPlugin(processMenu, mv.plugins.process.RecenterMesh(), 'Recenter');
-            addPlugin(processMenu, mv.plugins.process.TranslateMesh(), 'Translate...');
+            transformMenu = uimenu(processMenu, 'Label', 'Transform');
+            addPlugin(transformMenu, mv.plugins.process.TranslateMesh(), 'Translation...');
+            addPlugin(transformMenu, mv.plugins.process.UniformScalingMesh(), 'Scaling...');
             addPlugin(processMenu, mv.plugins.process.TriangulateMesh(), 'Triangulate', true);
             addPlugin(processMenu, mv.plugins.process.SmoothMesh(), 'Smooth');
             addPlugin(processMenu, mv.plugins.process.SubdivideMesh(), 'Subdivide');
@@ -270,34 +273,32 @@ methods
         
         disp('update Display');
         
-        % clear axis
+        % remove all existing children
         ax = this.handles.mainAxis;
         cla(ax);
         hold on;
 
         % compute bounding box that encloses all meshes
+        updateBoundingBox(this.scene);
         bbox = this.scene.displayOptions.boundingBox;
-        for i = 1:length(this.scene.meshHandleList)
-            mh = this.scene.meshHandleList{i};
-            bbox = mergeBoxes3d(bbox, boundingBox3d(mh.mesh.vertices));
-        end
-        bbox
         
+        % update axis bouding box
         set(ax, 'XLim', bbox(1:2));
         set(ax, 'YLim', bbox(3:4));
         set(ax, 'ZLim', bbox(5:6));
-        view(3);
 
         % display the meshes
         for i = 1:length(this.scene.meshHandleList)
             mh = this.scene.meshHandleList{i};
             mesh = mh.mesh;
+            axes(ax);
             h = drawMesh(mesh.vertices, mesh.faces);
             mh.handles.patch = h;
         end
         
         % initialize line handles for axis lines
         if this.scene.displayOptions.axisLinesVisible
+            axes(ax);
             hLx = drawLine3d([0 0 0  1 0 0], 'k');
             hLy = drawLine3d([0 0 0  0 1 0], 'k');
             hLZ = drawLine3d([0 0 0  0 0 1], 'k');
@@ -338,7 +339,7 @@ methods
 %             set(hl2, 'Xdata', [0 0], 'YData', [viewBox(3) viewBox(4)]);
 %         end
 
-        updateMeshList(this);
+%         updateMeshList(this);
         
 %         disp('end of update Display');
     end
