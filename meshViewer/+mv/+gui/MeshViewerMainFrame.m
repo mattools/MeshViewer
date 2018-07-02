@@ -92,7 +92,15 @@ methods
             addPlugin(fileMenu, mv.plugins.file.CreateNewSceneFrame(), 'New Empty Scene');
             addPlugin(fileMenu, mv.plugins.file.OpenFileOFF(), 'Open OFF File...');
             addPlugin(fileMenu, mv.plugins.file.OpenFilePLY(), 'Open PLY File...');
-            addPlugin(fileMenu, mv.plugins.file.CreateIcosahedron(), 'Create Icosahedron');
+            demoMeshesMenu = uimenu(fileMenu, 'Label', 'Sample Meshes');
+            addPlugin(demoMeshesMenu, mv.plugins.file.CreateTetrahedron(), 'Tetrahedron');
+            addPlugin(demoMeshesMenu, mv.plugins.file.CreateCube(), 'Cube');
+            addPlugin(demoMeshesMenu, mv.plugins.file.CreateOctahedron(), 'Octahedron');
+            addPlugin(demoMeshesMenu, mv.plugins.file.CreateIcosahedron(), 'Icosahedron');
+            addPlugin(demoMeshesMenu, mv.plugins.file.CreateDodecahedron(), 'Dodecahedron');
+            addPlugin(demoMeshesMenu, mv.plugins.file.CreateRhombododecahedron(), 'RhomboDodecahedron', true);
+            addPlugin(demoMeshesMenu, mv.plugins.file.CreateTetrakaidecahedron(), 'Tetrakaidecahedron');
+            addPlugin(demoMeshesMenu, mv.plugins.file.CreateSoccerBall(), 'Soccer Ball');
             uimenu(fileMenu, 'Label', 'Save', 'Separator', 'on');
             addPlugin(fileMenu, mv.plugins.file.CloseCurrentFrame(), 'Close', true);
             addPlugin(fileMenu, mv.plugins.file.Quit(), 'Quit');
