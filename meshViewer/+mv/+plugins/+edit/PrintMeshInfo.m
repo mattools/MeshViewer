@@ -43,9 +43,12 @@ methods
         nf = meshFaceNumber(mh.mesh.vertices, mh.mesh.faces);
         
         disp('mesh info:');
-        disp(sprintf('  mesh name: %12s', mh.id)); %#ok<DSPS>
-        disp(sprintf('  vertex number:   %6d', nv)); %#ok<DSPS>
-        disp(sprintf('  face number:     %6d', nf)); %#ok<DSPS>
+        fprintf('  mesh name: %12s\n', mh.id);
+        fprintf('  vertex number:   %6d\n', nv);
+        fprintf('  face number:     %6d\n', nf);
+        
+        bbox = boundingBox3d(mh.mesh.vertices);
+        fprintf('  bounding box:  (%g %g  %g %g  %g %g)\n', bbox);
         
     end
 end % end methods

@@ -121,7 +121,8 @@ methods
             
             processMenu = uimenu(hf, 'Label', '&Process');
             addPlugin(processMenu, mv.plugins.process.RecenterMesh(), 'Recenter');
-            addPlugin(processMenu, mv.plugins.process.TriangulateMesh(), 'Triangulate');
+            addPlugin(processMenu, mv.plugins.process.TranslateMesh(), 'Translate...');
+            addPlugin(processMenu, mv.plugins.process.TriangulateMesh(), 'Triangulate', true);
             addPlugin(processMenu, mv.plugins.process.SmoothMesh(), 'Smooth');
             addPlugin(processMenu, mv.plugins.process.SubdivideMesh(), 'Subdivide');
             addPlugin(processMenu, mv.plugins.process.CheckMeshAdjacentFaces(), 'Check Adjacent Faces', true);
@@ -273,26 +274,28 @@ methods
         ax = this.handles.mainAxis;
         cla(ax);
         hold on;
-                    
+
+        % compute bounding box that encloses all meshes
         bbox = this.scene.displayOptions.boundingBox;
         for i = 1:length(this.scene.meshHandleList)
             mh = this.scene.meshHandleList{i};
-            mesh = mh.mesh;
-            tic;
-            h = drawMesh(mesh.vertices, mesh.faces);
-%             h = patch('vertices', mesh.vertices, 'faces', mesh.faces);
-%             t = toc;
-%             disp(sprintf('disp mesh: %8.3f ms', t*1000));
-            mh.handles.patch = h;
-            
-            bbox = mergeBoxes3d(bbox, boundingBox3d(mesh.vertices));
+            bbox = mergeBoxes3d(bbox, boundingBox3d(mh.mesh.vertices));
         end
+        bbox
         
         set(ax, 'XLim', bbox(1:2));
         set(ax, 'YLim', bbox(3:4));
         set(ax, 'ZLim', bbox(5:6));
         view(3);
 
+        % display the meshes
+        for i = 1:length(this.scene.meshHandleList)
+            mh = this.scene.meshHandleList{i};
+            mesh = mh.mesh;
+            h = drawMesh(mesh.vertices, mesh.faces);
+            mh.handles.patch = h;
+        end
+        
         % initialize line handles for axis lines
         if this.scene.displayOptions.axisLinesVisible
             hLx = drawLine3d([0 0 0  1 0 0], 'k');
