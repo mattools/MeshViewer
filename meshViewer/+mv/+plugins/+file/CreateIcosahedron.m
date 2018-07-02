@@ -39,7 +39,13 @@ methods
         [v, f] = createIcosahedron;
         mesh = TriMesh(v, f);
         
-        addNewMeshFrame(frame.gui, mesh);
+        % add new mesh to the current scene
+        mh = createMeshHandle(frame.scene, mesh, 'icosahedron');
+        frame.scene.addMeshHandle(mh);
+        
+        % update widgets and display
+        updateMeshList(frame);
+        updateDisplay(frame);
     end
     
 end % end methods

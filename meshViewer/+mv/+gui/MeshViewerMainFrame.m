@@ -101,9 +101,9 @@ methods
             % Edit Menu Definition 
             
             editMenu = uimenu(hf, 'Label', '&Edit');
-%             addPlugin(editMenu, mv.plugins.edit.SayHello(), 'Say Hello');
-            addPlugin(editMenu, mv.plugins.edit.DuplicateMesh(), 'Duplicate');
             addPlugin(editMenu, mv.plugins.edit.RenameMesh(), 'Rename');
+            addPlugin(editMenu, mv.plugins.edit.DuplicateMesh(), 'Duplicate Selection', true);
+            addPlugin(editMenu, mv.plugins.edit.RemoveMesh(), 'Remove Selection');
             addPlugin(editMenu, mv.plugins.edit.PrintMeshInfo(), 'Mesh Info', true);
             addPlugin(editMenu, mv.plugins.edit.PrintMeshList(), 'Print Mesh List', true);
             

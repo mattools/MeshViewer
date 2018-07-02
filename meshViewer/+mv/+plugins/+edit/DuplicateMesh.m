@@ -1,5 +1,5 @@
 classdef DuplicateMesh < mv.gui.Plugin
-% Duplicates the current mesh into the current frame(deep copy)
+% Duplicates the current mesh into the current frame (deep copy)
 %
 %   Class DuplicateMesh
 %
