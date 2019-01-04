@@ -38,18 +38,24 @@ methods
             return;
         end
        
-        mh = meshList{1};
-        nv = size(mh.mesh.vertices, 1);
-        nf = meshFaceNumber(mh.mesh.vertices, mh.mesh.faces);
+        inds = frame.selectedMeshIndices;
+        if length(inds) < 1
+            return;
+        end
         
-        disp('mesh info:');
-        fprintf('  mesh name: %12s\n', mh.id);
-        fprintf('  vertex number:   %6d\n', nv);
-        fprintf('  face number:     %6d\n', nf);
-        
-        bbox = boundingBox3d(mh.mesh.vertices);
-        fprintf('  bounding box:  (%g %g  %g %g  %g %g)\n', bbox);
-        
+        for i = 1:length(inds)
+            mh = meshList{inds(i)};
+            nv = size(mh.mesh.vertices, 1);
+            nf = meshFaceNumber(mh.mesh.vertices, mh.mesh.faces);
+            
+            disp('mesh info:');
+            fprintf('  mesh name: %12s\n', mh.id);
+            fprintf('  vertex number:   %6d\n', nv);
+            fprintf('  face number:     %6d\n', nf);
+            
+            bbox = boundingBox3d(mh.mesh.vertices);
+            fprintf('  bounding box:  (%g %g  %g %g  %g %g)\n', bbox);
+        end
     end
 end % end methods
 
