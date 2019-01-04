@@ -74,11 +74,7 @@ methods
         % convert to mesh
         mesh = TriMesh(vertices, faces);
 
-        mh = createMeshHandle(frame.scene, mesh, meshName);
-        frame.scene.addMeshHandle(mh);
-     
-        updateDisplay(frame);
-        updateMeshList(frame);
+        addNewMesh(frame, mesh, meshName);
     end
 end % end methods
 

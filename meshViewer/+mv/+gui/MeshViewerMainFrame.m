@@ -246,6 +246,23 @@ methods
     
 end % end constructors
 
+
+%% General methods
+methods
+    function addNewMesh(this, mesh, meshName)
+        % adds a new mesh to the scene, and update displays
+        
+        % add new mesh to the scene
+        mh = createMeshHandle(this.scene, mesh, meshName);
+        this.scene.addMeshHandle(mh);
+        
+        % update display
+        updateDisplay(this);
+        updateMeshList(this);
+    end
+end
+
+
 %% Getters
 methods
     function handleList = selectedMeshHandleList(this)

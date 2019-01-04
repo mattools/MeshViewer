@@ -60,11 +60,7 @@ methods
         fprintf('  create mesh: %8.3f ms', t*1000);
 
         [path, name] = fileparts(fileName); %#ok<ASGLU>
-        mh = createMeshHandle(frame.scene, mesh, name);
-        frame.scene.addMeshHandle(mh);
-     
-        updateDisplay(frame);
-        updateMeshList(frame);
+        addNewMesh(frame, mesh, name);
     end
 end % end methods
 

@@ -56,11 +56,7 @@ methods
         mesh = TriMesh(v, f);
 
         [path, name] = fileparts(fileName); %#ok<ASGLU>
-        mh = createMeshHandle(frame.scene, mesh, name);
-        frame.scene.addMeshHandle(mh);
-     
-        updateDisplay(frame);
-        updateMeshList(frame);
+        addNewMesh(frame, mesh, name);
     end
     
 end % end methods

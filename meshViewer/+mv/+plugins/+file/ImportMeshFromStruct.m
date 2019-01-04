@@ -54,17 +54,8 @@ methods
         if wasCanceled(gd)
             return;
         end
-%         % open dialog to input the name of struct containing mesh
-%         prompt = {'Enter Variable Name:'};
-%         title = 'Import From Workspace';
-%         lines = 1;
-%         def = {'ans'};
-%         answer = inputdlg(prompt, title, lines, def);
-%         
-%         % if user cancels, answer is empty
-%         if isempty(answer)
-%             return;
-%         end
+        
+        % extract data
         name = getNextString(gd);
         data = evalin('base', name);
         
@@ -85,12 +76,8 @@ methods
 
         % convert to mesh
         mesh = TriMesh(data.vertices, data.faces);
-
-        mh = createMeshHandle(frame.scene, mesh, name);
-        frame.scene.addMeshHandle(mh);
-     
-        updateDisplay(frame);
-        updateMeshList(frame);
+        
+        addNewMesh(frame, mesh, name);
     end
 end % end methods
 
