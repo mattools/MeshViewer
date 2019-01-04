@@ -93,6 +93,9 @@ methods
             addPlugin(fileMenu, mv.plugins.file.CreateNewSceneFrame(), 'New Empty Scene');
             addPlugin(fileMenu, mv.plugins.file.OpenFileOFF(), 'Open OFF File...');
             addPlugin(fileMenu, mv.plugins.file.OpenFilePLY(), 'Open PLY File...');
+            importMeshesMenu = uimenu(fileMenu, 'Label', 'Import');
+            addPlugin(importMeshesMenu, mv.plugins.file.ImportMeshFromStruct(), 'Mesh struct from Workspace');
+            addPlugin(importMeshesMenu, mv.plugins.file.ImportMeshVFFromWorkspace(), 'Vertices+Faces from Workspace');
             demoMeshesMenu = uimenu(fileMenu, 'Label', 'Sample Meshes');
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateTetrahedron(), 'Tetrahedron');
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateCube(), 'Cube');
