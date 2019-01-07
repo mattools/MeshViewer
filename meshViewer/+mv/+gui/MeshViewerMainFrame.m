@@ -116,6 +116,9 @@ methods
             addPlugin(editMenu, mv.plugins.edit.RenameMesh(), 'Rename');
             addPlugin(editMenu, mv.plugins.edit.DuplicateMesh(), 'Duplicate', true);
             addPlugin(editMenu, mv.plugins.edit.RemoveMesh(), 'Delete');
+            addPlugin(editMenu, mv.plugins.edit.SelectAll(), 'Select All', true);
+            addPlugin(editMenu, mv.plugins.edit.SelectNone(), 'Select None');
+            addPlugin(editMenu, mv.plugins.edit.SelectInverse(), 'Inverse Selection');
             addPlugin(editMenu, mv.plugins.edit.SetSelectionFaceColor(), 'Set Face Color', true);
             addPlugin(editMenu, mv.plugins.edit.SetFaceTransparency(), 'Set Face Transparency');
             addPlugin(editMenu, mv.plugins.edit.SetEdgeStyle(), 'Set Edge Style');
@@ -264,7 +267,7 @@ methods
 end
 
 
-%% Getters
+%% Management of selection
 methods
     function handleList = selectedMeshHandleList(this)
         % returns the list of selected mesh handles
@@ -282,6 +285,11 @@ methods
         end
         
         handleList = handleList(inds);
+    end
+    
+    function setSelectedMeshIndices(this, indices)
+        this.selectedMeshIndices = indices;
+        set(this.handles.shapeList, 'Value', indices);
     end
 end
 
