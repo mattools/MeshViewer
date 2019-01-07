@@ -326,18 +326,16 @@ methods
         for i = 1:length(this.scene.meshHandleList)
             mh = this.scene.meshHandleList{i};
             mesh = mh.mesh;
-            axes(ax);
-            h = drawMesh(mesh.vertices, mesh.faces);
+            h = drawMesh(ax, mesh.vertices, mesh.faces);
             apply(mh.displayOptions, h);
             mh.handles.patch = h;
         end
         
         % initialize line handles for axis lines
         if this.scene.displayOptions.axisLinesVisible
-            axes(ax);
-            hLx = drawLine3d([0 0 0  1 0 0], 'k');
-            hLy = drawLine3d([0 0 0  0 1 0], 'k');
-            hLZ = drawLine3d([0 0 0  0 0 1], 'k');
+            hLx = drawLine3d(ax, [0 0 0  1 0 0], 'k');
+            hLy = drawLine3d(ax, [0 0 0  0 1 0], 'k');
+            hLZ = drawLine3d(ax, [0 0 0  0 0 1], 'k');
         end
         
         % enables 3D rotation of axis
