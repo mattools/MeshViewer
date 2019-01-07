@@ -314,6 +314,7 @@ methods
             mesh = mh.mesh;
             axes(ax);
             h = drawMesh(mesh.vertices, mesh.faces);
+            apply(mh.displayOptions, h);
             mh.handles.patch = h;
         end
         

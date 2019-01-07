@@ -48,6 +48,7 @@ methods
         % iterate over selected shapes
         for i = 1:length(meshList)
             mh = meshList{i};
+            mh.displayOptions.faceColor = newColor;
             set(mh.handles.patch, 'FaceColor', newColor);
         end
     end

@@ -42,12 +42,15 @@ end % end properties
 %% Constructor
 methods
     function this = MeshHandle(mesh, id)
-    % Constructor for MeshHandle class
+        % Constructor for MeshHandle class
+        
+        % store the data and ID
         this.mesh = mesh;
         this.id = id;
         
-%         this.displayOptions = Display
-
+        % create new display options
+        this.displayOptions = mv.app.MeshDisplayOptions;
+        
     end
 
 end % end constructors

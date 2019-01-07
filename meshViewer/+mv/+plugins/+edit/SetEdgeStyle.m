@@ -67,11 +67,14 @@ methods
         if showEdges
             for i = 1:length(meshList)
                 mh = meshList{i};
+                mh.displayOptions.edgeColor = edgeColor;
+                mh.displayOptions.edgeVisible = true;
                 set(mh.handles.patch, 'EdgeColor', edgeColor, 'LineWidth', lineWidth);
             end
         else
             for i = 1:length(meshList)
                 mh = meshList{i};
+                mh.displayOptions.edgeVisible = false;
                 set(mh.handles.patch, 'EdgeColor', 'none');
             end
         end

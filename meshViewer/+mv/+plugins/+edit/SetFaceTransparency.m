@@ -57,6 +57,7 @@ methods
         % iterate over selected shapes
         for i = 1:length(meshList)
             mh = meshList{i};
+            mh.displayOptions.faceTransparency = alpha;
             set(mh.handles.patch, 'FaceAlpha', alpha);
         end
     end
