@@ -44,6 +44,14 @@ methods
             v = mh.mesh.vertices;
             f = mh.mesh.faces;
             
+            if isstruct(f) || size(f, 2) > 3
+                errordlg('Requires a triangular mesh', 'Subdivide Error');
+                if iMesh > 1
+                    updateDisplay(frame);
+                end
+                return;
+            end
+            
             % subdivides the mesh and replaces the original one
             [v, f] = subdivideMesh(v, f, 2);
             

@@ -41,7 +41,7 @@ methods
         mh = meshList{1};
         vol = meshVolume(mh.mesh.vertices, mh.mesh.faces);
         
-        disp(sprintf('Mesh volume: %7.5g', vol)); %#ok<DSPS>
+        disp(sprintf('Mesh volume: %7.5g', abs(vol))); %#ok<DSPS>
         
     end
 end % end methods

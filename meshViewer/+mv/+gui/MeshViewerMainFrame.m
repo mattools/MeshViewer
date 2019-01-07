@@ -107,7 +107,7 @@ methods
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateSoccerBall(), 'Soccer Ball');
             uimenu(fileMenu, 'Label', 'Save', 'Separator', 'on');
             addPlugin(fileMenu, mv.plugins.file.CloseCurrentFrame(), 'Close', true);
-            addPlugin(fileMenu, mv.plugins.file.Quit(), 'Quit');
+%             addPlugin(fileMenu, mv.plugins.file.Quit(), 'Quit');
             
             
             % Edit Menu Definition 
