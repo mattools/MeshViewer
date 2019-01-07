@@ -27,6 +27,7 @@ elseif nargin == 1
         v = mesh.vertices;
         f = mesh.faces;
         mesh = TriMesh(v, f);
+        meshName = inputname(1);
     else
         error('Requires the input to be a mesh structure or a Mesh class instance');
     end
@@ -36,6 +37,7 @@ elseif nargin == 2
     v = varargin{1};
     f = varargin{2};
     mesh = TriMesh(v, f);
+    meshName = 'Mesh';
 else
     error('Unable to process input arguments');
 end
@@ -46,7 +48,7 @@ gui = mv.gui.MeshViewerGUI(app);
 
 % create new frame
 if ~isempty(mesh)
-    addNewMeshFrame(gui, mesh);
+    addNewMeshFrame(gui, mesh, meshName);
 else
     addNewMeshFrame(gui);
 end

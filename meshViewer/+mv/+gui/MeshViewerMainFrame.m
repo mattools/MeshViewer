@@ -202,6 +202,7 @@ methods
                 'Parent', treePanel, ...
                 'Units', 'normalized', ...
                 'Position', [0 0 1 1], ...
+                'Max', 2, 'Min', 0, ... % to allow empty selection
                 'Callback', @this.onMeshListModified);
 
             displayOptionsPanel = uitable(...
@@ -295,7 +296,7 @@ methods
     
     function setSelectedMeshIndices(this, indices)
         this.selectedMeshIndices = indices;
-        set(this.handles.shapeList, 'Value', indices);
+        set(this.handles.shapeList, 'Max', 2, 'Min', 0, 'Value', indices);
     end
 end
 
@@ -426,15 +427,10 @@ methods
             end
             shapeNames{i} = name;
         end
-
-        % avoid empty indices, causing problems to gui...
-        if nMeshes > 0 && isempty(inds)
-            inds = 1;
-        end
         
         set(this.handles.shapeList, ...
             'String', shapeNames, ...
-            'Max', nMeshes, ...
+            'Min', 0, 'Max', nMeshes+2, ...
             'Value', inds);
     end
 end
