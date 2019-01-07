@@ -18,7 +18,7 @@ classdef MeshViewerGUI < handle
 
 %% Properties
 properties
-    % application
+    % the data of the application, as an instance of MeshViewerAppData
     app;
     
     % remember where files were loaded
@@ -34,9 +34,13 @@ methods
         % MeshViewerGUI constructor
         %
         % GUI = MeshViewerGUI(APP)
-        % where APP is an instance of MeshViewerApp
+        % where APP is an instance of MeshViewerAppData
         %
         
+        if ~exist('appli', 'var')
+            % create default empty app data container
+            appli = mv.app.MeshViewerAppData();
+        end
         this.app = appli;
         
     end % constructor 

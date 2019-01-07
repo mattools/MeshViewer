@@ -43,8 +43,8 @@ else
 end
 
 % create the application, and a GUI
-app = mv.app.MeshViewerApp;
-gui = mv.gui.MeshViewerGUI(app);
+%app = mv.app.MeshViewerAppData;
+gui = mv.gui.MeshViewerGUI();
 
 % create new frame
 if ~isempty(mesh)

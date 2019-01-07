@@ -1,4 +1,4 @@
-classdef MeshViewerApp < handle
+classdef MeshViewerAppData < handle
 %MESHVIEWERAPP Contains data of a MeshViewer instance
 %
 %   Class MeshViewerApp
@@ -25,7 +25,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = MeshViewerApp(varargin)
+    function this = MeshViewerAppData(varargin)
     % Constructor for MeshViewerApp class
 
     end
