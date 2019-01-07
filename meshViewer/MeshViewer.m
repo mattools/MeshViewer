@@ -1,4 +1,4 @@
-function varargout = MeshViewer(varargin)
+function MeshViewer(varargin)
 %MESHVIEWER Launcher for the MeshViewer application
 %
 %   output = MeshViewer(input)
@@ -16,9 +16,21 @@ function varargout = MeshViewer(varargin)
 % Copyright 2018 INRA - Cepia Software Platform.
 
 if nargin == 0
-    % generate a default mesh
-    [v, f] = torusMesh([50 50 50 30 10 30 45]);
-    mesh = TriMesh(v, f);
+    % no argument -> create a new empty viewer
+    mesh = [];
+
+elseif nargin == 1
+    mesh = varargin{1};
+    if isa(mesh, 'TriMesh')
+        % nothing to do!
+    elseif isstruct(mesh)
+        v = mesh.vertices;
+        f = mesh.faces;
+        mesh = TriMesh(v, f);
+    else
+        error('Requires the input to be a mesh structure or a Mesh class instance');
+    end
+    
 elseif nargin == 2
     % parses input
     v = varargin{1};
@@ -32,4 +44,11 @@ end
 app = mv.app.MeshViewerApp;
 gui = mv.gui.MeshViewerGUI(app);
 
-addNewMeshFrame(gui, mesh);
+% create new frame
+if ~isempty(mesh)
+    addNewMeshFrame(gui, mesh);
+else
+    addNewMeshFrame(gui);
+end
+
+
