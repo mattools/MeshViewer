@@ -12,7 +12,7 @@ classdef ImportMeshVFFromWorkspace < mv.gui.Plugin
 % ------
 % Author: David Legland
 % e-mail: david.legland@inra.fr
-% Created: 2018-05-24,    using Matlab 9.4.0.813654 (R2018a)
+% Created: 2019-01-03,    using Matlab 9.4.0.813654 (R2018a)
 % Copyright 2018 INRA - BIA-BIBS.
 
 
@@ -45,6 +45,7 @@ methods
         addTextField(gd, 'Name of new Mesh: ', 'NewMesh');
       
         % display the dialog, and wait for user
+        setSize(gd, [350 200]);
         showDialog(gd);
         % check if ok or cancel was clicked
         if wasCanceled(gd)
