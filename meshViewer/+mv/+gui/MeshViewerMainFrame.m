@@ -116,7 +116,8 @@ methods
             addPlugin(editMenu, mv.plugins.edit.RenameMesh(), 'Rename');
             addPlugin(editMenu, mv.plugins.edit.DuplicateMesh(), 'Duplicate Selection', true);
             addPlugin(editMenu, mv.plugins.edit.RemoveMesh(), 'Remove Selection');
-            addPlugin(editMenu, mv.plugins.edit.SetSelectionFaceColor(), 'Set Selection Face Color', true);
+            addPlugin(editMenu, mv.plugins.edit.SetSelectionFaceColor(), 'Set Face Color', true);
+            addPlugin(editMenu, mv.plugins.edit.SetEdgeStyle(), 'Set Edge Style');
             addPlugin(editMenu, mv.plugins.edit.PrintMeshInfo(), 'Mesh Info', true);
             addPlugin(editMenu, mv.plugins.edit.PrintMeshList(), 'Print Mesh List', true);
             addPlugin(editMenu, mv.plugins.edit.PrintAxisProperties(), 'Print Axis Properties', true);
