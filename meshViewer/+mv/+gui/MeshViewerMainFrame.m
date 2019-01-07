@@ -122,12 +122,18 @@ methods
             addPlugin(editMenu, mv.plugins.edit.SetSelectionFaceColor(), 'Set Face Color', true);
             addPlugin(editMenu, mv.plugins.edit.SetFaceTransparency(), 'Set Face Transparency');
             addPlugin(editMenu, mv.plugins.edit.SetEdgeStyle(), 'Set Edge Style');
+            addPlugin(editMenu, mv.plugins.edit.PrintMeshList(), 'Print Mesh List');
             addPlugin(editMenu, mv.plugins.edit.PrintMeshInfo(), 'Mesh Info', true);
-            addPlugin(editMenu, mv.plugins.edit.PrintMeshList(), 'Print Mesh List', true);
-            addPlugin(editMenu, mv.plugins.edit.PrintAxisProperties(), 'Print Axis Properties', true);
             
             
-           % Process Menu Definition 
+            % Edit Menu Definition 
+            
+            viewMenu = uimenu(hf, 'Label', '&View');
+            addPlugin(viewMenu, mv.plugins.view.ToggleLight(), 'Toggle Light');
+            addPlugin(viewMenu, mv.plugins.view.PrintAxisProperties(), 'Print Axis Properties', true);
+
+            
+            % Process Menu Definition 
             
             processMenu = uimenu(hf, 'Label', '&Process');
             addPlugin(processMenu, mv.plugins.process.RecenterMesh(), 'Recenter');
