@@ -158,8 +158,13 @@ methods
         function item = addPlugin(menu, plugin, label, varargin)
             
             % creates new item
-            item = uimenu(menu, 'Label', label, ...
-                'MenuSelectedFcn', @(src, evt)plugin.run(this, src, evt));
+            if verLessThan('matlab', 'R2018a')
+                item = uimenu(menu, 'Label', label, ...
+                    'Callback', @(src, evt)plugin.run(this, src, evt));
+            else
+                item = uimenu(menu, 'Label', label, ...
+                    'MenuSelectedFcn', @(src, evt)plugin.run(this, src, evt));
+            end
             
             % eventually add separator above item
             if ~isempty(varargin)
