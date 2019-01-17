@@ -15,6 +15,9 @@ function MeshViewer(varargin)
 % Created: 2018-05-25,    using Matlab 9.4.0.813654 (R2018a)
 % Copyright 2018 INRA - Cepia Software Platform.
 
+
+%% Parse input argument(s)
+
 if nargin == 0
     % no argument -> create a new empty viewer
     mesh = [];
@@ -41,6 +44,9 @@ elseif nargin == 2
 else
     error('Unable to process input arguments');
 end
+
+
+%% Create data for applicatino
 
 % create the application, and a GUI
 %app = mv.app.MeshViewerAppData;

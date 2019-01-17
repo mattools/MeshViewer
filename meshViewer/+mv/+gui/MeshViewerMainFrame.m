@@ -321,7 +321,7 @@ methods
 
         % compute bounding box that encloses all meshes
         updateBoundingBox(this.scene);
-        bbox = this.scene.displayOptions.boundingBox;
+        bbox = viewBox(this.scene.displayOptions);
         
         % update axis bouding box
         set(ax, 'XLim', bbox(1:2));

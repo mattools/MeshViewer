@@ -21,11 +21,15 @@ properties
     % set of mesh handles within this scene, as a cell array
     meshHandleList;
     
+    lightHandle;
+    
     % the set of display options for the scene, as a struct.
     % Used to initialize the axis.
     displayOptions;
     
-%     axisLinesVisible = true;
+    % base directory for saving data
+    baseDir = pwd;
+    
 end % end properties
 
 
@@ -34,9 +38,7 @@ methods
     function this = Scene(varargin)
     % Constructor for Scene class
 
-        this.displayOptions = struct(...
-            'boundingBox', [ -1 1  -1 1  -1 1], ...
-            'axisLinesVisible', true);
+        this.displayOptions = mv.app.SceneDisplayOptions();
     end
 
 end % end constructors
@@ -64,8 +66,8 @@ methods
             end
         end
         
-        % update bbox
-        this.displayOptions.boundingBox = bbox;
+        % set up new bounding box
+        setViewBox(this.displayOptions, bbox);
     end
 end
 

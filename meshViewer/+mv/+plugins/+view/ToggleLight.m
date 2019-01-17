@@ -35,21 +35,13 @@ methods
         
         % get widgets of main axis
         ax = frame.handles.mainAxis;
-        children = get(ax, 'children');
-        
-        % identify the Graphical object corresponding to light
-        hl = [];
-        for i = 1:length(children)
-            if strcmp(children(i).Type, 'light') 
-                hl = children(i); 
-                break; 
-            end
-        end
-        
-        if isempty(hl)
-            light('Parent', ax);
+
+        % toggle light
+        if isempty(frame.scene.lightHandle)
+            frame.scene.lightHandle = light('Parent', ax);
         else
-            delete(hl);
+            delete(frame.scene.lightHandle);
+            frame.scene.lightHandle = [];
         end
     end
     
