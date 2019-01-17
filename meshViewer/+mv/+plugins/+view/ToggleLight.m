@@ -36,12 +36,22 @@ methods
         % get widgets of main axis
         ax = frame.handles.mainAxis;
 
-        % toggle light
+        % toggle light state
+        options = frame.scene.displayOptions;
+        options.lightVisible = ~options.lightVisible;
+
+        % ensure light object exists
         if isempty(frame.scene.lightHandle)
             frame.scene.lightHandle = light('Parent', ax);
+        end
+        
+        % update display depending on light state
+        if options.lightVisible
+            % make it visible
+            set(frame.scene.lightHandle, 'Visible', 'on');
         else
-            delete(frame.scene.lightHandle);
-            frame.scene.lightHandle = [];
+            % make it invisible
+            set(frame.scene.lightHandle, 'Visible', 'off');
         end
     end
     

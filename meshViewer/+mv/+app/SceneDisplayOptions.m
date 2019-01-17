@@ -34,6 +34,8 @@ properties
     % indicates whether main axes are visible or not (boolean)
     axisLinesVisible = true;
     
+    lightVisible = true;
+    
 end % end properties
 
 

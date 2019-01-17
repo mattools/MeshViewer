@@ -140,6 +140,7 @@ methods
             transformMenu = uimenu(processMenu, 'Label', 'Transform');
             addPlugin(transformMenu, mv.plugins.process.TranslateMesh(), 'Translation...');
             addPlugin(transformMenu, mv.plugins.process.UniformScalingMesh(), 'Scaling...');
+            addPlugin(transformMenu, mv.plugins.process.PlanarSymmetry(), 'Planar Symmetry...');
             addPlugin(processMenu, mv.plugins.process.TriangulateMesh(), 'Triangulate', true);
             addPlugin(processMenu, mv.plugins.process.SmoothMesh(), 'Smooth');
             addPlugin(processMenu, mv.plugins.process.SubdivideMesh(), 'Subdivide');
@@ -343,9 +344,14 @@ methods
             hLy = drawLine3d(ax, [0 0 0  0 1 0], 'k');
             hLZ = drawLine3d(ax, [0 0 0  0 0 1], 'k');
         end
-        
+
+        if this.scene.displayOptions.lightVisible
+            this.scene.lightHandle = light('Parent', ax);
+        end
+
         % enables 3D rotation of axis
         rotate3d(gcf, 'on');
+        
 %         h = rotate3d(gca);
 %         set(h, 'RotateStyle', 'orbit');
         
