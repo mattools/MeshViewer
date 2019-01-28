@@ -155,6 +155,7 @@ methods
             addPlugin(analyzeMenu, mv.plugins.analyze.ComputeMeshVolume(), 'Volume');
             addPlugin(analyzeMenu, mv.plugins.analyze.ComputeMeshArea(), 'Surface Area');
             addPlugin(analyzeMenu, mv.plugins.analyze.ComputeMeshMeanBreadth(), 'Mean Breadth');
+            addPlugin(analyzeMenu, mv.plugins.analyze.PlotMeshVertexDegreeHistogram(), 'Vertex Degree Histogram', true);
             
         end % end of setupMenu function
 

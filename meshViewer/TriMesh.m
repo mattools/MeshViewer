@@ -51,7 +51,7 @@ end
 %% General use methods
 methods
     function nv = vertexNumber(this)
-        nv = size(this.vertices);
+        nv = size(this.vertices, 1);
     end
     
     function nf = faceNumber(this)
