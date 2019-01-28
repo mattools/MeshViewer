@@ -140,7 +140,7 @@ methods
             transformMenu = uimenu(processMenu, 'Label', 'Transform');
             addPlugin(transformMenu, mv.plugins.process.TranslateMesh(), 'Translation...');
             addPlugin(transformMenu, mv.plugins.process.UniformScalingMesh(), 'Scaling...');
-            addPlugin(transformMenu, mv.plugins.process.PlanarSymmetry(), 'Planar Symmetry...');
+            addPlugin(transformMenu, mv.plugins.process.FlipMesh(), 'Flip Mesh...');
             addPlugin(processMenu, mv.plugins.process.TriangulateMesh(), 'Triangulate', true);
             addPlugin(processMenu, mv.plugins.process.SmoothMesh(), 'Smooth');
             addPlugin(processMenu, mv.plugins.process.SubdivideMesh(), 'Subdivide');

@@ -1,10 +1,10 @@
-classdef PlanarSymmetry < mv.gui.Plugin
+classdef FlipMesh < mv.gui.Plugin
 % Apply a planar symmetry transform on the selected mesh(es)
 %
-%   Class PlanarSymmetry
+%   Class FlipMesh
 %
 %   Example
-%   PlanarSymmetry
+%   FlipMesh
 %
 %   See also
 %
@@ -23,8 +23,8 @@ end % end properties
 
 %% Constructor
 methods
-    function this = PlanarSymmetry(varargin)
-    % Constructor for PlanarSymmetry class
+    function this = FlipMesh(varargin)
+    % Constructor for FlipMesh class
     end
 end % end constructors
 
@@ -39,9 +39,9 @@ methods
         end
         
         % create dialog for choosing translation paraemters
-        gd = GenericDialog('Planar Symmetry');
-        addChoice(gd, 'Direction: ', {'YZ-Plane', 'XZ-Plane', 'XY-Plane'}, 'YZ-Plane');
-        addChoice(gd, 'Plane Origin', {'Global Origin', 'Mesh centroid'}, 'Global Origin');
+        gd = GenericDialog('Flip MEsh');
+        addChoice(gd, 'Flip Axis: ', {'X-Axis', 'Y-Axis', 'Z-Axis'}, 'X-Axis');
+        addChoice(gd, 'Origin: ', {'Global Origin', 'Mesh centroid'}, 'Global Origin');
         showDialog(gd);
         if wasCanceled(gd)
             return;
