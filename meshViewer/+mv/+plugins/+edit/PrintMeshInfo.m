@@ -49,7 +49,7 @@ methods
             nf = meshFaceNumber(mh.mesh.vertices, mh.mesh.faces);
             
             disp('mesh info:');
-            fprintf('  mesh name: %12s\n', mh.id);
+            fprintf('  mesh name: %12s\n', mh.name);
             fprintf('  vertex number:   %6d\n', nv);
             fprintf('  face number:     %6d\n', nf);
             

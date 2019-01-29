@@ -93,6 +93,7 @@ methods
             addPlugin(fileMenu, mv.plugins.file.CreateNewSceneFrame(), 'New Empty Scene');
             addPlugin(fileMenu, mv.plugins.file.OpenFileOFF(), 'Open OFF File...');
             addPlugin(fileMenu, mv.plugins.file.OpenFilePLY(), 'Open PLY File...');
+            addPlugin(fileMenu, mv.plugins.file.OpenMeshAsStructure(), 'Open MeshViewer Mesh File...');
             importMeshesMenu = uimenu(fileMenu, 'Label', 'Import');
             addPlugin(importMeshesMenu, mv.plugins.file.ImportMeshFromStruct(), 'Mesh struct from Workspace');
             addPlugin(importMeshesMenu, mv.plugins.file.ImportMeshVFFromWorkspace(), 'Vertices+Faces from Workspace');
@@ -105,7 +106,8 @@ methods
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateRhombododecahedron(), 'RhomboDodecahedron', true);
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateTetrakaidecahedron(), 'Tetrakaidecahedron');
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateSoccerBall(), 'Soccer Ball');
-            uimenu(fileMenu, 'Label', 'Save', 'Separator', 'on');
+%             uimenu(fileMenu, 'Label', 'Save', 'Separator', 'on');
+            addPlugin(fileMenu, mv.plugins.file.SaveMeshAsStructure(), 'Save as .mat File...', true);
             addPlugin(fileMenu, mv.plugins.file.CloseCurrentFrame(), 'Close', true);
 %             addPlugin(fileMenu, mv.plugins.file.Quit(), 'Quit');
             
@@ -435,8 +437,8 @@ methods
             mh = this.scene.meshHandleList{i};
 
             % create name for current shape
-            name = mh.id;
-            if isempty(mh.id)
+            name = mh.name;
+            if isempty(mh.name)
                 name = ['(' class(shape.geometry) ')'];
             end
             shapeNames{i} = name;

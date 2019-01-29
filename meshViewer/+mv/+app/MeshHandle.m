@@ -18,17 +18,11 @@ classdef MeshHandle < handle
 
 %% Properties
 properties
-    % the ID of the mesh, as a string. Should be unique within the application
-    id;
+    % the name of the mesh, as a string. Should be unique within the application
+    name;
 
     % reference to the mesh, instance of TriMesh (or more generic class)
     mesh;
-    
-    % handles to the graphical object(s) used  to display the mesh
-    % sub structures: 
-    % * patch
-    % * vertices
-    handles;
     
     % a list of display options, instance of MeshDisplayOptions
     displayOptions;
@@ -36,17 +30,23 @@ properties
     % flag set to true if the mesh was modified
     modified = false;
     
+    % handles to the graphical object(s) used  to display the mesh
+    % sub structures: 
+    % * patch
+    % * vertices
+    handles;
+    
 end % end properties
 
 
 %% Constructor
 methods
-    function this = MeshHandle(mesh, id)
+    function this = MeshHandle(mesh, name)
         % Constructor for MeshHandle class
         
         % store the data and ID
         this.mesh = mesh;
-        this.id = id;
+        this.name = name;
         
         % create new display options
         this.displayOptions = mv.app.MeshDisplayOptions;
@@ -59,6 +59,34 @@ end % end constructors
 %% Methods
 methods
 end % end methods
+
+
+%% Serialization methods
+methods
+    function str = toStruct(this)
+        % Convert to a structure to facilitate serialization
+        str = struct('type', 'MeshHandle', ...
+            'name', this.name, ...
+            'displayOptions', toStruct(this.displayOptions), ...
+            'mesh', toStruct(this.mesh));
+    end
+end
+methods (Static)
+    function mh = fromStruct(str)
+        % Create a new instance from a structure
+        if ~(isfield(str, 'name') && isfield(str, 'mesh'))
+            error('Requires fields name and mesh');
+        end
+        
+        mesh = TriMesh.fromStruct(str.mesh);
+        mh = mv.app.MeshHandle(mesh, str.name);
+        
+        if isfield(str, 'displayOptions')
+            mh.displayOptions = mv.app.MeshDisplayOptions.fromStruct(str.displayOptions);
+        end
+    end
+end
+
 
 end % end classdef
 

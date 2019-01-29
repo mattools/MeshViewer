@@ -18,9 +18,14 @@ classdef MeshDisplayOptions < handle
 
 %% Properties
 properties
+    % global visibility of the mesh
+    visible = true;
+    
+    
     faceColor = [1 0 0];
     
-    faceTransparency = 1;
+    faceAlpha = 1;
+    
     
     edgeVisible = true;
 
@@ -54,9 +59,59 @@ methods
 
         % setup faces
         set(patchHandle, 'faceColor', this.faceColor);
-        set(patchHandle, 'faceAlpha', this.faceTransparency);
+        set(patchHandle, 'faceAlpha', this.faceAlpha);
     end
 end % end methods
+
+
+%% Serialization methods
+methods
+    function str = toStruct(this)
+        % Convert to a structure to facilitate serialization
+        str = struct('type', 'MeshDisplayOptions');
+        
+        str.visible = this.visible;
+        
+        if any(this.faceColor ~= [1 0 0])
+            str.faceColor = this.faceColor;
+        end
+        
+        if this.faceAlpha ~= 1
+            str.faceAlpha = this.faceAlpha;
+        end
+        
+        if ~this.edgeVisible
+            str.edgeVisible = false;
+        end
+        
+        if any(this.edgeColor ~= [0 0 0])
+            str.edgeColor = this.edgeColor;
+        end
+    end
+end
+methods (Static)
+    function options = fromStruct(str)
+        % Create a new instance from a structure
+        
+        % create default instance
+        options = mv.app.MeshDisplayOptions();
+        
+        % iterate over 
+        names = fieldnames(str);
+        for i = 1:length(names)
+            name = names{i};
+            if strcmp(name, 'type')
+                continue;
+            end
+            if isprop(options, name)
+                options.(name) = str.(name);
+            else
+                warning(['MeshDisplayOption has no property named: ' name]);
+            end
+        end
+    end
+end
+
 
 end % end classdef
 

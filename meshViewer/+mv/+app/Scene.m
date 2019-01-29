@@ -123,6 +123,11 @@ methods
         mesh = varargin{1};
         if isa(mesh, 'mv.app.MeshHandle')
             mh = mesh;
+            
+            % check name validity
+            if hasMeshWithName(this, mh.name)
+                mh.name = getNextFreeName(this, mh.name);
+            end
             return;
         end
         
@@ -175,7 +180,7 @@ methods
         tf = false;
         for i = 1:length(this.meshHandleList)
             mh = this.meshHandleList{i};
-            if strcmp(mh.id, name)
+            if strcmp(mh.name, name)
                 tf = true;
                 return;
             end
