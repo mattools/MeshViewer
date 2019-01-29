@@ -62,4 +62,30 @@ methods
         ne = size(this.edges, 1);
     end
 end
+
+%% Serialization methods
+methods
+    function str = toStruct(this)
+        % Convert to a structure to facilitate serialization
+        str = struct('type', 'TriMesh', ...
+            'vertices', this.vertices, ...
+            'faces', this.faces);
+        if ~isempty(this.edges)
+            str.edges = this.edges;
+        end
+    end
+end
+methods (Static)
+    function mesh = fromStruct(str)
+        % Create a new instance from a structure
+        if ~(isfield(str, 'vertices') && isfield(str, 'faces'))
+            error('Requires fields vertices and faces');
+        end
+        if size(str.faces, 2) ~= 3
+            error('Requires a triangular face array');
+        end
+        mesh = TriMesh(str);
+    end
+end
+
 end
