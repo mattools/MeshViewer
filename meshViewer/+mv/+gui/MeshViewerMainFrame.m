@@ -132,6 +132,7 @@ methods
             
             viewMenu = uimenu(hf, 'Label', '&View');
             addPlugin(viewMenu, mv.plugins.view.ToggleLight(), 'Toggle Light');
+            addPlugin(viewMenu, mv.plugins.view.ToggleAxisLinesDisplay(), 'Toggle Axis Lines Display');
             addPlugin(viewMenu, mv.plugins.view.PrintAxisProperties(), 'Print Axis Properties', true);
 
             
@@ -343,17 +344,29 @@ methods
             mh.handles.patch = h;
         end
         
+        sceneHandles = this.scene.handles;
+
         % initialize line handles for axis lines
         if this.scene.displayOptions.axisLinesVisible
-            hLx = drawLine3d(ax, [0 0 0  1 0 0], 'k');
-            hLy = drawLine3d(ax, [0 0 0  0 1 0], 'k');
-            hLZ = drawLine3d(ax, [0 0 0  0 0 1], 'k');
+%             if isempty(sceneHandles.axisLineX)
+                sceneHandles.axisLineX = drawLine3d(ax, [0 0 0  1 0 0], 'k');
+                sceneHandles.axisLineY = drawLine3d(ax, [0 0 0  0 1 0], 'k');
+                sceneHandles.axisLineZ = drawLine3d(ax, [0 0 0  0 0 1], 'k');
+%             end
+            
+%             set(sceneHandles.axisLineX, 'XData', bbox(1:2));
+%             set(sceneHandles.axisLineY, 'YData', bbox(3:4));
+%             set(sceneHandles.axisLineZ, 'ZData', bbox(5:6));
+            
         end
 
         if this.scene.displayOptions.lightVisible
             this.scene.lightHandle = light('Parent', ax);
         end
-
+        
+        % update scene info
+        this.scene.handles = sceneHandles;
+        
         % enables 3D rotation of axis
         rotate3d(gcf, 'on');
         

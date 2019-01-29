@@ -21,14 +21,23 @@ properties
     % set of mesh handles within this scene, as a cell array
     meshHandleList;
     
-    lightHandle;
-    
     % the set of display options for the scene, as a struct.
     % Used to initialize the axis.
     displayOptions;
     
     % base directory for saving data
     baseDir = pwd;
+
+    % structure that contains handles to graphical widgets representing
+    % lights, annotations...
+    handles = struct(...
+        'light', [], ...
+        'axisLineX', [], ...
+        'axisLineY', [], ...
+        'axisLineZ', []);
+
+    % (deprecated)
+    lightHandle;
     
 end % end properties
 
