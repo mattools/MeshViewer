@@ -27,13 +27,10 @@ properties
     % Description of z-axis, as a SceneAxis instance
     zAxis;
 
-%     % an optional background image, as an instance of ImageNode
-%     % (used in Shape project, but not in MeshViewer)
-%     backgroundImage;
-    
     % indicates whether main axes are visible or not (boolean)
     axisLinesVisible = true;
     
+    % indicates whether light is visible or not (boolean)
     lightVisible = true;
     
 end % end properties

@@ -33,28 +33,12 @@ end % end constructors
 methods
     function run(this, frame, src, evt) %#ok<INUSL>
         
-        % get widgets of main axis
-        ax = frame.handles.mainAxis;
-
         % toggle options state
         options = frame.scene.displayOptions;
         options.axisLinesVisible = ~options.axisLinesVisible;
 
-        % ensure line axis objects exist
-        handles = frame.scene.handles;
-        if isempty(handles.axisLineX)
-            handles.axisLineX = drawLine3d(ax, [0 0 0  1 0 0], 'k');
-            handles.axisLineY = drawLine3d(ax, [0 0 0  0 1 0], 'k');
-            handles.axisLineZ = drawLine3d(ax, [0 0 0  0 0 1], 'k');
-        end
-        
-        % set visibility depending on options
-        hh = [handles.axisLineX, handles.axisLineY, handles.axisLineZ];
-        if options.axisLinesVisible
-            set(hh, 'Visible', 'on');
-        else
-            set(hh, 'Visible', 'off');
-        end
+        % update associated graphical elements
+        updateAxisLinesDisplay(frame.sceneRenderer);
     end
     
 end % end methods

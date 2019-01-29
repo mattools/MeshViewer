@@ -33,26 +33,12 @@ end % end constructors
 methods
     function run(this, frame, src, evt) %#ok<INUSL>
         
-        % get widgets of main axis
-        ax = frame.handles.mainAxis;
-
         % toggle light state
         options = frame.scene.displayOptions;
         options.lightVisible = ~options.lightVisible;
 
-        % ensure light object exists
-        if isempty(frame.scene.lightHandle)
-            frame.scene.lightHandle = light('Parent', ax);
-        end
-        
-        % update display depending on light state
-        if options.lightVisible
-            % make it visible
-            set(frame.scene.lightHandle, 'Visible', 'on');
-        else
-            % make it invisible
-            set(frame.scene.lightHandle, 'Visible', 'off');
-        end
+        % update associated graphical element
+        updateLightDisplay(frame.sceneRenderer);
     end
     
 end % end methods

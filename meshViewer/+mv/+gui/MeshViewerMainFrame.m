@@ -27,6 +27,8 @@ properties
     % the scene displayed by this frame
     % Contains a collection of meshes.
     scene;
+    
+    sceneRenderer;
 %     
 %     % the set of mouse listeners.
 %     % Stored as an array of svui.app.Shape instances
@@ -58,9 +60,14 @@ methods
         setupMenu(fig);
         setupLayout(fig);
         
+        % create scene renderer
+        this.sceneRenderer = mv.gui.SceneRenderer(scene, this.handles.mainAxis);
+        
         this.handles.figure = fig;
         
-        updateDisplay(this);
+%         updateDisplay(this);
+        refreshDisplay(this.sceneRenderer);
+        
         updateMeshList(this);
         updateTitle(this);
         
@@ -167,10 +174,10 @@ methods
             % creates new item
             if verLessThan('matlab', 'R2018a')
                 item = uimenu(menu, 'Label', label, ...
-                    'Callback', @(src, evt)plugin.run(this, src, evt));
+                    'Callback', @(src, evt) plugin.run(this, src, evt));
             else
                 item = uimenu(menu, 'Label', label, ...
-                    'MenuSelectedFcn', @(src, evt)plugin.run(this, src, evt));
+                    'MenuSelectedFcn', @(src, evt) plugin.run(this, src, evt));
             end
             
             % eventually add separator above item
@@ -321,91 +328,7 @@ methods
         
         disp('update Display');
         
-        % remove all existing children
-        ax = this.handles.mainAxis;
-        cla(ax);
-        hold on;
-
-        % compute bounding box that encloses all meshes
-        updateBoundingBox(this.scene);
-        bbox = viewBox(this.scene.displayOptions);
-        
-        % update axis bouding box
-        set(ax, 'XLim', bbox(1:2));
-        set(ax, 'YLim', bbox(3:4));
-        set(ax, 'ZLim', bbox(5:6));
-
-        % display the meshes
-        for i = 1:length(this.scene.meshHandleList)
-            mh = this.scene.meshHandleList{i};
-            mesh = mh.mesh;
-            h = drawMesh(ax, mesh.vertices, mesh.faces);
-            apply(mh.displayOptions, h);
-            mh.handles.patch = h;
-        end
-        
-        sceneHandles = this.scene.handles;
-
-        % initialize line handles for axis lines
-        if this.scene.displayOptions.axisLinesVisible
-%             if isempty(sceneHandles.axisLineX)
-                sceneHandles.axisLineX = drawLine3d(ax, [0 0 0  1 0 0], 'k');
-                sceneHandles.axisLineY = drawLine3d(ax, [0 0 0  0 1 0], 'k');
-                sceneHandles.axisLineZ = drawLine3d(ax, [0 0 0  0 0 1], 'k');
-%             end
-            
-%             set(sceneHandles.axisLineX, 'XData', bbox(1:2));
-%             set(sceneHandles.axisLineY, 'YData', bbox(3:4));
-%             set(sceneHandles.axisLineZ, 'ZData', bbox(5:6));
-            
-        end
-
-        if this.scene.displayOptions.lightVisible
-            this.scene.lightHandle = light('Parent', ax);
-        end
-        
-        % update scene info
-        this.scene.handles = sceneHandles;
-        
-        % enables 3D rotation of axis
-        rotate3d(gcf, 'on');
-        
-%         h = rotate3d(gca);
-%         set(h, 'RotateStyle', 'orbit');
-        
-%         % draw each shape in the document
-%         tool = this.currentTool;
-%         shapes = this.doc.shapes;
-%         for i = 1:length(shapes)
-%             shape = shapes(i);
-%             hs = draw(shape);
-%             set(hs, 'buttonDownFcn', @tool.onMouseClicked);
-%             set(hs, 'UserData', shape);
-%             
-%             if any(shape == this.selectedShapes)
-%                 set(hs, 'Selected', 'on');
-%             end
-%         end
-        
-%         % set axis bounds from view box
-%         if ~isempty(this.doc.viewBox)
-%             set(ax, 'XLim', this.doc.viewBox(1:2));
-%             set(ax, 'YLim', this.doc.viewBox(3:4));
-%         end
-            
-%         % draw lines for X, Y and Z axes, based on current axis bounds
-%         if this.scene.axisLinesVisible
-%             viewBox = this.scene.viewBox;
-%             if isempty(viewBox)
-%                 viewBox = [get(ax, 'xlim') get(ax, 'ylim')];
-%             end
-%             set(hl1, 'XData', [viewBox(1) viewBox(2)], 'Ydata', [0 0]);
-%             set(hl2, 'Xdata', [0 0], 'YData', [viewBox(3) viewBox(4)]);
-%         end
-
-%         updateMeshList(this);
-        
-%         disp('end of update Display');
+        refreshDisplay(this.sceneRenderer);
     end
     
     function updateMeshSelectionDisplay(this) %#ok<MANU>
