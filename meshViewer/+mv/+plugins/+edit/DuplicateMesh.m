@@ -46,7 +46,7 @@ methods
             
             % creates a new mesh instance
             mesh = TriMesh(v, f);
-            mh = createMeshHandle(frame.scene, mesh, mh.id);
+            mh = createMeshHandle(frame.scene, mesh, mh.name);
             
             % add new mesh to the current scene
             frame.scene.addMeshHandle(mh);

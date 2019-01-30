@@ -154,7 +154,9 @@ methods
             addPlugin(processMenu, mv.plugins.process.TriangulateMesh(), 'Triangulate', true);
             addPlugin(processMenu, mv.plugins.process.SmoothMesh(), 'Smooth');
             addPlugin(processMenu, mv.plugins.process.SubdivideMesh(), 'Subdivide');
-            addPlugin(processMenu, mv.plugins.process.SimplifyMeshByVertexClustering(), 'Vertex Clustering');
+            simplifyMenu = uimenu(processMenu, 'Label', 'Simplify');
+            addPlugin(simplifyMenu, mv.plugins.process.SimplifyMeshByReducePatch(), 'Reduce Patch');
+            addPlugin(simplifyMenu, mv.plugins.process.SimplifyMeshByVertexClustering(), 'Vertex Clustering');
             addPlugin(processMenu, mv.plugins.process.EnsureManifoldMesh(), 'Ensure Manifold Mesh');
             addPlugin(processMenu, mv.plugins.process.CheckMeshAdjacentFaces(), 'Check Adjacent Faces', true);
 

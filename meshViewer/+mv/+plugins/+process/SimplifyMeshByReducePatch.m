@@ -1,10 +1,10 @@
-classdef SimplifyMeshByVertexClustering < mv.gui.Plugin
-%SIMPLIFYMESHBYVERTEXCLUSTERING  One-line description here, please.
+classdef SimplifyMeshByReducePatch < mv.gui.Plugin
+% Simplifies a triangular mesh by using Matlab reducepatch command
 %
-%   Class SimplifyMeshByVertexClustering
+%   Class SimplifyMeshByReducePatch
 %
 %   Example
-%   SimplifyMeshByVertexClustering
+%   SimplifyMeshByReducePatch
 %
 %   See also
 %
@@ -12,7 +12,7 @@ classdef SimplifyMeshByVertexClustering < mv.gui.Plugin
 % ------
 % Author: David Legland
 % e-mail: david.legland@inra.fr
-% Created: 2019-01-28,    using Matlab 9.5.0.944444 (R2018b)
+% Created: 2019-01-30,    using Matlab 9.5.0.944444 (R2018b)
 % Copyright 2019 INRA - BIA-BIBS.
 
 
@@ -23,8 +23,8 @@ end % end properties
 
 %% Constructor
 methods
-    function this = SimplifyMeshByVertexClustering(varargin)
-    % Constructor for SimplifyMeshByVertexClustering class
+    function this = SimplifyMeshByReducePatch(varargin)
+    % Constructor for SimplifyMeshByReducePatch class
 
     end
 
@@ -41,8 +41,8 @@ methods
         end
        
         % choose variable
-        gd = GenericDialog('Simplify by Vertex Clustering');
-        addNumericField(gd, 'Grid Spacing: ', 1, 0);
+        gd = GenericDialog('Simplify using reducepatch');
+        addNumericField(gd, 'Face Number: ', 1000, 0);
       
         % display the dialog, and wait for user
         setSize(gd, [250 150]);
@@ -53,16 +53,15 @@ methods
         end
         
         % parse user input
-        spacing = getNextNumber(gd);
+        faceNumber = getNextNumber(gd);
 
         % iterate over selected meshes
         for iMesh = 1:length(meshList)
             % get data for current mesh
             mh = meshList{iMesh};
-            v = mh.mesh.vertices;
-            f = mh.mesh.faces;
+            mesh = mh.mesh;
             
-            if iscell(f) || size(f, 2) > 3
+            if iscell(mesh.faces) || size(mesh.faces, 2) > 3
                 errordlg('Requires a triangular mesh', 'Simplify Error');
                 if iMesh > 1
                     updateDisplay(frame);
@@ -71,11 +70,12 @@ methods
             end
             
             % subdivides the mesh and replaces the original one
-            [v, f] = meshVertexClustering(v, f, spacing);
+            str = struct('vertices', mesh.vertices, 'faces', mesh.faces);
+            str = reducepatch(str, faceNumber);
             
             % update mesh
-            mh.mesh.vertices = v;
-            mh.mesh.faces = f;
+            mh.mesh.vertices = str.vertices;
+            mh.mesh.faces = str.faces;
         end
         
         updateDisplay(frame);
