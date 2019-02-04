@@ -148,10 +148,11 @@ methods
             processMenu = uimenu(hf, 'Label', '&Process');
             addPlugin(processMenu, mv.plugins.process.RecenterMesh(), 'Recenter');
             transformMenu = uimenu(processMenu, 'Label', 'Transform');
-            addPlugin(transformMenu, mv.plugins.process.TranslateMesh(), 'Translation...');
-            addPlugin(transformMenu, mv.plugins.process.UniformScalingMesh(), 'Scaling...');
-            addPlugin(transformMenu, mv.plugins.process.FlipMesh(), 'Flip Mesh...');
-            addPlugin(processMenu, mv.plugins.process.TriangulateMesh(), 'Triangulate', true);
+            addPlugin(transformMenu, mv.plugins.process.TranslateMesh(), 'Translate...');
+            addPlugin(transformMenu, mv.plugins.process.RotateMeshMainAxes(), 'Rotate...');
+            addPlugin(transformMenu, mv.plugins.process.UniformScalingMesh(), 'Scale...');
+            addPlugin(transformMenu, mv.plugins.process.FlipMesh(), 'Flip...');
+            addPlugin(processMenu, mv.plugins.process.TriangulateMesh(), 'Triangulate...', true);
             addPlugin(processMenu, mv.plugins.process.SmoothMesh(), 'Smooth');
             addPlugin(processMenu, mv.plugins.process.SubdivideMesh(), 'Subdivide');
             simplifyMenu = uimenu(processMenu, 'Label', 'Simplify');

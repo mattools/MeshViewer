@@ -40,7 +40,7 @@ methods
         
         % compute middle position along Z axis
         bbox = viewBox(frame.scene.displayOptions);
-        medZ = ( bbox(6) - bbox(5) ) / 2;
+        medZ = ( bbox(6) - bbox(5) ) / 2 + bbox(5);
         
         % create dialog for choosing translation paraemters
         gd = GenericDialog('Intersect with Plane');
@@ -60,10 +60,13 @@ methods
         switch dirIndex
             case 1
                 plane = [0 0 position  1 0 0  0 1 0];
+                planeDigit = 'Z';
             case 2
                 plane = [0 position 0  0 0 1  1 0 0];
+                planeDigit = 'Y';
             case 3
                 plane = [position 0 0  0 1 0  0 0 1];
+                planeDigit = 'X';
         end
         
         % allocate memory
@@ -76,8 +79,9 @@ methods
             intersections{iMesh} = intersectPlaneMesh(plane, mh.mesh.vertices, mh.mesh.faces);
         end
 
-        figure; hold on;
+        figure; hold on; axis equal;
         drawPolygon3d(intersections, 'color', 'b');
+        title(sprintf('%s = %d', planeDigit, position));
     end
     
 end % end methods
