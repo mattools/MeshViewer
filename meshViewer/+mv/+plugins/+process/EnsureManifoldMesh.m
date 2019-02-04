@@ -55,8 +55,7 @@ methods
             end
             
             % Apply cleanup operations to ensure manifold
-            f2 = removeDuplicateFaces(f);
-            [v2, f2] = removeMeshEars(v, f2);
+            [v2, f2] = ensureManifoldMesh(v, f);
            
             % update mesh
             mh.mesh.vertices = v2;

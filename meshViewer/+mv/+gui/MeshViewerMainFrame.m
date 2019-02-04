@@ -157,6 +157,7 @@ methods
             simplifyMenu = uimenu(processMenu, 'Label', 'Simplify');
             addPlugin(simplifyMenu, mv.plugins.process.SimplifyMeshByReducePatch(), 'Reduce Patch');
             addPlugin(simplifyMenu, mv.plugins.process.SimplifyMeshByVertexClustering(), 'Vertex Clustering');
+            addPlugin(processMenu, mv.plugins.process.IntersectPlaneMesh(), 'Intersect With Plane');
             addPlugin(processMenu, mv.plugins.process.EnsureManifoldMesh(), 'Ensure Manifold Mesh');
             addPlugin(processMenu, mv.plugins.process.CheckMeshAdjacentFaces(), 'Check Adjacent Faces', true);
 

@@ -18,6 +18,8 @@ function MeshViewer(varargin)
 
 %% Parse input argument(s)
 
+meshName = '';
+
 if nargin == 0
     % no argument -> create a new empty viewer
     mesh = [];
@@ -27,6 +29,7 @@ elseif nargin == 1
     if isa(mesh, 'TriMesh')
         % nothing to do!
     elseif isstruct(mesh)
+        % parses vertices and faces from structure
         v = mesh.vertices;
         f = mesh.faces;
         mesh = TriMesh(v, f);
@@ -36,15 +39,18 @@ elseif nargin == 1
     end
     
 elseif nargin == 2
-    % parses input
+    % assumes two arguments correspond to vertices and faces,
+    % and create a new TriMesh
     v = varargin{1};
     f = varargin{2};
     mesh = TriMesh(v, f);
-    meshName = 'Mesh';
 else
     error('Unable to process input arguments');
 end
 
+if isempty(meshName)
+    meshName = 'Mesh';
+end
 
 %% Create data for applicatino
 
