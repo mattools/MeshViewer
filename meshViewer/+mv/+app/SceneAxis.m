@@ -19,28 +19,28 @@ classdef SceneAxis < handle
 %% Properties
 properties
     % vector of two values, containing the min and the max
-    limits = [0 1];
+    Limits = [0 1];
     
     % if reversed, values are in decreasing order
-    reverse = false;
+    Reverse = false;
     
     % the label to be displayed
-    label = '';
+    Label = '';
     
 end % end properties
 
 
 %% Constructor
 methods
-    function this = SceneAxis(varargin)
+    function obj = SceneAxis(varargin)
         % Constructor for SceneAxis class
         
         % copy constructor
         if ~isempty(varargin) && isa(varargin{1}, 'SceneAxis')
             that = varargin{1};
-            this.limits = that.limits;
-            this.reverse = that.reverse;
-            this.label = that.label;
+            obj.Limits = that.Limits;
+            obj.Reverse = that.Reverse;
+            obj.Label = that.Label;
             return;
         end
         
@@ -48,11 +48,11 @@ methods
         while length(varargin) > 2
             name = varargin{1};
             if strcmpi(name, 'limits')
-                this.limits = varargin{2};
+                obj.Limits = varargin{2};
             elseif strcmpi(name, 'reverse')
-                this.reverse = varargin{2};
+                obj.Reverse = varargin{2};
             elseif strcmpi(name, 'label')
-                this.label = varargin{2};
+                obj.Label = varargin{2};
             else
                 warning(['Unknown parameter name for SceneAxis: ' name]);
             end
@@ -69,24 +69,24 @@ end % end methods
 
 %% Serialization methods
 methods
-    function str = toStruct(this)
+    function str = toStruct(obj)
         % Convert to a structure to facilitate serialization
 
         % create a structure containing all fields that differ from default
-        if ~isempty(this.limits)
-            str.limits = this.limits;
+        if ~isempty(obj.Limits)
+            str.limits = obj.Limits;
         end
-        if this.reverse
-            str.reverse = this.reverse;
+        if obj.Reverse
+            str.reverse = obj.Reverse;
         end
-        if ~isempty(this.label)
-            str.label = this.label;
+        if ~isempty(obj.Label)
+            str.label = obj.Label;
         end
     end
     
-    function write(this, fileName, varargin)
+    function write(obj, fileName, varargin)
         % Write into a JSON file
-        savejson('', toStruct(this), 'FileName', fileName, varargin{:});
+        savejson('', toStruct(obj), 'FileName', fileName, varargin{:});
     end
 end
 
@@ -102,11 +102,11 @@ methods (Static)
         for i = 1:length(names)
             name = names{i};
             if strcmpi(name, 'limits')
-                axis.limits = str.(name);
+                axis.Limits = str.(name);
             elseif strcmpi(name, 'reverse')
-                axis.reverse = str.(name);
+                axis.Reverse = str.(name);
             elseif strcmpi(name, 'label')
-                axis.label = str.(name);
+                axis.Label = str.(name);
             else
                 warning(['Unknown SceneAxis parameter: ' name]);
             end

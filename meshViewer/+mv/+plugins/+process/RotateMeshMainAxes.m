@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = RotateMeshMainAxes(varargin)
+    function obj = RotateMeshMainAxes(varargin)
     % Constructor for RotateMeshMainAxes class
     end
 end % end constructors
@@ -31,7 +31,7 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         meshList =  selectedMeshHandleList(frame);
         if length(meshList) < 1
@@ -72,7 +72,7 @@ methods
         for iMesh = 1:length(meshList)
             % get data for current mesh
             mh = meshList{iMesh};
-            v = mh.mesh.vertices;
+            v = mh.Mesh.Vertices;
             
             % create translation matrix
             if originIndex == 2
@@ -84,7 +84,7 @@ methods
             v = transformPoint3d(v, transfo);
             
             % update mesh
-            mh.mesh.vertices = v;
+            mh.Mesh.Vertices = v;
         end
 
         updateDisplay(frame);

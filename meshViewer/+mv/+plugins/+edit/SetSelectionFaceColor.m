@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = SetSelectionFaceColor(varargin)
+    function obj = SetSelectionFaceColor(varargin)
     % Constructor for RenameMesh class
     end
 end % end constructors
@@ -31,7 +31,7 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         % get current mesh
         meshList =  selectedMeshHandleList(frame);
@@ -42,14 +42,14 @@ methods
         % open color chooser dialog
 %         defaultColor = [1 0 0];
         mh = meshList{1};
-        defaultColor = get(mh.handles.patch, 'FaceColor');
+        defaultColor = get(mh.Handles.Patch, 'FaceColor');
         newColor = uisetcolor(defaultColor, 'Set Line Color');
 
         % iterate over selected shapes
         for i = 1:length(meshList)
             mh = meshList{i};
-            mh.displayOptions.faceColor = newColor;
-            set(mh.handles.patch, 'FaceColor', newColor);
+            mh.DisplayOptions.FaceColor = newColor;
+            set(mh.Handles.Patch, 'FaceColor', newColor);
         end
     end
     

@@ -18,14 +18,14 @@ classdef MeshViewerAppData < handle
 
 %% Properties
 properties
-    % set of mesh handles managed by this application
-    meshList;
+    % set of mesh handles managed by obj application
+    MeshList;
 end % end properties
 
 
 %% Constructor
 methods
-    function this = MeshViewerAppData(varargin)
+    function obj = MeshViewerAppData(varargin)
     % Constructor for MeshViewerApp class
 
     end
@@ -35,14 +35,14 @@ end % end constructors
 
 %% Management of mesh handles
 methods
-    function addMeshHandle(this, mh)
-        this.meshList = [this.meshList {mh}];
+    function addMeshHandle(obj, mh)
+        obj.MeshList = [obj.meshList {mh}];
     end
     
-    function removeMeshHandle(this, mh)
+    function removeMeshHandle(obj, mh)
         ind = -1;
-        for i = 1:length(this.meshList)
-            if this.meshList{i} == mh
+        for i = 1:length(obj.MeshList)
+            if obj.MeshList{i} == mh
                 ind = i;
                 break;
             end
@@ -52,15 +52,15 @@ methods
             error('could not find the mesh handle');
         end
         
-        this.meshList(ind) = [];
+        obj.MeshList(ind) = [];
     end
     
-    function meshList = getMeshHandles(this)
-        meshList = this.meshList;
+    function meshList = getMeshHandles(obj)
+        meshList = obj.MeshList;
     end
     
-    function b = hasMeshHandles(this)
-        b = ~isempty(this.meshList);
+    function b = hasMeshHandles(obj)
+        b = ~isempty(obj.MeshList);
     end
     
 end

@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = Plugin(varargin)
+    function obj = Plugin(varargin)
     % Constructor for Plugin class
 
     end
@@ -33,13 +33,13 @@ end % end constructors
 
 %% Abstract methods
 methods (Abstract)
-   run(this, frame, src, event);
+   run(obj, frame, src, event);
 end % end of abstract methods declaration
 
 %% Utility method
 methods
-    function b = isEnabled(this, frame)
-        % Checks if this plugin can be available for the specified frame
+    function b = isEnabled(obj, frame)
+        % Checks if obj plugin can be available for the specified frame
         % 
         % Default behaviour is to return true, but specific implementations
         % can return different result depending on the content of the

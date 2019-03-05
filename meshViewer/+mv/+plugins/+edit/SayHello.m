@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = SayHello(varargin)
+    function obj = SayHello(varargin)
     % Constructor for SayHello class
 
     end
@@ -33,7 +33,7 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt)
+    function run(obj, frame, src, evt)
         disp('Hello!');
     end
     

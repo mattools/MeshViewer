@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = ToggleLight(varargin)
+    function obj = ToggleLight(varargin)
     % Constructor for ToggleLight class
     end
 end % end constructors
@@ -31,14 +31,14 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         % toggle light state
-        options = frame.scene.displayOptions;
-        options.lightVisible = ~options.lightVisible;
+        options = frame.Scene.DisplayOptions;
+        options.LightVisible = ~options.LightVisible;
 
         % update associated graphical element
-        updateLightDisplay(frame.sceneRenderer);
+        updateLightDisplay(frame.SceneRenderer);
     end
     
 end % end methods

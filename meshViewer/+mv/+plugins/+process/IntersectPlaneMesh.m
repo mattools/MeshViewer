@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = IntersectPlaneMesh(varargin)
+    function obj = IntersectPlaneMesh(varargin)
     % Constructor for IntersectPlaneMesh class
     end
 end % end constructors
@@ -31,7 +31,7 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         meshList =  selectedMeshHandleList(frame);
         if length(meshList) < 1
@@ -39,7 +39,7 @@ methods
         end
         
         % compute middle position along Z axis
-        bbox = viewBox(frame.scene.displayOptions);
+        bbox = viewBox(frame.Scene.DisplayOptions);
         medZ = ( bbox(6) - bbox(5) ) / 2 + bbox(5);
         
         % create dialog for choosing translation paraemters
@@ -76,7 +76,7 @@ methods
         for iMesh = 1:length(meshList)
             % get data for current mesh
             mh = meshList{iMesh};
-            intersections{iMesh} = intersectPlaneMesh(plane, mh.mesh.vertices, mh.mesh.faces);
+            intersections{iMesh} = intersectPlaneMesh(plane, mh.Mesh.Vertices, mh.Mesh.Faces);
         end
 
         figure; hold on; axis equal;

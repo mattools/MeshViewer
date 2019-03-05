@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = PrintMeshList(varargin)
+    function obj = PrintMeshList(varargin)
     % Constructor for PrintMeshList class
 
     end
@@ -33,13 +33,13 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         disp('print mesh list');
         
-        scene = frame.scene;
-        for i = 1:length(scene.meshHandleList)
-            mh = scene.meshHandleList{i};
-            disp(mh.id);
+        scene = frame.Scene;
+        for i = 1:length(scene.MeshHandleList)
+            mh = scene.MeshHandleList{i};
+            disp(mh.Name);
         end
         
     end

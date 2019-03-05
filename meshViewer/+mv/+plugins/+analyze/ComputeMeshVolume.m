@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = ComputeMeshVolume(varargin)
+    function obj = ComputeMeshVolume(varargin)
     % Constructor for ComputeMeshVolume class
     end
 end % end constructors
@@ -31,15 +31,15 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
-        meshList = frame.scene.meshHandleList;
+        meshList = frame.Scene.MeshHandleList;
         if length(meshList) < 1
             return;
         end
        
         mh = meshList{1};
-        vol = meshVolume(mh.mesh.vertices, mh.mesh.faces);
+        vol = meshVolume(mh.Mesh.Vertices, mh.Mesh.Faces);
         
         disp(sprintf('Mesh volume: %7.5g', abs(vol))); %#ok<DSPS>
         

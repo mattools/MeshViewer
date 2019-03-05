@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = CheckMeshAdjacentFaces(varargin)
+    function obj = CheckMeshAdjacentFaces(varargin)
     % Constructor for CheckMeshAdjacentFaces class
     end
 end % end constructors
@@ -31,16 +31,16 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
-        meshList = frame.scene.meshHandleList;
+        meshList = frame.Scene.MeshHandleList;
         if length(meshList) < 1
             return;
         end
        
         mh = meshList{1};
-        v = mh.mesh.vertices;
-        f = mh.mesh.faces;
+        v = mh.Mesh.Vertices;
+        f = mh.Mesh.Faces;
         
         % recenter by removing the mean
         checkMeshAdjacentFaces(v, f);

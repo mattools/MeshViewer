@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = TriangulateMesh(varargin)
+    function obj = TriangulateMesh(varargin)
     % Constructor for TriangulateMesh class
     end
 end % end constructors
@@ -31,7 +31,7 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         meshList =  selectedMeshHandleList(frame);
         if length(meshList) < 1
@@ -44,10 +44,10 @@ methods
             mh = meshList{iMesh};
             
             % compute new face indices
-            tri = triangulateFaces(mh.mesh.faces);
+            tri = triangulateFaces(mh.Mesh.Faces);
             
             % update mesh
-            mh.mesh.faces = tri;
+            mh.Mesh.Faces = tri;
         end
         
         updateDisplay(frame);

@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = CreateNewSceneFrame(varargin)
+    function obj = CreateNewSceneFrame(varargin)
     % Constructor for CreateNewSceneFrame class
 
     end
@@ -33,7 +33,7 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         addNewMeshFrame(frame.gui);
     end

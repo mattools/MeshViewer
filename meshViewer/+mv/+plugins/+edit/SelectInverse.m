@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = SelectInverse(varargin)
+    function obj = SelectInverse(varargin)
     % Constructor for SelectInverse class
     end
 end % end constructors
@@ -31,10 +31,10 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
-        nMeshes = length(frame.scene.meshHandleList);
+    function run(obj, frame, src, evt) %#ok<INUSL>
+        nMeshes = length(frame.Scene.MeshHandleList);
         inds = 1:nMeshes;
-        inds(frame.selectedMeshIndices) = [];
+        inds(frame.SelectedMeshIndices) = [];
         setSelectedMeshIndices(frame, inds);
     end
 end % end methods

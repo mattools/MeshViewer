@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = PrintMeshInfo(varargin)
+    function obj = PrintMeshInfo(varargin)
     % Constructor for PrintMeshInfo class
     end
 end % end constructors
@@ -31,29 +31,32 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
-        meshList = frame.scene.meshHandleList;
+        meshList = frame.Scene.MeshHandleList;
         if length(meshList) < 1
             return;
         end
        
-        inds = frame.selectedMeshIndices;
+        inds = frame.SelectedMeshIndices;
         if length(inds) < 1
             return;
         end
         
         for i = 1:length(inds)
+            % get current mesh
             mh = meshList{inds(i)};
-            nv = size(mh.mesh.vertices, 1);
-            nf = meshFaceNumber(mh.mesh.vertices, mh.mesh.faces);
+            mesh = mh.Mesh;
+            
+            nv = size(mesh.Vertices, 1);
+            nf = meshFaceNumber(mesh.Vertices, mesh.Faces);
             
             disp('mesh info:');
-            fprintf('  mesh name: %12s\n', mh.name);
+            fprintf('  mesh name: %12s\n', mh.Name);
             fprintf('  vertex number:   %6d\n', nv);
             fprintf('  face number:     %6d\n', nf);
             
-            bbox = boundingBox3d(mh.mesh.vertices);
+            bbox = boundingBox3d(mesh.Vertices);
             fprintf('  bounding box:  (%g %g  %g %g  %g %g)\n', bbox);
         end
     end

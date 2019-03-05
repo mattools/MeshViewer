@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = EnsureManifoldMesh(varargin)
+    function obj = EnsureManifoldMesh(varargin)
     % Constructor for EnsureManifoldMesh class
 
     end
@@ -33,7 +33,7 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         meshList =  selectedMeshHandleList(frame);
         if length(meshList) < 1
@@ -43,8 +43,8 @@ methods
         for iMesh = 1:length(meshList)
             % get data for current mesh
             mh = meshList{iMesh};
-            v = mh.mesh.vertices;
-            f = mh.mesh.faces;
+            v = mh.Mesh.Vertices;
+            f = mh.Mesh.Faces;
             
             if isstruct(f) || size(f, 2) > 3
                 errordlg('Requires a triangular mesh', 'Subdivide Error');
@@ -58,8 +58,8 @@ methods
             [v2, f2] = ensureManifoldMesh(v, f);
            
             % update mesh
-            mh.mesh.vertices = v2;
-            mh.mesh.faces = f2;
+            mh.Mesh.Vertices = v2;
+            mh.Mesh.Faces = f2;
         end
         
         updateDisplay(frame);

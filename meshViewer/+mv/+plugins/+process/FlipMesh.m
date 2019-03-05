@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = FlipMesh(varargin)
+    function obj = FlipMesh(varargin)
     % Constructor for FlipMesh class
     end
 end % end constructors
@@ -31,7 +31,7 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         meshList =  selectedMeshHandleList(frame);
         if length(meshList) < 1
@@ -39,7 +39,7 @@ methods
         end
         
         % create dialog for choosing translation paraemters
-        gd = GenericDialog('Flip MEsh');
+        gd = GenericDialog('Flip Mesh');
         addChoice(gd, 'Flip Axis: ', {'X-Axis', 'Y-Axis', 'Z-Axis'}, 'X-Axis');
         addChoice(gd, 'Origin: ', {'Global Origin', 'Mesh centroid'}, 'Global Origin');
         showDialog(gd);
@@ -70,7 +70,7 @@ methods
         for iMesh = 1:length(meshList)
             % get data for current mesh
             mh = meshList{iMesh};
-            v = mh.mesh.vertices;
+            v = mh.Mesh.Vertices;
             
             % create translation matrix
             if originIndex == 2
@@ -82,7 +82,7 @@ methods
             v = transformPoint3d(v, transfo);
             
             % update mesh
-            mh.mesh.vertices = v;
+            mh.Mesh.Vertices = v;
         end
         
         updateDisplay(frame);

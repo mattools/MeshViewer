@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = CreateCube(varargin)
+    function obj = CreateCube(varargin)
     % Constructor for CreateCube class
 
     end
@@ -33,15 +33,15 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         % creates the mesh
         [v, f] = createCube;
         mesh = TriMesh(v, f);
         
         % add new mesh to the current scene
-        mh = createMeshHandle(frame.scene, mesh, 'cube');
-        frame.scene.addMeshHandle(mh);
+        mh = createMeshHandle(frame.Scene, mesh, 'cube');
+        frame.Scene.addMeshHandle(mh);
         
         % update widgets and display
         updateMeshList(frame);

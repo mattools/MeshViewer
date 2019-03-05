@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = SetFaceTransparency(varargin)
+    function obj = SetFaceTransparency(varargin)
     % Constructor for SetFaceTransparency class
     end
 end % end constructors
@@ -31,7 +31,7 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         % get current mesh
         meshList =  selectedMeshHandleList(frame);
@@ -57,8 +57,8 @@ methods
         % iterate over selected shapes
         for i = 1:length(meshList)
             mh = meshList{i};
-            mh.displayOptions.faceTransparency = alpha;
-            set(mh.handles.patch, 'FaceAlpha', alpha);
+            mh.DisplayOptions.FaceTransparency = alpha;
+            set(mh.Handles.Patch, 'FaceAlpha', alpha);
         end
     end
     

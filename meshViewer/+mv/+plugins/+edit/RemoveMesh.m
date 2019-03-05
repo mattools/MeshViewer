@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = RemoveMesh(varargin)
+    function obj = RemoveMesh(varargin)
     % Constructor for RemoveMesh class
     end
 end % end constructors
@@ -31,7 +31,7 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         % get current mesh
         meshList = selectedMeshHandleList(frame);
@@ -40,11 +40,13 @@ methods
         end
 
         % remove selected meshed from scene
-        inds = frame.selectedMeshIndices;
-        frame.scene.meshHandleList(inds) = [];
-        % update selection
-        frame.selectedMeshIndices = [];
+        inds = frame.SelectedMeshIndices;
+        frame.Scene.MeshHandleList(inds) = [];
         
+        % update selection
+        frame.SelectedMeshIndices = [];
+        
+        % update display
         updateMeshList(frame);
         updateDisplay(frame);
     end

@@ -16,19 +16,25 @@ classdef TriMesh < handle
 % Copyright 2018 INRA - Cepia Software Platform.
 
 properties
-    vertices;
-    faces;
+    % Coordinates of mesh vertices, as a Nv-by-3 array
+    Vertices;
     
-    edges = [];
+    % indices of vertices of each face, as a Nf-by-3 array of integers
+    Faces;
     
-    vertexFaces = {};
-    vertexEdges = {};
-    edgeFaces = [];
-    faceEdges = [];
+    % optionnal information about edges, as a Ne-by-2 array of integers
+    Edges = [];
     
-    faceNormals = [];
-    edgeNormals = [];
-    vertexNormals = [];
+    % more topological information
+    VertexFaces = {};
+    VertexEdges = {};
+    EdgeFaces = [];
+    FaceEdges = [];
+    
+    % some geometrical informations
+    FaceNormals = [];
+    EdgeNormals = [];
+    VertexNormals = [];
 end
 
 %% Constructor
@@ -36,13 +42,13 @@ methods
     function this = TriMesh(varargin)
         
         if isnumeric(varargin{1})
-            this.vertices = varargin{1};
-            this.faces = varargin{2};
+            this.Vertices = varargin{1};
+            this.Faces = varargin{2};
             
         elseif isstruct(varargin{1})
             var1 = varargin{1};
-            this.vertices = var1.vertices;
-            this.faces = var1.faces;
+            this.Vertices = var1.Vertices;
+            this.Faces = var1.Faces;
         end
         
     end
@@ -51,15 +57,15 @@ end
 %% General use methods
 methods
     function nv = vertexNumber(this)
-        nv = size(this.vertices, 1);
+        nv = size(this.Vertices, 1);
     end
     
     function nf = faceNumber(this)
-        nf = size(this.faces, 1);
+        nf = size(this.Faces, 1);
     end
     
     function ne = edgeNumber(this)
-        ne = size(this.edges, 1);
+        ne = size(this.Edges, 1);
     end
 end
 
@@ -68,10 +74,10 @@ methods
     function str = toStruct(this)
         % Convert to a structure to facilitate serialization
         str = struct('type', 'TriMesh', ...
-            'vertices', this.vertices, ...
-            'faces', this.faces);
-        if ~isempty(this.edges)
-            str.edges = this.edges;
+            'vertices', this.Vertices, ...
+            'faces', this.Faces);
+        if ~isempty(this.Edges)
+            str.edges = this.Edges;
         end
     end
 end

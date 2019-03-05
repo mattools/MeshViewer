@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = PlotMeshVertexDegreeHistogram(varargin)
+    function obj = PlotMeshVertexDegreeHistogram(varargin)
     % Constructor for PlotMeshVertexDegreeHistogram class
     end
 end % end constructors
@@ -31,7 +31,7 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         meshList =  selectedMeshHandleList(frame);
         if length(meshList) ~= 1
@@ -40,10 +40,10 @@ methods
         end
         
         mh = meshList{1};
-        mesh = mh.mesh;
+        mesh = mh.Mesh;
         
         % compute edges
-        edges = meshEdges(mesh.faces);
+        edges = meshEdges(mesh.Faces);
         
         % allocate memory for result
         nV = vertexNumber(mesh);

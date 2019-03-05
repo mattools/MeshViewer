@@ -18,25 +18,26 @@ classdef Scene < handle
 
 %% Properties
 properties
-    % set of mesh handles within this scene, as a cell array
-    meshHandleList;
+    % set of mesh handles within obj scene, as a cell array
+    MeshHandleList;
     
-    % the set of display options for the scene, as a struct.
+    % the set of display options for the scene, as an instance of
+    % SceneDisplayOptions.
     % Used to initialize the axis.
-    displayOptions;
+    DisplayOptions;
     
     % base directory for saving data
-    baseDir = pwd;
+    BaseDir = pwd;
     
 end % end properties
 
 
 %% Constructor
 methods
-    function this = Scene(varargin)
+    function obj = Scene(varargin)
     % Constructor for Scene class
 
-        this.displayOptions = mv.app.SceneDisplayOptions();
+        obj.DisplayOptions = mv.app.SceneDisplayOptions();
     end
 
 end % end constructors
@@ -44,7 +45,7 @@ end % end constructors
 
 %% General use methods
 methods
-    function bbox = updateBoundingBox(this)
+    function bbox = updateBoundingBox(obj)
         % recomputes the bounding box from the list of meshes
 
         % default bounding box
@@ -52,33 +53,33 @@ methods
         
         % if scene containes meshes, recomputes bounding boxes as the
         % enclosing box of all meshes
-        nMeshes = length(this.meshHandleList);
+        nMeshes = length(obj.MeshHandleList);
         if nMeshes > 0
             % use initial infinite bounds
             bbox = [inf -inf  inf -inf  inf -inf];
             
             % compute bounding box that encloses all meshes
             for iMesh = 1:nMeshes
-                mh = this.meshHandleList{iMesh};
-                bbox = mergeBoxes3d(bbox, boundingBox3d(mh.mesh.vertices));
+                mh = obj.MeshHandleList{iMesh};
+                bbox = mergeBoxes3d(bbox, boundingBox3d(mh.Mesh.Vertices));
             end
         end
         
         % set up new bounding box
-        setViewBox(this.displayOptions, bbox);
+        setViewBox(obj.DisplayOptions, bbox);
     end
 end
 
 %% Management of mesh handles
 methods
-    function addMeshHandle(this, mh)
-        this.meshHandleList = [this.meshHandleList {mh}];
+    function addMeshHandle(obj, mh)
+        obj.MeshHandleList = [obj.MeshHandleList {mh}];
     end
     
-    function removeMeshHandle(this, mh)
+    function removeMeshHandle(obj, mh)
         ind = -1;
-        for i = 1:length(this.meshHandleList)
-            if this.meshHandleList{i} == mh
+        for i = 1:length(obj.MeshHandleList)
+            if obj.MeshHandleList{i} == mh
                 ind = i;
                 break;
             end
@@ -88,18 +89,18 @@ methods
             error('could not find the mesh handle');
         end
         
-        this.meshHandleList(ind) = [];
+        obj.MeshHandleList(ind) = [];
     end
     
-    function meshHandleList = getMeshHandles(this)
-        meshHandleList = this.meshHandleList;
+    function meshHandleList = getMeshHandles(obj)
+        meshHandleList = obj.MeshHandleList;
     end
     
-    function b = hasMeshHandles(this)
-        b = ~isempty(this.meshHandleList);
+    function b = hasMeshHandles(obj)
+        b = ~isempty(obj.MeshHandleList);
     end
     
-    function mh = createMeshHandle(this, varargin)
+    function mh = createMeshHandle(obj, varargin)
         % Return a formatted mesh handle or empty
         %
         % Usages
@@ -123,8 +124,8 @@ methods
             mh = mesh;
             
             % check name validity
-            if hasMeshWithName(this, mh.name)
-                mh.name = getNextFreeName(this, mh.name);
+            if hasMeshWithName(obj, mh.Name)
+                mh.name = getNextFreeName(obj, mh.Name);
             end
             return;
         end
@@ -141,24 +142,24 @@ methods
         end
 
         % choose a unique name
-        name = getNextFreeName(this, name);
+        name = getNextFreeName(obj, name);
 
         % encapsulate the mesh into MeshHandle
         mh = mv.app.MeshHandle(mesh, name);
     end
     
-    function newName = getNextFreeName(this, baseName)
+    function newName = getNextFreeName(obj, baseName)
         % ensure the name associated to the mesh handle is unique for the scene
         
         newName = baseName;
-        if hasMeshWithName(this, newName)
+        if hasMeshWithName(obj, newName)
             % remove trailing digits if any
             newName = removeTrailingDigits(newName);
             pattern = '%s-%d';
             index = 1;
             
             newName = sprintf(pattern, newName, index);
-            while hasMeshWithName(this, newName)
+            while hasMeshWithName(obj, newName)
                 index = index + 1;
                 newName = sprintf(pattern, newName, index);
             end
@@ -174,11 +175,11 @@ methods
         end
     end
     
-    function tf = hasMeshWithName(this, name)
+    function tf = hasMeshWithName(obj, name)
         tf = false;
-        for i = 1:length(this.meshHandleList)
-            mh = this.meshHandleList{i};
-            if strcmp(mh.name, name)
+        for i = 1:length(obj.MeshHandleList)
+            mh = obj.MeshHandleList{i};
+            if strcmp(mh.Name, name)
                 tf = true;
                 return;
             end

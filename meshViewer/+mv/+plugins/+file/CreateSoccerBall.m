@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = CreateSoccerBall(varargin)
+    function obj = CreateSoccerBall(varargin)
     % Constructor for CreateSoccerBall class
 
     end
@@ -33,15 +33,15 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         % creates the mesh
         [v, f] = createSoccerBall;
         mesh = TriMesh(v, f);
         
         % add new mesh to the current scene
-        mh = createMeshHandle(frame.scene, mesh, 'soccerBall');
-        frame.scene.addMeshHandle(mh);
+        mh = createMeshHandle(frame.Scene, mesh, 'soccerBall');
+        frame.Scene.addMeshHandle(mh);
         
         % update widgets and display
         updateMeshList(frame);

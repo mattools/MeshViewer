@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = ImportMeshVFFromWorkspace(varargin)
+    function obj = ImportMeshVFFromWorkspace(varargin)
     % Constructor for SayHello class
     end
 end % end constructors
@@ -31,7 +31,7 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
        
         % identifies the name of input variables
         vars = evalin('base', 'whos');

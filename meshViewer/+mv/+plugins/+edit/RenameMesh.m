@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = RenameMesh(varargin)
+    function obj = RenameMesh(varargin)
     % Constructor for RenameMesh class
     end
 end % end constructors
@@ -31,7 +31,7 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         % get current mesh
         meshList =  selectedMeshHandleList(frame);
@@ -43,20 +43,20 @@ methods
         end
        
         mh = meshList{1};
-        id = mh.id;
+        name = mh.Name;
         
-        newName = getNextFreeName(frame.scene, id);
+        newName = getNextFreeName(frame.Scene, name);
         answers = inputdlg('New Name', 'Rename Mesh', 1, {newName});
         if isempty(answers)
             return;
         end
         
         newName = answers{1};
-        if hasMeshWithName(frame.scene, newName)
+        if hasMeshWithName(frame.Scene, newName)
             warning(['Name: ' newName ' already exists within scene']);
             return;
         end
-        mh.id = newName;
+        mh.Name = newName;
         
         updateMeshList(frame);
     end

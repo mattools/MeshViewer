@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = RecenterMesh(varargin)
+    function obj = RecenterMesh(varargin)
     % Constructor for RecenterMesh class
     end
 end % end constructors
@@ -31,7 +31,7 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         meshList =  selectedMeshHandleList(frame);
         if length(meshList) < 1
@@ -40,12 +40,12 @@ methods
        
         for iMesh = 1:length(meshList)
             mh = meshList{iMesh};
-            v = mh.mesh.vertices;
+            v = mh.Mesh.Vertices;
             % recenter by removing the mean
             v = bsxfun(@minus, v, mean(v, 1));
             
             % update mesh
-            mh.mesh.vertices = v;
+            mh.Mesh.Vertices = v;
         end
         
         updateDisplay(frame);

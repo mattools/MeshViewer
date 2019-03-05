@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = CreateTetrakaidecahedron(varargin)
+    function obj = CreateTetrakaidecahedron(varargin)
     % Constructor for CreateTetrakaidecahedron class
 
     end
@@ -33,15 +33,15 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         % creates the mesh
         [v, f] = createTetrakaidecahedron;
         mesh = TriMesh(v, f);
         
         % add new mesh to the current scene
-        mh = createMeshHandle(frame.scene, mesh, 'tetrakaidecahedron');
-        frame.scene.addMeshHandle(mh);
+        mh = createMeshHandle(frame.Scene, mesh, 'tetrakaidecahedron');
+        frame.Scene.addMeshHandle(mh);
         
         % update widgets and display
         updateMeshList(frame);

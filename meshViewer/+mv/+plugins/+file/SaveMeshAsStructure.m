@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = SaveMeshAsStructure(varargin)
+    function obj = SaveMeshAsStructure(varargin)
     % Constructor for SaveMeshAsStructure class
     end
 end % end constructors
@@ -31,7 +31,7 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
 
         % check number of selected meshes
         meshList =  selectedMeshHandleList(frame);
@@ -44,7 +44,7 @@ methods
         mh = meshList{1};
 
         % Opens a dialog to choose a mesh file
-        pattern = fullfile(frame.gui.lastPathSave, '*.mesh');
+        pattern = fullfile(frame.Gui.LastPathSave, '*.mesh');
         [fileName, filePath] = uiputfile(pattern, 'Save Mesh file');
         
         % check if cancel
@@ -53,7 +53,7 @@ methods
         end
         
         % setup last path used for opening
-        frame.gui.lastPathSave = filePath;
+        frame.Gui.LastPathSave = filePath;
         
         % convert mesh handle into structure
         str = toStruct(mh);

@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = ComputeMeshArea(varargin)
+    function obj = ComputeMeshArea(varargin)
     % Constructor for ComputeMeshArea class
     end
 end % end constructors
@@ -31,15 +31,15 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
-        meshList = frame.scene.meshHandleList;
+        meshList = frame.Scene.MeshHandleList;
         if length(meshList) < 1
             return;
         end
        
         mh = meshList{1};
-        area = meshSurfaceArea(mh.mesh.vertices, mh.mesh.faces);
+        area = meshSurfaceArea(mh.Mesh.Vertices, mh.Mesh.Faces);
         
         disp(sprintf('Mesh surface area: %7.5g', area)); %#ok<DSPS>
         

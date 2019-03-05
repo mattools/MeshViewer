@@ -19,17 +19,17 @@ classdef MeshDisplayOptions < handle
 %% Properties
 properties
     % global visibility of the mesh
-    visible = true;
+    Visible = true;
     
     
-    faceColor = [1 0 0];
+    FaceColor = [1 0 0];
     
-    faceAlpha = 1;
+    FaceAlpha = 1;
     
     
-    edgeVisible = true;
+    EdgeVisible = true;
 
-    edgeColor = [0 0 0];
+    EdgeColor = [0 0 0];
 
     
 end % end properties
@@ -37,7 +37,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = MeshDisplayOptions(varargin)
+    function obj = MeshDisplayOptions(varargin)
     % Constructor for MeshDisplayOptions class
 
     end
@@ -47,45 +47,45 @@ end % end constructors
 
 %% Methods
 methods
-    function apply(this, patchHandle)
-        % apply this set of options to the input patch handle(s)
+    function apply(obj, patchHandle)
+        % apply obj set of options to the input patch handle(s)
 
         % setup edges
-        if this.edgeVisible
-            set(patchHandle, 'EdgeColor', this.edgeColor);
+        if obj.EdgeVisible
+            set(patchHandle, 'EdgeColor', obj.EdgeColor);
         else
             set(patchHandle, 'EdgeColor', 'none');
         end
 
         % setup faces
-        set(patchHandle, 'faceColor', this.faceColor);
-        set(patchHandle, 'faceAlpha', this.faceAlpha);
+        set(patchHandle, 'faceColor', obj.FaceColor);
+        set(patchHandle, 'faceAlpha', obj.FaceAlpha);
     end
 end % end methods
 
 
 %% Serialization methods
 methods
-    function str = toStruct(this)
+    function str = toStruct(obj)
         % Convert to a structure to facilitate serialization
         str = struct('type', 'MeshDisplayOptions');
         
-        str.visible = this.visible;
+        str.visible = obj.Visible;
         
-        if any(this.faceColor ~= [1 0 0])
-            str.faceColor = this.faceColor;
+        if any(obj.FaceColor ~= [1 0 0])
+            str.faceColor = obj.FaceColor;
         end
         
-        if this.faceAlpha ~= 1
-            str.faceAlpha = this.faceAlpha;
+        if obj.FaceAlpha ~= 1
+            str.faceAlpha = obj.FaceAlpha;
         end
         
-        if ~this.edgeVisible
+        if ~obj.EdgeVisible
             str.edgeVisible = false;
         end
         
-        if any(this.edgeColor ~= [0 0 0])
-            str.edgeColor = this.edgeColor;
+        if any(obj.EdgeColor ~= [0 0 0])
+            str.edgeColor = obj.EdgeColor;
         end
     end
 end
@@ -103,11 +103,17 @@ methods (Static)
             if strcmp(name, 'type')
                 continue;
             end
-            if isprop(options, name)
-                options.(name) = str.(name);
+            
+            propertyName = capitalizeFirstDigit(name);
+            if isprop(options, propertyName)
+                options.(propertyName) = str.(name);
             else
-                warning(['MeshDisplayOption has no property named: ' name]);
+                warning(['MeshDisplayOption has no property named: ' propertyName]);
             end
+        end
+        
+        function name = capitalizeFirstDigit(name)
+            name(1) = upper(name(1));
         end
     end
 end

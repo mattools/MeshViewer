@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = DuplicateMesh(varargin)
+    function obj = DuplicateMesh(varargin)
     % Constructor for DuplicateMesh class
     end
 end % end constructors
@@ -31,7 +31,7 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         % get current mesh
         meshList =  selectedMeshHandleList(frame);
@@ -41,15 +41,15 @@ methods
        
         for iMesh = 1:length(meshList)
             mh = meshList{iMesh};
-            v = mh.mesh.vertices;
-            f = mh.mesh.faces;
+            v = mh.Mesh.vertices;
+            f = mh.Mesh.faces;
             
             % creates a new mesh instance
             mesh = TriMesh(v, f);
-            mh = createMeshHandle(frame.scene, mesh, mh.name);
+            mh = createMeshHandle(frame.Scene, mesh, mh.Name);
             
             % add new mesh to the current scene
-            frame.scene.addMeshHandle(mh);
+            frame.Scene.addMeshHandle(mh);
         end
         
         updateMeshList(frame);

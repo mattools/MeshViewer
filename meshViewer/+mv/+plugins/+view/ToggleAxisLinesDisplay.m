@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = ToggleAxisLinesDisplay(varargin)
+    function obj = ToggleAxisLinesDisplay(varargin)
     % Constructor for ToggleAxisLinesDisplay class
     end
 end % end constructors
@@ -31,14 +31,14 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         % toggle options state
-        options = frame.scene.displayOptions;
-        options.axisLinesVisible = ~options.axisLinesVisible;
+        options = frame.Scene.DisplayOptions;
+        options.AxisLinesVisible = ~options.AxisLinesVisible;
 
         % update associated graphical elements
-        updateAxisLinesDisplay(frame.sceneRenderer);
+        updateAxisLinesDisplay(frame.SceneRenderer);
     end
     
 end % end methods

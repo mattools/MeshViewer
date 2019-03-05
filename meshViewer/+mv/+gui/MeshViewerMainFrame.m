@@ -19,16 +19,16 @@ classdef MeshViewerMainFrame < handle
 %% Properties
 properties
     % reference to the main GUI instance
-    gui;
+    Gui;
    
     % list of handles to the various gui items
-    handles;
+    Handles;
     
-    % the scene displayed by this frame
+    % the scene displayed by obj frame
     % Contains a collection of meshes.
-    scene;
+    Scene;
     
-    sceneRenderer;
+    SceneRenderer;
 %     
 %     % the set of mouse listeners.
 %     % Stored as an array of svui.app.Shape instances
@@ -38,16 +38,16 @@ properties
 %     currentTool = [];
 %     
     % the set of selected meshes, stored as an index array
-    selectedMeshIndices = [];
+    SelectedMeshIndices = [];
     
 end % end properties
 
 
 %% Constructor
 methods
-    function this = MeshViewerMainFrame(gui, scene)
-        this.gui = gui;
-        this.scene = scene;
+    function obj = MeshViewerMainFrame(gui, scene)
+        obj.Gui = gui;
+        obj.Scene = scene;
         
         % create default figure
         fig = figure(...
@@ -61,36 +61,36 @@ methods
         setupLayout(fig);
         
         % create scene renderer
-        this.sceneRenderer = mv.gui.SceneRenderer(scene, this.handles.mainAxis);
+        obj.SceneRenderer = mv.gui.SceneRenderer(scene, obj.Handles.MainAxis);
         
-        this.handles.figure = fig;
+        obj.Handles.Figure = fig;
         
-%         updateDisplay(this);
-        refreshDisplay(this.sceneRenderer);
+%         updateDisplay(obj);
+        refreshDisplay(obj.SceneRenderer);
         
-        updateMeshList(this);
-        updateTitle(this);
+        updateMeshList(obj);
+        updateTitle(obj);
         
         % setup listeners associated to the figure
         set(fig, ...
-            'CloseRequestFcn', @this.close, ...
-            'ResizeFcn', @this.onFigureResized);
+            'CloseRequestFcn', @obj.close, ...
+            'ResizeFcn', @obj.onFigureResized);
         
 %         % setup mouse listeners associated to the figure
-%         set(fig, 'WindowButtonDownFcn',     @this.processMouseButtonPressed);
-%         set(fig, 'WindowButtonUpFcn',       @this.processMouseButtonReleased);
-%         set(fig, 'WindowButtonMotionFcn',   @this.processMouseMoved);
+%         set(fig, 'WindowButtonDownFcn',     @obj.processMouseButtonPressed);
+%         set(fig, 'WindowButtonUpFcn',       @obj.processMouseButtonReleased);
+%         set(fig, 'WindowButtonMotionFcn',   @obj.processMouseMoved);
 % 
 %         % setup mouse listener for display of mouse coordinates
-%         tool = svui.gui.tools.ShowCursorPositionTool(this, 'showMousePosition');
-%         addMouseListener(this, tool);
+%         tool = svui.Gui.tools.ShowCursorPositionTool(obj, 'showMousePosition');
+%         addMouseListener(obj, tool);
 %         
-%         tool = svui.gui.tools.SelectionTool(this, 'selection');
-%         addMouseListener(this, tool);
-%         this.currentTool = tool;
+%         tool = svui.Gui.tools.SelectionTool(obj, 'selection');
+%         addMouseListener(obj, tool);
+%         obj.currentTool = tool;
         
         
-        set(fig, 'UserData', this);
+        set(fig, 'UserData', obj);
         
         function setupMenu(hf)
             
@@ -176,12 +176,12 @@ methods
         function item = addPlugin(menu, plugin, label, varargin)
             
             % creates new item
-            if verLessThan('matlab', 'R2018a')
+            if verLessThan('matlab', '8.4')
                 item = uimenu(menu, 'Label', label, ...
-                    'Callback', @(src, evt) plugin.run(this, src, evt));
+                    'Callback', @(src, evt) plugin.run(obj, src, evt));
             else
                 item = uimenu(menu, 'Label', label, ...
-                    'MenuSelectedFcn', @(src, evt) plugin.run(this, src, evt));
+                    'MenuSelectedFcn', @(src, evt) plugin.run(obj, src, evt));
             end
             
             % eventually add separator above item
@@ -220,13 +220,13 @@ methods
                 'BorderType', 'none', ...
                 'BorderWidth', 0);
             
-            this.handles.shapeList = uicontrol(...
+            obj.Handles.ShapeList = uicontrol(...
                 'Style', 'listbox', ...
                 'Parent', treePanel, ...
                 'Units', 'normalized', ...
                 'Position', [0 0 1 1], ...
                 'Max', 2, 'Min', 0, ... % to allow empty selection
-                'Callback', @this.onMeshListModified);
+                'Callback', @obj.onMeshListModified);
 
             displayOptionsPanel = uitable(...
                 'parent', docInfoPanel, ...
@@ -235,8 +235,8 @@ methods
                         
             docInfoPanel.Heights = [-2 -1];
             
-            this.handles.docInfoPanel = docInfoPanel;
-            this.handles.displayOptionsPanel = displayOptionsPanel;
+            obj.Handles.DocInfoPanel = docInfoPanel;
+            obj.Handles.DisplayOptionsPanel = displayOptionsPanel;
             
 
 
@@ -247,12 +247,12 @@ methods
             
             ax = axes('parent', container, ...
                 'ActivePositionProperty', 'outerposition', ...
-                'units', 'normalized', ...
-                'position', [0 0 1 1], ...
+                'Units', 'normalized', ...
+                'Position', [0 0 1 1], ...
             	'XLim', [-1 1], ...
             	'YLim', [-1 1], ...
             	'ZLim', [-1 1], ...
-                'dataAspectRatio', [1 1 1], ...
+                'DataAspectRatio', [1 1 1], ...
             	'XTick', [], ...
             	'YTick', [], ...
             	'ZTick', [], ...
@@ -261,12 +261,12 @@ methods
             axis(ax, [-1 1 -1 1 -1 1]);
 
             % keep widgets handles
-            this.handles.mainAxis = ax;
+            obj.Handles.MainAxis = ax;
             
             horzPanel.Widths = [180 -1];
             
             % info panel for cursor position and value
-            this.handles.statusBar = uicontrol(...
+            obj.Handles.StatusBar = uicontrol(...
                 'Parent', mainPanel, ...
                 'Style', 'text', ...
                 'String', ' x=    y=     I=', ...
@@ -283,33 +283,33 @@ end % end constructors
 
 %% General methods
 methods
-    function addNewMesh(this, mesh, meshName)
+    function addNewMesh(obj, mesh, meshName)
         % adds a new mesh to the scene, and update displays
         
         % add new mesh to the scene
-        mh = createMeshHandle(this.scene, mesh, meshName);
-        this.scene.addMeshHandle(mh);
+        mh = createMeshHandle(obj.Scene, mesh, meshName);
+        obj.Scene.addMeshHandle(mh);
         
         % update display
-        updateDisplay(this);
-        updateMeshList(this);
+        updateDisplay(obj);
+        updateMeshList(obj);
     end
 end
 
 
 %% Management of selection
 methods
-    function handleList = selectedMeshHandleList(this)
+    function handleList = selectedMeshHandleList(obj)
         % returns the list of selected mesh handles
         
         handleList = {};
         
-        inds = this.selectedMeshIndices;
+        inds = obj.SelectedMeshIndices;
         if isempty(inds)
             return;
         end
         
-        handleList = this.scene.meshHandleList;
+        handleList = obj.Scene.MeshHandleList;
         if length(handleList) < max(inds)
             error('Wrong index for mesh handle selection');
         end
@@ -317,9 +317,9 @@ methods
         handleList = handleList(inds);
     end
     
-    function setSelectedMeshIndices(this, indices)
-        this.selectedMeshIndices = indices;
-        set(this.handles.shapeList, 'Max', 2, 'Min', 0, 'Value', indices);
+    function setSelectedMeshIndices(obj, indices)
+        obj.SelectedMeshIndices = indices;
+        set(obj.Handles.ShapeList, 'Max', 2, 'Min', 0, 'Value', indices);
     end
 end
 
@@ -327,19 +327,19 @@ end
 %% Widget callbacks
 methods
     
-    function updateDisplay(this)
+    function updateDisplay(obj)
         % refresh document display: clear axis, draw each shape, udpate axis
         
         disp('update Display');
         
-        refreshDisplay(this.sceneRenderer);
+        refreshDisplay(obj.SceneRenderer);
     end
     
-    function updateMeshSelectionDisplay(this) %#ok<MANU>
+    function updateMeshSelectionDisplay(obj) %#ok<MANU>
         % update the selected state of each shape
         
 %         % extract the list of handles in current axis
-%         ax = this.handles.mainAxis;
+%         ax = obj.Handles.MainAxis;
 %         children = get(ax, 'Children');
 %         
 %         % iterate over children
@@ -348,7 +348,7 @@ methods
 %             shape = get(children(i), 'UserData');
 %             
 %             % update selection state of current shape
-%             if any(shape == this.selectedMeshIndices)
+%             if any(shape == obj.selectedMeshIndices)
 %                 set(children(i), 'Selected', 'on');
 %             else
 %                 set(children(i), 'Selected', 'off');
@@ -357,34 +357,34 @@ methods
         
     end
     
-    function updateTitle(this)
+    function updateTitle(obj)
         % set up title of the figure, containing name of doc
         title = 'MeshViewer';
-%         title = sprintf('%s - MeshViewer', this.doc.name);
-        set(this.handles.figure, 'Name', title);
+%         title = sprintf('%s - MeshViewer', obj.doc.name);
+        set(obj.Handles.Figure, 'Name', title);
     end
     
     
-    function updateMeshList(this)
+    function updateMeshList(obj)
         % Refresh the shape tree when a shape is added or removed
 
         disp('update shape list');
         
-        nMeshes = length(this.scene.meshHandleList);
+        nMeshes = length(obj.Scene.MeshHandleList);
         shapeNames = cell(nMeshes, 1);
         inds = [];
         for i = 1:nMeshes
-            mh = this.scene.meshHandleList{i};
+            mh = obj.Scene.MeshHandleList{i};
 
             % create name for current shape
-            name = mh.name;
-            if isempty(mh.name)
-                name = ['(' class(shape.geometry) ')'];
+            name = mh.Name;
+            if isempty(mh.Name)
+                name = ['(' 'Mesh struct' ')'];
             end
             shapeNames{i} = name;
         end
         
-        set(this.handles.shapeList, ...
+        set(obj.Handles.ShapeList, ...
             'String', shapeNames, ...
             'Min', 0, 'Max', nMeshes+2, ...
             'Value', inds);
@@ -395,27 +395,27 @@ end
 %% Widget callbacks
 
 methods
-    function onMeshListModified(this, varargin)
+    function onMeshListModified(obj, varargin)
         % when user click on panel containing list of mesh handles,
         % determines which names are selected and updates index of mesh
         % handles accordingly
         
         disp('mesh selection list updated');
         
-        inds = get(this.handles.shapeList, 'Value');
-        this.selectedMeshIndices = inds;
+        inds = get(obj.Handles.ShapeList, 'Value');
+        obj.SelectedMeshIndices = inds;
     end
 end
 
 %% Figure management
 methods
-    function close(this, varargin)
+    function close(obj, varargin)
 %         disp('Close shape viewer frame');
-        delete(this.handles.figure);
+        delete(obj.Handles.Figure);
     end
     
-    function onFigureResized(this, varargin)
-%         updateMeshSelectionDisplay(this);
+    function onFigureResized(obj, varargin)
+%         updateMeshSelectionDisplay(obj);
     end
 end
 end % end classdef

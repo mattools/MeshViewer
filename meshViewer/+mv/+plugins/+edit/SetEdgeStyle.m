@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = SetEdgeStyle(varargin)
+    function obj = SetEdgeStyle(varargin)
     % Constructor for SetEdgeStyle class
     end
 end % end constructors
@@ -31,7 +31,7 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         % get current mesh
         meshList =  selectedMeshHandleList(frame);
@@ -67,15 +67,15 @@ methods
         if showEdges
             for i = 1:length(meshList)
                 mh = meshList{i};
-                mh.displayOptions.edgeColor = edgeColor;
-                mh.displayOptions.edgeVisible = true;
-                set(mh.handles.patch, 'EdgeColor', edgeColor, 'LineWidth', lineWidth);
+                mh.DisplayOptions.EdgeColor = edgeColor;
+                mh.DisplayOptions.EdgeVisible = true;
+                set(mh.Handles.Patch, 'EdgeColor', edgeColor, 'LineWidth', lineWidth);
             end
         else
             for i = 1:length(meshList)
                 mh = meshList{i};
-                mh.displayOptions.edgeVisible = false;
-                set(mh.handles.patch, 'EdgeColor', 'none');
+                mh.DisplayOptions.EdgeVisible = false;
+                set(mh.Handles.Patch, 'EdgeColor', 'none');
             end
         end
     end

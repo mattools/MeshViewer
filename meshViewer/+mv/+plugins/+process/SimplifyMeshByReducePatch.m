@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = SimplifyMeshByReducePatch(varargin)
+    function obj = SimplifyMeshByReducePatch(varargin)
     % Constructor for SimplifyMeshByReducePatch class
 
     end
@@ -33,7 +33,7 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         meshList =  selectedMeshHandleList(frame);
         if length(meshList) < 1
@@ -59,9 +59,9 @@ methods
         for iMesh = 1:length(meshList)
             % get data for current mesh
             mh = meshList{iMesh};
-            mesh = mh.mesh;
+            mesh = mh.Mesh;
             
-            if iscell(mesh.faces) || size(mesh.faces, 2) > 3
+            if iscell(mesh.Faces) || size(mesh.Faces, 2) > 3
                 errordlg('Requires a triangular mesh', 'Simplify Error');
                 if iMesh > 1
                     updateDisplay(frame);
@@ -70,12 +70,12 @@ methods
             end
             
             % subdivides the mesh and replaces the original one
-            str = struct('vertices', mesh.vertices, 'faces', mesh.faces);
+            str = struct('vertices', mesh.Vertices, 'faces', mesh.Faces);
             str = reducepatch(str, faceNumber);
             
             % update mesh
-            mh.mesh.vertices = str.vertices;
-            mh.mesh.faces = str.faces;
+            mh.Mesh.Vertices = str.vertices;
+            mh.Mesh.Faces = str.faces;
         end
         
         updateDisplay(frame);

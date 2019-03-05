@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = PrintAxisProperties(varargin)
+    function obj = PrintAxisProperties(varargin)
     % Constructor for PrintAxisProperties class
     end
 end % end constructors
@@ -31,9 +31,9 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
-        ax = frame.handles.mainAxis;
+        ax = frame.Handles.MainAxis;
         get(ax);
     end
     

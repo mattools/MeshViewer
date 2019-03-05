@@ -1,10 +1,10 @@
 classdef CreateIcosahedron < mv.gui.Plugin
 % Creates a new frame containing an icosahedron
 %
-%   Class SayHello
+%   Class CreateIcosahedron
 %
 %   Example
-%   SayHello
+%   CreateIcosahedron
 %
 %   See also
 %
@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = CreateIcosahedron(varargin)
+    function obj = CreateIcosahedron(varargin)
     % Constructor for SayHello class
 
     end
@@ -33,15 +33,15 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
         % creates the mesh
         [v, f] = createIcosahedron;
         mesh = TriMesh(v, f);
         
         % add new mesh to the current scene
-        mh = createMeshHandle(frame.scene, mesh, 'icosahedron');
-        frame.scene.addMeshHandle(mh);
+        mh = createMeshHandle(frame.Scene, mesh, 'icosahedron');
+        frame.Scene.addMeshHandle(mh);
         
         % update widgets and display
         updateMeshList(frame);

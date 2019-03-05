@@ -19,18 +19,18 @@ classdef ImportMeshFromStruct < mv.gui.Plugin
 %% Properties
 properties
     % the list of widgets, identified by names
-    handles = struct();
+    Handles = struct();
     
-    frame;
+    Frame;
     
-    closingButton;
+    ClosingButton;
     
 end % end properties
 
 
 %% Constructor
 methods
-    function this = ImportMeshFromStruct(varargin)
+    function obj = ImportMeshFromStruct(varargin)
     % Constructor for SayHello class
     end
 end % end constructors
@@ -38,11 +38,11 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
     
         % store current frame
         % TODO: not a good practice
-        this.frame = frame;
+        obj.Frame = frame;
         
         % identifies the name of struct variables
         vars = evalin('base', 'whos');
@@ -55,16 +55,16 @@ methods
             return;
         end
         
-        createDialog(this, structNames);
+        createDialog(obj, structNames);
 
-        waitForUser(this);
+        waitForUser(obj);
         
-        if wasCanceled(this)
+        if wasCanceled(obj)
             return;
         end
 
         % extract data
-        inds = get(this.handles.list, 'Value');
+        inds = get(obj.Handles.List, 'Value');
         if isempty(inds)
             return;
         end
@@ -99,27 +99,27 @@ methods
         
         
         % clear figure
-        close(this.handles.figure);
+        close(obj.Handles.Figure);
     end
 end % end methods
 
 %% layout creation
 methods
-    function fig = createDialog(this, nameList)
+    function fig = createDialog(obj, nameList)
         
         % cerate new figure
         fig = figure;
-        this.handles.figure = fig;
+        obj.Handles.Figure = fig;
 
         % vertical layout for widgets and control panels
         vb  = uix.VBox('Parent', fig, 'Spacing', 5, 'Padding', 5);
 
         % create an empty panel that will contain widgets
-        this.handles.mainPanel = uix.VBox('Parent', vb);
+        obj.Handles.MainPanel = uix.VBox('Parent', vb);
 
         % populate vbox with a label and a list
-        this.handles.listLabel = uicontrol('Style', 'Text', ...
-            'Parent', this.handles.mainPanel, ...
+        obj.Handles.ListLabel = uicontrol('Style', 'Text', ...
+            'Parent', obj.Handles.MainPanel, ...
             'String', 'Choose structures to import:', ...
             'FontWeight', 'Normal', ...
             'FontSize', 10, ...
@@ -127,81 +127,81 @@ methods
             'HorizontalAlignment', 'Left');
 
 %         itemList = {'Disk', 'Square', 'Triangle', 'Point', 'Line', 'Plane', 'Other'};
-        this.handles.list = uicontrol( 'Style', 'list', ...
+        obj.Handles.List = uicontrol( 'Style', 'list', ...
            'BackgroundColor', 'w', ...
-           'Parent', this.handles.mainPanel, ...
+           'Parent', obj.Handles.MainPanel, ...
            'String', nameList, ...
            'Value', 1, ...
            'Max', inf, ...
            'Callback', 'disp(''listcallback'')');
 
         % setup relative heights
-        set(this.handles.mainPanel, 'Heights', [30 -1] );
+        set(obj.Handles.MainPanel, 'Heights', [30 -1] );
 
         % button for control panel
         buttonsPanel = uix.HButtonBox('Parent', vb, 'Padding', 5);
-        this.handles.okButton = uicontrol( 'Parent', buttonsPanel, ...
+        obj.Handles.OkButton = uicontrol( 'Parent', buttonsPanel, ...
             'String', 'OK', ...
-            'Callback', @this.onButtonOK);
-        this.handles.cancelButton = uicontrol( 'Parent', buttonsPanel, ...
+            'Callback', @obj.onButtonOK);
+        obj.Handles.CancelButton = uicontrol( 'Parent', buttonsPanel, ...
             'String', 'Cancel', ...
-            'Callback', @this.onButtonCancel);
+            'Callback', @obj.onButtonCancel);
 
         set(vb, 'Heights', [-1 40] );
 
 
         % setup figure size
-        set(this.handles.figure, 'units', 'pixels');
-        pos = get(this.handles.figure, 'Position');
+        set(obj.Handles.Figure, 'units', 'pixels');
+        pos = get(obj.Handles.Figure, 'Position');
         pos(3:4) = [250 250];
-        set(this.handles.figure, 'Position', pos);
+        set(obj.Handles.Figure, 'Position', pos);
     end
 end
 
 %% Figure and control Callback
 methods
-    function onButtonOK(this, varargin)
-        this.closingButton = 'ok';
-        set(this.handles.figure, 'Visible', 'off');
+    function onButtonOK(obj, varargin)
+        obj.ClosingButton = 'ok';
+        set(obj.Handles.Figure, 'Visible', 'off');
     end
     
-    function onButtonCancel(this, varargin)
-        this.closingButton = 'cancel';
-        set(this.handles.figure, 'Visible', 'off');
+    function onButtonCancel(obj, varargin)
+        obj.ClosingButton = 'cancel';
+        set(obj.Handles.Figure, 'Visible', 'off');
     end
     
-    function showDialog(this)
+    function showDialog(obj)
         % makes the dialog visible, and waits for user validation
-        setVisible(this, true);
-        waitForUser(this);
+        setVisible(obj, true);
+        waitForUser(obj);
     end
     
-    function setVisible(this, value)
+    function setVisible(obj, value)
         if value
-            set(this.handles.figure, 'Visible', 'on');
-            set(this.handles.figure, 'WindowStyle', 'modal');
+            set(obj.Handles.Figure, 'Visible', 'on');
+            set(obj.Handles.Figure, 'WindowStyle', 'modal');
         else
-            set(this.handles.figure, 'Visible', 'off');
+            set(obj.Handles.Figure, 'Visible', 'off');
         end
     end
     
-    function b = wasOked(this)
-        b = strcmp(this.closingButton, 'ok');
+    function b = wasOked(obj)
+        b = strcmp(obj.ClosingButton, 'ok');
     end
     
-    function b = wasCanceled(this)
-        b = strcmp(this.closingButton, 'cancel');
+    function b = wasCanceled(obj)
+        b = strcmp(obj.ClosingButton, 'cancel');
     end
     
-    function button = waitForUser(this)
-        waitfor(this.handles.figure, 'Visible', 'off');
-        button = this.closingButton;
+    function button = waitForUser(obj)
+        waitfor(obj.Handles.Figure, 'Visible', 'off');
+        button = obj.ClosingButton;
     end
     
-    function closeFigure(this)
+    function closeFigure(obj)
         % close the current figure
-        if ~isempty(this.handles.figure);
-            close(this.handles.figure);
+        if ~isempty(obj.Handles.Figure)
+            close(obj.Handles.Figure);
         end
     end
     

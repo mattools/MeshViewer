@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = ComputeMeshMeanBreadth(varargin)
+    function obj = ComputeMeshMeanBreadth(varargin)
     % Constructor for ComputeMeshMeanBreadth class
     end
 end % end constructors
@@ -31,19 +31,19 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
-        meshList = frame.scene.meshHandleList;
+        meshList = frame.Scene.MeshHandleList;
         if length(meshList) < 1
             return;
         end
        
         mh = meshList{1};
-        faces = mh.mesh.faces;
+        faces = mh.Mesh.Faces;
         if iscell(faces) || size(faces, 2) > 3
             faces = triangulateFaces(faces);
         end
-        mb = trimeshMeanBreadth(mh.mesh.vertices, faces);
+        mb = trimeshMeanBreadth(mh.Mesh.Vertices, faces);
         
         disp(sprintf('Mesh mean breadth: %7.5g', mb)); %#ok<DSPS>
         

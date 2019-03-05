@@ -19,28 +19,28 @@ classdef SceneRenderer < handle
 %% Properties
 properties
     % the scene to render
-    scene;
+    Scene;
     
     % the handle to the render axis
-    axisHandle;
+    AxisHandle;
     
     % various widget handles
-    handles = struct(...
-        'light', [], ...
-        'axisLines', [], ...  % an array of three handles
-        'axisLineX', [], ...
-        'axisLineY', [], ...
-        'axisLineZ', []);
+    Handles = struct(...
+        'Light', [], ...
+        'AxisLines', [], ...  % an array of three handles
+        'AxisLineX', [], ...
+        'AxisLineY', [], ...
+        'AxisLineZ', []);
 
 end % end properties
 
 
 %% Constructor
 methods
-    function this = SceneRenderer(scene, axis, varargin)
+    function obj = SceneRenderer(scene, axis, varargin)
         % Constructor for SceneRenderer class
-        this.scene = scene;
-        this.axisHandle = axis;
+        obj.Scene = scene;
+        obj.AxisHandle = axis;
     end
 
 end % end constructors
@@ -48,26 +48,26 @@ end % end constructors
 
 %% Methods
 methods
-    function refreshDisplay(this)
+    function refreshDisplay(obj)
         % refresh document display: clear axis, draw each shape, udpate axis
         
         disp('update Display from renderer');
         
         % remove all existing children
-        ax = this.axisHandle;
+        ax = obj.AxisHandle;
         
         cla(ax);
         hold on;
 
         % remove handles from struct
-        names = fieldnames(this.handles);
+        names = fieldnames(obj.Handles);
         for i = 1:length(names)
-            this.handles.(names{i}) = [];
+            obj.Handles.(names{i}) = [];
         end
         
         % compute bounding box that encloses all meshes
-        updateBoundingBox(this.scene);
-        bbox = viewBox(this.scene.displayOptions);
+        updateBoundingBox(obj.Scene);
+        bbox = viewBox(obj.Scene.DisplayOptions);
         
         % update axis bouding box
         set(ax, 'XLim', bbox(1:2));
@@ -75,16 +75,16 @@ methods
         set(ax, 'ZLim', bbox(5:6));
 
         % display the meshes
-        for i = 1:length(this.scene.meshHandleList)
-            mh = this.scene.meshHandleList{i};
-            mesh = mh.mesh;
-            h = drawMesh(ax, mesh.vertices, mesh.faces);
-            apply(mh.displayOptions, h);
-            mh.handles.patch = h;
+        for i = 1:length(obj.Scene.MeshHandleList)
+            mh = obj.Scene.MeshHandleList{i};
+            mesh = mh.Mesh;
+            h = drawMesh(ax, mesh.Vertices, mesh.Faces);
+            apply(mh.DisplayOptions, h);
+            mh.Handles.Patch = h;
         end
 
-        updateAxisLinesDisplay(this);
-        updateLightDisplay(this);
+        updateAxisLinesDisplay(obj);
+        updateLightDisplay(obj);
         
         % enables 3D rotation of axis
         rotate3d(gcf, 'on');        
@@ -94,23 +94,23 @@ end % end methods
 
 %% Update graphical items
 methods
-    function updateAxisLinesDisplay(this)
+    function updateAxisLinesDisplay(obj)
         % update visibility and position of axis lines 
-        visible = this.scene.displayOptions.axisLinesVisible;
-        updateWidget(this, this.handles.axisLines, visible, @this.createNewAxisLines);
+        visible = obj.Scene.DisplayOptions.AxisLinesVisible;
+        updateWidget(obj, obj.Handles.AxisLines, visible, @obj.createNewAxisLines);
     end
     
-    function updateLightDisplay(this)
+    function updateLightDisplay(obj)
         % update visibility and position of light graphical elements
-        visible = this.scene.displayOptions.lightVisible;
-        updateWidget(this, this.handles.light, visible, @this.createNewLight);
+        visible = obj.Scene.DisplayOptions.LightVisible;
+        updateWidget(obj, obj.Handles.Light, visible, @obj.createNewLight);
     end
     
 end
 
 methods (Access = private)
     
-    function updateWidget(this, widget, visible, createFcn) %#ok<INUSL>
+    function updateWidget(obj, widget, visible, createFcn) %#ok<INUSL>
         % updates visibility of specified widget(s), creating new one if necessary
         if visible
             if isempty(widget)
@@ -128,21 +128,21 @@ methods (Access = private)
         end
     end
     
-    function res = createNewAxisLines(this)
+    function res = createNewAxisLines(obj)
         % create new graphical elements for axis lines
-        ax = this.axisHandle;
+        ax = obj.AxisHandle;
         hlx = drawLine3d(ax, [0 0 0  1 0 0], 'k');
         hly = drawLine3d(ax, [0 0 0  0 1 0], 'k');
         hlz = drawLine3d(ax, [0 0 0  0 0 1], 'k');
-        this.handles.axisLines = [hlx, hly, hlz];
-        res = this.handles.axisLines;
+        obj.Handles.AxisLines = [hlx, hly, hlz];
+        res = obj.Handles.AxisLines;
     end
     
-    function res = createNewLight(this)
+    function res = createNewLight(obj)
         % create new graphical element for light
-        ax = this.axisHandle;
-        this.handles.light = light('Parent', ax);
-        res = this.handles.light;
+        ax = obj.AxisHandle;
+        obj.Handles.Light = light('Parent', ax);
+        res = obj.Handles.Light;
     end
 end
 

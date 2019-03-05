@@ -19,32 +19,32 @@ classdef SceneDisplayOptions < handle
 %% Properties
 properties
     % Description of x-axis, as a SceneAxis instance
-    xAxis;
+    XAxis
     
     % Description of y-axis, as a SceneAxis instance
-    yAxis;
+    YAxis;
     
     % Description of z-axis, as a SceneAxis instance
-    zAxis;
+    ZAxis;
 
     % indicates whether main axes are visible or not (boolean)
-    axisLinesVisible = true;
+    AxisLinesVisible = true;
     
     % indicates whether light is visible or not (boolean)
-    lightVisible = true;
+    LightVisible = true;
     
 end % end properties
 
 
 %% Constructor
 methods
-    function this = SceneDisplayOptions(varargin)
+    function obj = SceneDisplayOptions(varargin)
         % Constructor for DisplayOptions class
         
         % create new axes
-        this.xAxis = mv.app.SceneAxis();
-        this.yAxis = mv.app.SceneAxis();
-        this.zAxis = mv.app.SceneAxis();
+        obj.XAxis = mv.app.SceneAxis();
+        obj.YAxis = mv.app.SceneAxis();
+        obj.ZAxis = mv.app.SceneAxis();
     end
 
 end % end constructors
@@ -52,17 +52,17 @@ end % end constructors
 
 %% Methods
 methods
-    function box = viewBox(this)
+    function box = viewBox(obj)
         % Compute the view box from the limits on the different axes
-        box = [this.xAxis.limits this.yAxis.limits this.zAxis.limits];
+        box = [obj.XAxis.Limits obj.YAxis.Limits obj.ZAxis.Limits];
     end
     
-    function setViewBox(this, box)
+    function setViewBox(obj, box)
         % set axes limits from viewbox values
-        this.xAxis.limits = box(1:2);
-        this.yAxis.limits = box(3:4);
+        obj.XAxis.Limits = box(1:2);
+        obj.YAxis.Limits = box(3:4);
         if length(box) > 4
-            this.zAxis.limits = box(5:6);
+            obj.ZAxis.Limits = box(5:6);
         end
     end
 end % end methods

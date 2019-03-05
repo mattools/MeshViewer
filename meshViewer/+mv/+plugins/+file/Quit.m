@@ -1,10 +1,10 @@
 classdef Quit < mv.gui.Plugin
 % Quit the application
 %
-%   Class SayHello
+%   Class Quit
 %
 %   Example
-%   SayHello
+%   Quit
 %
 %   See also
 %
@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = Quit(varargin)
+    function obj = Quit(varargin)
     % Constructor for SayHello class
 
     end
@@ -33,9 +33,9 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
-        gui = frame.gui;
+        gui = frame.Gui;
         gui.exit();
         close(frame);
         

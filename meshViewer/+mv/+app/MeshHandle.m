@@ -19,37 +19,37 @@ classdef MeshHandle < handle
 %% Properties
 properties
     % the name of the mesh, as a string. Should be unique within the application
-    name;
+    Name;
 
     % reference to the mesh, instance of TriMesh (or more generic class)
-    mesh;
+    Mesh;
     
     % a list of display options, instance of MeshDisplayOptions
-    displayOptions;
+    DisplayOptions;
     
     % flag set to true if the mesh was modified
-    modified = false;
+    Modified = false;
     
     % handles to the graphical object(s) used  to display the mesh
     % sub structures: 
     % * patch
     % * vertices
-    handles;
+    Handles;
     
 end % end properties
 
 
 %% Constructor
 methods
-    function this = MeshHandle(mesh, name)
+    function obj = MeshHandle(mesh, name)
         % Constructor for MeshHandle class
         
         % store the data and ID
-        this.mesh = mesh;
-        this.name = name;
+        obj.Mesh = mesh;
+        obj.Name = name;
         
         % create new display options
-        this.displayOptions = mv.app.MeshDisplayOptions;
+        obj.DisplayOptions = mv.app.MeshDisplayOptions;
         
     end
 
@@ -63,12 +63,12 @@ end % end methods
 
 %% Serialization methods
 methods
-    function str = toStruct(this)
+    function str = toStruct(obj)
         % Convert to a structure to facilitate serialization
         str = struct('type', 'MeshHandle', ...
-            'name', this.name, ...
-            'displayOptions', toStruct(this.displayOptions), ...
-            'mesh', toStruct(this.mesh));
+            'name', obj.Name, ...
+            'displayOptions', toStruct(obj.DisplayOptions), ...
+            'mesh', toStruct(obj.Mesh));
     end
 end
 methods (Static)

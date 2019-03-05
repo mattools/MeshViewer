@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = OpenFilePLY(varargin)
+    function obj = OpenFilePLY(varargin)
     % Constructor for SayHello class
     end
 end % end constructors
@@ -31,10 +31,10 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
        
         % Opens a dialog to choose a mesh file
-        pattern = fullfile(frame.gui.lastPathOpen, '*.ply');
+        pattern = fullfile(frame.Gui.LastPathOpen, '*.ply');
         [fileName, filePath] = uigetfile(pattern, 'Read PLY Mesh file');
         
         % check if cancel
@@ -43,7 +43,7 @@ methods
         end
         
         % setup last path used for opening
-        frame.gui.lastPathOpen = filePath;
+        frame.Gui.LastPathOpen = filePath;
         
         % read the mesh contained in the selected file
         fprintf('Reading ply file...');

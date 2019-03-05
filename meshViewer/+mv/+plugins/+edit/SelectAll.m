@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = SelectAll(varargin)
+    function obj = SelectAll(varargin)
     % Constructor for SelectAll class
     end
 end % end constructors
@@ -31,9 +31,9 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         
-        nMeshes = length(frame.scene.meshHandleList);
+        nMeshes = length(frame.Scene.MeshHandleList);
         setSelectedMeshIndices(frame, 1:nMeshes);        
     end
 end % end methods

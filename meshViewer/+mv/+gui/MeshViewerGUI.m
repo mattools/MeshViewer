@@ -19,18 +19,18 @@ classdef MeshViewerGUI < handle
 %% Properties
 properties
     % the data of the application, as an instance of MeshViewerAppData
-    app;
+    App;
     
     % remember where files were loaded
-    lastPathOpen = '.';
+    LastPathOpen = '.';
 
     % remember where files were saved
-    lastPathSave = '.';
+    LastPathSave = '.';
 end 
 
 %% Constructor
 methods
-    function this = MeshViewerGUI(appli, varargin)
+    function obj = MeshViewerGUI(appli, varargin)
         % MeshViewerGUI constructor
         %
         % GUI = MeshViewerGUI(APP)
@@ -41,7 +41,7 @@ methods
             % create default empty app data container
             appli = mv.app.MeshViewerAppData();
         end
-        this.app = appli;
+        obj.App = appli;
         
     end % constructor 
 
@@ -50,7 +50,7 @@ end % construction function
 
 %% General methods
 methods
-    function frame = addNewMeshFrame(this, varargin)
+    function frame = addNewMeshFrame(obj, varargin)
         % Create a new frame, eventually containing the specified mesh
         %
         % usage:
@@ -67,7 +67,7 @@ methods
         end
         
         % creates the new frame
-        frame = mv.gui.MeshViewerMainFrame(this, scene);
+        frame = mv.gui.MeshViewerMainFrame(obj, scene);
         
         function mh = createMeshHandle(varargin)
             % parses the input arguments and return a formatted mesh handle
@@ -101,10 +101,10 @@ methods
         end
     end
     
-    function exit(this) %#ok<MANU>
+    function exit(obj) %#ok<MANU>
         % EXIT Close all viewers
            
-%         docList = getDocuments(this.app);
+%         docList = getDocuments(obj.app);
 %         for d = 1:length(docList)
 %             doc = docList{d};
 %             

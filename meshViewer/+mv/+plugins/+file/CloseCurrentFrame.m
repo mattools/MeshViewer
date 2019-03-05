@@ -1,10 +1,10 @@
 classdef CloseCurrentFrame < mv.gui.Plugin
 %Close the current frame
 %
-%   Class SayHello
+%   Class CloseCurrentFrame
 %
 %   Example
-%   SayHello
+%   CloseCurrentFrame
 %
 %   See also
 %
@@ -23,7 +23,7 @@ end % end properties
 
 %% Constructor
 methods
-    function this = CloseCurrentFrame(varargin)
+    function obj = CloseCurrentFrame(varargin)
     % Constructor for SayHello class
 
     end
@@ -33,7 +33,7 @@ end % end constructors
 
 %% Methods
 methods
-    function run(this, frame, src, evt) %#ok<INUSL>
+    function run(obj, frame, src, evt) %#ok<INUSL>
         close(frame);
     end
     
