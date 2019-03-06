@@ -39,7 +39,7 @@ methods
         end
        
         mh = meshList{1};
-        area = meshSurfaceArea(mh.Mesh.Vertices, mh.Mesh.Faces);
+        area = surfaceArea(mh.Mesh);
         
         disp(sprintf('Mesh surface area: %7.5g', area)); %#ok<DSPS>
         

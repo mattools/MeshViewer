@@ -1,5 +1,5 @@
 classdef ComputeMeshMeanBreadth < mv.gui.Plugin
-% Display general info about the current mesh
+% Compute mean breadth of the current mesh
 %
 %   Class ComputeMeshMeanBreadth
 %
@@ -39,15 +39,10 @@ methods
         end
        
         mh = meshList{1};
-        faces = mh.Mesh.Faces;
-        if iscell(faces) || size(faces, 2) > 3
-            faces = triangulateFaces(faces);
-        end
-        mb = trimeshMeanBreadth(mh.Mesh.Vertices, faces);
-        
+        mb = meanBreadth(mh.Mesh);
         disp(sprintf('Mesh mean breadth: %7.5g', mb)); %#ok<DSPS>
-        
     end
+    
 end % end methods
 
 end % end classdef
