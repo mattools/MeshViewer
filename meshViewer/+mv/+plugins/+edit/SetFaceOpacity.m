@@ -1,10 +1,10 @@
-classdef SetFaceTransparency < mv.gui.Plugin
-% Setup color and display of edges in current selection
+classdef SetFaceOpacity < mv.gui.Plugin
+% Setup opacity of faces
 %
-%   Class SetFaceTransparency
+%   Class SetFaceOpacity
 %
 %   Example
-%   SetFaceTransparency
+%   SetFaceOpacity
 %
 %   See also
 %
@@ -23,8 +23,8 @@ end % end properties
 
 %% Constructor
 methods
-    function obj = SetFaceTransparency(varargin)
-    % Constructor for SetFaceTransparency class
+    function obj = SetFaceOpacity(varargin)
+    % Constructor for SetFaceOpacity class
     end
 end % end constructors
 
@@ -39,13 +39,14 @@ methods
             return;
         end
 
-        % choose variable
-        gd = GenericDialog('Set Face Transparency');
-        addNumericField(gd, 'Transparency: ', 1, 0);
+        % Create a dialog to setup variable
+        gd = GenericDialog('Set Face Opacity');
+        addNumericField(gd, 'Opacity: ', 1, 0);
       
-        % display the dialog, and wait for user
+        % display the dialog, and wait for user input
         setSize(gd, [350 150]);
         showDialog(gd);
+        
         % check if ok or cancel was clicked
         if wasCanceled(gd)
             return;
@@ -57,7 +58,7 @@ methods
         % iterate over selected shapes
         for i = 1:length(meshList)
             mh = meshList{i};
-            mh.DisplayOptions.FaceTransparency = alpha;
+            mh.DisplayOptions.FaceOpacity = alpha;
             set(mh.Handles.Patch, 'FaceAlpha', alpha);
         end
     end

@@ -24,7 +24,7 @@ properties
     
     FaceColor = [1 0 0];
     
-    FaceAlpha = 1;
+    FaceOpacity = 1;
     
     
     EdgeVisible = true;
@@ -59,7 +59,7 @@ methods
 
         % setup faces
         set(patchHandle, 'faceColor', obj.FaceColor);
-        set(patchHandle, 'faceAlpha', obj.FaceAlpha);
+        set(patchHandle, 'faceAlpha', obj.FaceOpacity);
     end
 end % end methods
 
@@ -76,8 +76,8 @@ methods
             str.faceColor = obj.FaceColor;
         end
         
-        if obj.FaceAlpha ~= 1
-            str.faceAlpha = obj.FaceAlpha;
+        if obj.FaceOpacity ~= 1
+            str.faceOpacity = obj.FaceOpacity;
         end
         
         if ~obj.EdgeVisible
@@ -96,7 +96,7 @@ methods (Static)
         % create default instance
         options = mv.app.MeshDisplayOptions();
         
-        % iterate over 
+        % iterate over names of structure fields
         names = fieldnames(str);
         for i = 1:length(names)
             name = names{i};

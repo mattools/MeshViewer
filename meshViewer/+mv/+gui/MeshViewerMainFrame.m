@@ -129,7 +129,7 @@ methods
             addPlugin(editMenu, mv.plugins.edit.SelectNone(), 'Select None');
             addPlugin(editMenu, mv.plugins.edit.SelectInverse(), 'Inverse Selection');
             addPlugin(editMenu, mv.plugins.edit.SetSelectionFaceColor(), 'Set Face Color', true);
-            addPlugin(editMenu, mv.plugins.edit.SetFaceTransparency(), 'Set Face Transparency');
+            addPlugin(editMenu, mv.plugins.edit.SetFaceOpacity(), 'Set Face Opacity');
             addPlugin(editMenu, mv.plugins.edit.SetEdgeStyle(), 'Set Edge Style');
             addPlugin(editMenu, mv.plugins.edit.PrintMeshList(), 'Print Mesh List');
             addPlugin(editMenu, mv.plugins.edit.PrintMeshInfo(), 'Mesh Info', true);
