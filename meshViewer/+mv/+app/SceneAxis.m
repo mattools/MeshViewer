@@ -27,6 +27,9 @@ properties
     % the label to be displayed
     Label = '';
     
+    % optional name of units
+    UnitName = '';
+    
 end % end properties
 
 
@@ -41,6 +44,7 @@ methods
             obj.Limits = that.Limits;
             obj.Reverse = that.Reverse;
             obj.Label = that.Label;
+            obj.UnitName = that.UnitName;
             return;
         end
         
@@ -53,6 +57,8 @@ methods
                 obj.Reverse = varargin{2};
             elseif strcmpi(name, 'label')
                 obj.Label = varargin{2};
+            elseif strcmpi(name, 'unitName')
+                obj.UnitName = varargin{2};
             else
                 warning(['Unknown parameter name for SceneAxis: ' name]);
             end
@@ -82,6 +88,9 @@ methods
         if ~isempty(obj.Label)
             str.label = obj.Label;
         end
+        if ~isempty(obj.UnitName)
+            str.unitName = obj.UnitName;
+        end
     end
     
     function write(obj, fileName, varargin)
@@ -107,6 +116,8 @@ methods (Static)
                 axis.Reverse = str.(name);
             elseif strcmpi(name, 'label')
                 axis.Label = str.(name);
+            elseif strcmpi(name, 'unitName')
+                axis.UnitName = str.(name);
             else
                 warning(['Unknown SceneAxis parameter: ' name]);
             end

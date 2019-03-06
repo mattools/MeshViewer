@@ -87,7 +87,9 @@ methods
         updateLightDisplay(obj);
         
         % enables 3D rotation of axis
-        rotate3d(gcf, 'on');        
+        rotate3d(gcf, 'on');
+        
+        annotateAxis(obj);
     end
 end % end methods
 
@@ -105,7 +107,32 @@ methods
         visible = obj.Scene.DisplayOptions.LightVisible;
         updateWidget(obj, obj.Handles.Light, visible, @obj.createNewLight);
     end
-    
+
+    function annotateAxis(obj)
+        
+        if ~isempty(obj.Scene.DisplayOptions.XAxis.Label)
+            str = obj.Scene.DisplayOptions.XAxis.Label;
+            if ~isempty(obj.Scene.DisplayOptions.XAxis.UnitName)
+                str = [str ' [' obj.Scene.DisplayOptions.XAxis.UnitName ']'];
+            end
+            xlabel(str);
+        end
+        if ~isempty(obj.Scene.DisplayOptions.YAxis.Label)
+            str = obj.Scene.DisplayOptions.YAxis.Label;
+            if ~isempty(obj.Scene.DisplayOptions.YAxis.UnitName)
+                str = [str ' [' obj.Scene.DisplayOptions.YAxis.UnitName ']'];
+            end
+            ylabel(str);
+        end
+        if ~isempty(obj.Scene.DisplayOptions.ZAxis.Label)
+            str = obj.Scene.DisplayOptions.ZAxis.Label;
+            if ~isempty(obj.Scene.DisplayOptions.ZAxis.UnitName)
+                str = [str ' [' obj.Scene.DisplayOptions.ZAxis.UnitName ']'];
+            end
+            zlabel(str);
+        end
+    end
+
 end
 
 methods (Access = private)

@@ -18,7 +18,7 @@ classdef Scene < handle
 
 %% Properties
 properties
-    % set of mesh handles within obj scene, as a cell array
+    % set of mesh handles within this scene, as a cell array
     MeshHandleList;
     
     % the set of display options for the scene, as an instance of
