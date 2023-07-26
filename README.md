@@ -11,5 +11,6 @@ A default GUI is created, that also allows to open some OFF or PLY files stored 
 
 # Dependencies
 
-* MatGeom Toolbox (https://github.com/mattools/matGeom)
-* GUI Layout V2 (https://fr.mathworks.com/matlabcentral/fileexchange/47982-gui-layout-toolbox)
+* [MatGeom Toolbox](https://github.com/mattools/matGeom), for the geometry processing operations
+* [GUI Layout V2](https://fr.mathworks.com/matlabcentral/fileexchange/47982-gui-layout-toolbox) for GUI
+* [GenericDialog](https://github.com/mattools/GenericDialog), a generic dialog for Matlab, mimicking ImageJ's functionalities
