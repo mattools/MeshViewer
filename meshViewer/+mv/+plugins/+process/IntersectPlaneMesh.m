@@ -1,5 +1,5 @@
 classdef IntersectPlaneMesh < mv.gui.Plugin
-% Compute intersection with a plane
+% Compute intersection of selected mesh(es) with a plane
 %
 %   Class IntersectPlaneMesh
 %
@@ -24,7 +24,7 @@ end % end properties
 %% Constructor
 methods
     function obj = IntersectPlaneMesh(varargin)
-    % Constructor for IntersectPlaneMesh class
+    % Constructor for IntersectPlaneMesh class.
     end
 end % end constructors
 
@@ -56,7 +56,7 @@ methods
         dirIndex = getNextChoiceIndex(gd);
         position = getNextNumber(gd);
         
-        % create base symmery transform
+        % create base symmetry transform
         switch dirIndex
             case 1
                 plane = [0 0 position  1 0 0  0 1 0];
@@ -76,7 +76,12 @@ methods
         for iMesh = 1:length(meshList)
             % get data for current mesh
             mh = meshList{iMesh};
-            intersections{iMesh} = intersectPlaneMesh(plane, mh.Mesh.Vertices, mh.Mesh.Faces);
+            if isnumeric(mh.Mesh.Faces) && size(mh.Mesh.Faces, 2) == 3
+                intersections{iMesh} = intersectPlaneMesh(plane, mh.Mesh.Vertices, mh.Mesh.Faces);
+            else
+                faces2 = triangulateFaces(mh.Mesh.Faces);
+                intersections{iMesh} = intersectPlaneMesh(plane, mh.Mesh.Vertices, faces2);
+            end
         end
 
         figure; hold on; axis equal;
