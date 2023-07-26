@@ -40,9 +40,8 @@ methods
         end
 
         % open color chooser dialog
-%         defaultColor = [1 0 0];
         mh = meshList{1};
-        defaultColor = get(mh.Handles.Patch, 'FaceColor');
+        defaultColor = mh.DisplayOptions.FaceColor;
         newColor = uisetcolor(defaultColor, 'Set Line Color');
 
         % iterate over selected shapes
