@@ -1,5 +1,5 @@
 classdef Scene < handle
-%SCENE A scene that contains several meshes
+%SCENE A scene that contains several meshes.
 %
 %   Class Scene
 %
@@ -18,11 +18,11 @@ classdef Scene < handle
 
 %% Properties
 properties
-    % set of mesh handles within this scene, as a cell array
+    % set of mesh handles within this scene, as a cell array.
     MeshHandleList;
     
     % the set of display options for the scene, as an instance of
-    % SceneDisplayOptions.
+    % mv.app.SceneDisplayOptions.
     % Used to initialize the axis.
     DisplayOptions;
     
@@ -35,7 +35,7 @@ end % end properties
 %% Constructor
 methods
     function obj = Scene(varargin)
-    % Constructor for Scene class
+    % Constructor for Scene class.
 
         obj.DisplayOptions = mv.app.SceneDisplayOptions();
     end
@@ -46,7 +46,7 @@ end % end constructors
 %% General use methods
 methods
     function bbox = updateBoundingBox(obj)
-        % recomputes the bounding box from the list of meshes
+        % recomputes the bounding box from the list of meshes.
 
         % default bounding box
         bbox = [-1 1  -1 1  -1 1];
@@ -101,7 +101,7 @@ methods
     end
     
     function mh = createMeshHandle(obj, varargin)
-        % Return a formatted mesh handle or empty
+        % Return a formatted mesh handle or empty.
         %
         % Usages
         %   createMeshHandle(gui)
@@ -149,7 +149,7 @@ methods
     end
     
     function newName = getNextFreeName(obj, baseName)
-        % ensure the name associated to the mesh handle is unique for the scene
+        % Find a new name ensuring it is unique within the scene.
         
         newName = baseName;
         if hasMeshWithName(obj, newName)

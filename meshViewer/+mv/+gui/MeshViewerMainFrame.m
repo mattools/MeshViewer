@@ -1,5 +1,5 @@
 classdef MeshViewerMainFrame < handle
-%MESHVIEWERMAINFRAME Contains a figure that displays one or several meshes
+%MESHVIEWERMAINFRAME Contains a figure that displays one or several meshes.
 %
 %   Class MeshViewerMainFrame
 %
@@ -24,7 +24,7 @@ properties
     % list of handles to the various gui items
     Handles;
     
-    % the scene displayed by obj frame
+    % The scene displayed by this frame, as an instance of mv.app.Scene.
     % Contains a collection of meshes.
     Scene;
     
@@ -284,7 +284,7 @@ end % end constructors
 %% General methods
 methods
     function addNewMesh(obj, mesh, meshName)
-        % adds a new mesh to the scene, and update displays
+        % Add a new mesh to the scene, and update displays.
         
         % add new mesh to the scene
         mh = createMeshHandle(obj.Scene, mesh, meshName);
@@ -300,7 +300,7 @@ end
 %% Management of selection
 methods
     function handleList = selectedMeshHandleList(obj)
-        % returns the list of selected mesh handles
+        % Return the list of selected mesh handles.
         
         handleList = {};
         
@@ -328,7 +328,8 @@ end
 methods
     
     function updateDisplay(obj)
-        % refresh document display: clear axis, draw each shape, udpate axis
+        % Refresh document display.
+        % -> clear axis, draw each shape, udpate axis
         
         disp('update Display');
         
@@ -336,7 +337,7 @@ methods
     end
     
     function updateMeshSelectionDisplay(obj) %#ok<MANU>
-        % update the selected state of each shape
+        % update the selected state of each shape.
         
 %         % extract the list of handles in current axis
 %         ax = obj.Handles.MainAxis;
@@ -366,7 +367,7 @@ methods
     
     
     function updateMeshList(obj)
-        % Refresh the shape tree when a shape is added or removed
+        % Refresh the shape tree when a shape is added or removed.
 
         disp('update shape list');
         
@@ -414,7 +415,7 @@ methods
         delete(obj.Handles.Figure);
     end
     
-    function onFigureResized(obj, varargin)
+    function onFigureResized(obj, varargin) %#ok<INUSD>
 %         updateMeshSelectionDisplay(obj);
     end
 end

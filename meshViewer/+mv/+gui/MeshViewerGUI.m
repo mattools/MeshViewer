@@ -70,7 +70,7 @@ methods
         frame = mv.gui.MeshViewerMainFrame(obj, scene);
         
         function mh = createMeshHandle(varargin)
-            % parses the input arguments and return a formatted mesh handle
+            % Create a new mesh handle from a mesh.
             
             % special case of no mesh
             if isempty(varargin)

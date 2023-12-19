@@ -1,5 +1,5 @@
 function MeshViewer(varargin)
-%MESHVIEWER Launcher for the MeshViewer application
+%MESHVIEWER Launcher for the MeshViewer application.
 %
 %   output = MeshViewer(input)
 %
@@ -54,8 +54,7 @@ end
 
 %% Create data for applicatino
 
-% create the application, and a GUI
-%app = mv.app.MeshViewerAppData;
+% create a new GUI
 gui = mv.gui.MeshViewerGUI();
 
 % create new frame
