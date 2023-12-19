@@ -130,6 +130,11 @@ methods
             return;
         end
         
+        % in case of a struct, try convert to mesh
+        if isstruct(mesh)
+            mesh = TriMesh(mesh);
+        end
+
         if ~isa(mesh, 'TriMesh')
             error('Requires either a MeshHandle or a TriMesh');
         end

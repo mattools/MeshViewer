@@ -1,4 +1,4 @@
-function MeshViewer(varargin)
+function varargout = MeshViewer(varargin)
 %MESHVIEWER Launcher for the MeshViewer application.
 %
 %   output = MeshViewer(input)
@@ -59,9 +59,11 @@ gui = mv.gui.MeshViewerGUI();
 
 % create new frame
 if ~isempty(mesh)
-    addNewMeshFrame(gui, mesh, meshName);
+    viewer = addNewMeshFrame(gui, mesh, meshName);
 else
-    addNewMeshFrame(gui);
+    viewer = addNewMeshFrame(gui);
 end
 
-
+if nargout > 0
+    varargout = {viewer};
+end

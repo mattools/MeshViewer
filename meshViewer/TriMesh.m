@@ -48,8 +48,8 @@ methods
             
         elseif isstruct(varargin{1})
             var1 = varargin{1};
-            obj.Vertices = var1.Vertices;
-            obj.Faces = var1.Faces;
+            obj.Vertices = var1.vertices;
+            obj.Faces = var1.faces;
         end
        
         % ensure faces is N-by-3
@@ -149,7 +149,7 @@ methods (Static)
     function mesh = fromStruct(str)
         % Create a new instance from a structure
         if ~(isfield(str, 'vertices') && isfield(str, 'faces'))
-            error('Requires fields vertices and faces');
+            error('Requires struct with two fields "vertices" and "faces"');
         end
         if size(str.faces, 2) ~= 3
             error('Requires a triangular face array');
