@@ -7,7 +7,7 @@ classdef CheckMeshAdjacentFaces < mv.gui.Plugin
 %   CheckMeshAdjacentFaces
 %
 %   See also
-%
+%     checkMeshAdjacentFaces
 
 % ------
 % Author: David Legland

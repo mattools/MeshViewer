@@ -73,7 +73,7 @@ methods
         end
 
         % convert to mesh
-        mesh = TriMesh(vertices, faces);
+        mesh = mv.TriMesh(vertices, faces);
 
         addNewMesh(frame, mesh, meshName);
     end

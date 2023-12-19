@@ -55,7 +55,7 @@ methods
 
         % Create mesh data structure
         tic;
-        mesh = TriMesh(v, f);
+        mesh = mv.TriMesh(v, f);
         t = toc;
         fprintf('  create mesh: %8.3f ms', t*1000);
 

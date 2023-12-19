@@ -78,7 +78,7 @@ methods (Static)
             error('Requires fields name and mesh');
         end
         
-        mesh = TriMesh.fromStruct(str.mesh);
+        mesh = mv.TriMesh.fromStruct(str.mesh);
         mh = mv.app.MeshHandle(mesh, str.name);
         
         if isfield(str, 'displayOptions')

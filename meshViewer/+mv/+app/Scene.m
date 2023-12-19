@@ -132,10 +132,10 @@ methods
         
         % in case of a struct, try convert to mesh
         if isstruct(mesh)
-            mesh = TriMesh(mesh);
+            mesh = mv.TriMesh(mesh);
         end
 
-        if ~isa(mesh, 'TriMesh')
+        if ~isa(mesh, 'mv.TriMesh')
             error('Requires either a MeshHandle or a TriMesh');
         end
         

@@ -45,7 +45,7 @@ methods
             f = mh.Mesh.faces;
             
             % creates a new mesh instance
-            mesh = TriMesh(v, f);
+            mesh = mv.TriMesh(v, f);
             mh = createMeshHandle(frame.Scene, mesh, mh.Name);
             
             % add new mesh to the current scene

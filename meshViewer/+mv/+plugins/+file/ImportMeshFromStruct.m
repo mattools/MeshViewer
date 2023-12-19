@@ -92,7 +92,7 @@ methods
             end
             
             % convert to mesh
-            mesh = TriMesh(data.vertices, data.faces);
+            mesh = mv.TriMesh(data.vertices, data.faces);
             
             addNewMesh(frame, mesh, name);
         end

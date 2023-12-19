@@ -1,5 +1,5 @@
 classdef TriMesh < handle
-%TRIMESH Class for representing a triangular 3D mesh
+%TRIMESH Class for representing a triangular 3D mesh.
 %
 %   output = TriMesh(input)
 %
@@ -16,13 +16,13 @@ classdef TriMesh < handle
 % Copyright 2018 INRA - Cepia Software Platform.
 
 properties
-    % Coordinates of mesh vertices, as a Nv-by-3 array
+    % Coordinates of mesh vertices, as a Nv-by-3 array.
     Vertices;
     
-    % indices of vertices of each face, as a Nf-by-3 array of integers
+    % indices of vertices of each face, as a Nf-by-3 array of integers.
     Faces;
     
-    % optionnal information about edges, as a Ne-by-2 array of integers
+    % optionnal information about edges, as a Ne-by-2 array of integers.
     Edges = [];
     
     % more topological information
@@ -62,7 +62,7 @@ end
 %% Geometric inforamtion about mesh
 methods
     function vol = volume(obj)
-        % (signed) volume enclosed by this mesh
+        % (signed) volume enclosed by this mesh.
         %
         % See Also
         %   meshVolume
@@ -88,7 +88,7 @@ methods
     end
     
     function area = surfaceArea(obj)
-        % surface area of mesh faces
+        % Surface area of mesh faces.
         %
         % See Also
         %   meshSurfaceArea
@@ -106,8 +106,9 @@ methods
     end
     
     function mb = meanBreadth(obj)
-        % Mean breadth of this mesh
-        % Mean breadth is proportionnal to the integral of mean curvature
+        % Mean breadth of this mesh.
+        %
+        % Mean breadth is proportionnal to the integral of mean curvature.
         %
         % See Also
         %   trimeshMeanBreadth
@@ -119,15 +120,18 @@ end
 
 %% Basic information about mesh
 methods
-    function nv = vertexNumber(obj)
+    function nv = vertexCount(obj)
+        % Return the number of vertices within the mesh.
         nv = size(obj.Vertices, 1);
     end
     
-    function nf = faceNumber(obj)
+    function nf = faceCount(obj)
+        % Return the number of faces within the mesh.
         nf = size(obj.Faces, 1);
     end
     
-    function ne = edgeNumber(obj)
+    function ne = edgeCount(obj)
+        % Return the number of edges within the mesh.
         ne = size(obj.Edges, 1);
     end
 end
@@ -136,8 +140,8 @@ end
 %% Serialization methods
 methods
     function str = toStruct(obj)
-        % Convert to a structure to facilitate serialization
-        str = struct('type', 'TriMesh', ...
+        % Convert to a structure to facilitate serialization.
+        str = struct('type', 'mv.TriMesh', ...
             'vertices', obj.Vertices, ...
             'faces', obj.Faces);
         if ~isempty(obj.Edges)
@@ -145,16 +149,17 @@ methods
         end
     end
 end
+
 methods (Static)
     function mesh = fromStruct(str)
-        % Create a new instance from a structure
+        % Create a new instance from a structure.
         if ~(isfield(str, 'vertices') && isfield(str, 'faces'))
             error('Requires struct with two fields "vertices" and "faces"');
         end
         if size(str.faces, 2) ~= 3
             error('Requires a triangular face array');
         end
-        mesh = TriMesh(str);
+        mesh = mv.TriMesh(str);
     end
 end
 

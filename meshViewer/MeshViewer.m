@@ -26,13 +26,13 @@ if nargin == 0
 
 elseif nargin == 1
     mesh = varargin{1};
-    if isa(mesh, 'TriMesh')
+    if isa(mesh, 'mv.TriMesh')
         % nothing to do!
     elseif isstruct(mesh)
         % parses vertices and faces from structure
         v = mesh.vertices;
         f = mesh.faces;
-        mesh = TriMesh(v, f);
+        mesh = mv.TriMesh(v, f);
         meshName = inputname(1);
     else
         error('Requires the input to be a mesh structure or a Mesh class instance');
@@ -43,7 +43,7 @@ elseif nargin == 2
     % and create a new TriMesh
     v = varargin{1};
     f = varargin{2};
-    mesh = TriMesh(v, f);
+    mesh = mv.TriMesh(v, f);
 else
     error('Unable to process input arguments');
 end

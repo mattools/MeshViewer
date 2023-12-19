@@ -37,7 +37,7 @@ methods
         
         % creates the mesh
         [v, f] = createCubeOctahedron;
-        mesh = TriMesh(v, f);
+        mesh = mv.TriMesh(v, f);
         
         % add new mesh to the current scene
         mh = createMeshHandle(frame.Scene, mesh, 'cubeOctahedron');

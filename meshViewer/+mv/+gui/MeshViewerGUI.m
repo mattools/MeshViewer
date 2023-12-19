@@ -85,7 +85,7 @@ methods
                 return;
             end
             
-            if ~isa(mesh, 'TriMesh')
+            if ~isa(mesh, 'mv.TriMesh')
                 error('Requires either a MeshHandle or a TriMesh');
             end
             

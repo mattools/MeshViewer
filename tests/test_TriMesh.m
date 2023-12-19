@@ -15,23 +15,25 @@ function test_suite = test_TriMesh
 % Created: 2019-01-29,    using Matlab 9.5.0.944444 (R2018b)
 % Copyright 2019 INRA - Cepia Software Platform.
 
-test_suite = buildFunctionHandleTestSuite(localfunctions);
+test_suite = functiontests(localfunctions);
+
 
 function test_Creation(testCase) %#ok<*DEFNU>
 % Test call of function without argument
 
 [v, f] = createTetrahedron();
-mesh = TriMesh(v, f);
+mesh = mv.TriMesh(v, f);
 
-assertTrue(isa(mesh, 'TriMesh'));
+assertTrue(testCase, isa(mesh, 'mv.TriMesh'));
+
 
 function test_StructureConversion(testCase) %#ok<*DEFNU>
 % Test call of function without argument
 
 [v, f] = createTetrahedron();
-mesh = TriMesh(v, f);
+mesh = mv.TriMesh(v, f);
 
 str = toStruct(mesh);
-mesh2 = TriMesh.fromStruct(str);
+mesh2 = mv.TriMesh.fromStruct(str);
 
-assertTrue(isa(mesh2, 'TriMesh'));
+assertTrue(testCase, isa(mesh2, 'mv.TriMesh'));

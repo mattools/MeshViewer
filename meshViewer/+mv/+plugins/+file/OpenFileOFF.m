@@ -53,7 +53,7 @@ methods
         fprintf(' (done in %8.3f ms)\n', t*1000);
         
         % Create mesh data structure
-        mesh = TriMesh(v, f);
+        mesh = mv.TriMesh(v, f);
 
         [path, name] = fileparts(fileName); %#ok<ASGLU>
         addNewMesh(frame, mesh, name);
