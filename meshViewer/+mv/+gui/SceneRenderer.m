@@ -66,7 +66,7 @@ methods
         end
         
         % compute bounding box that encloses all meshes
-        updateBoundingBox(obj.Scene);
+        % updateBoundingBox(obj.Scene);
         bbox = viewBox(obj.Scene.DisplayOptions);
         
         % update axis bouding box

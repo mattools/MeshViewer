@@ -84,9 +84,10 @@ methods
             end
         end
 
-        figure; hold on; axis equal;
+        figure; hold on; axis equal; axis(bbox(1:4));
         drawPolygon3d(intersections, 'color', 'b');
         title(sprintf('%s = %d', planeDigit, position));
+        
     end
     
 end % end methods

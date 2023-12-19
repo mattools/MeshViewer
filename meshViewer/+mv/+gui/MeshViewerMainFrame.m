@@ -138,6 +138,7 @@ methods
             % Edit Menu Definition 
             
             viewMenu = uimenu(hf, 'Label', '&View');
+            addPlugin(viewMenu, mv.plugins.view.SetSceneAxisBounds(), 'Setup Scene Bounds');
             addPlugin(viewMenu, mv.plugins.view.ToggleLight(), 'Toggle Light');
             addPlugin(viewMenu, mv.plugins.view.ToggleAxisLinesDisplay(), 'Toggle Axis Lines Display');
             addPlugin(viewMenu, mv.plugins.view.PrintAxisProperties(), 'Print Axis Properties', true);
