@@ -48,11 +48,24 @@ methods
     function bbox = updateBoundingBox(obj)
         % recomputes the bounding box from the list of meshes.
 
-        % default bounding box
-        bbox = [-1 1  -1 1  -1 1];
+        % compute the bounding box
+        bbox = computeBoundingBox(obj);
         
-        % if scene containes meshes, recomputes bounding boxes as the
-        % enclosing box of all meshes
+        % update display
+        setViewBox(obj.DisplayOptions, bbox);
+    end
+
+    function bbox = computeBoundingBox(obj)
+        % Compute the bounding box of the list of meshes.
+        %
+        % Does not modify scene display options.
+        %
+
+        % default bounding box
+        bbox = viewBox(obj.DisplayOptions);
+        
+        % if scene contains at least one mesh, recompute the bounding box
+        % as the enclosing box of all meshes
         nMeshes = length(obj.MeshHandleList);
         if nMeshes > 0
             % use initial infinite bounds
@@ -64,9 +77,6 @@ methods
                 bbox = mergeBoxes3d(bbox, boundingBox3d(mh.Mesh.Vertices));
             end
         end
-        
-        % set up new bounding box
-        setViewBox(obj.DisplayOptions, bbox);
     end
 end
 
@@ -159,14 +169,18 @@ methods
         newName = baseName;
         if hasMeshWithName(obj, newName)
             % remove trailing digits if any
-            newName = removeTrailingDigits(newName);
+            baseName = removeTrailingDigits(baseName);
             pattern = '%s-%d';
             index = 1;
             
-            newName = sprintf(pattern, newName, index);
-            while hasMeshWithName(obj, newName)
+            % find the first index such that no mesh already exist with the
+            % name: "[baseName]-[index]"
+            while true
+                newName = sprintf(pattern, baseName, index);
+                if ~hasMeshWithName(obj, newName)
+                    break;
+                end
                 index = index + 1;
-                newName = sprintf(pattern, newName, index);
             end
         end
         

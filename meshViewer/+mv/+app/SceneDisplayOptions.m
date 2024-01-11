@@ -53,7 +53,7 @@ end % end constructors
 %% Methods
 methods
     function box = viewBox(obj)
-        % Compute the view box from the limits on the different axes
+        % Compute the view box from the limits on the different axes.
         box = [obj.XAxis.Limits obj.YAxis.Limits obj.ZAxis.Limits];
     end
     

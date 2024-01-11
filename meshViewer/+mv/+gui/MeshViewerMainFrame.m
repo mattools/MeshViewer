@@ -98,8 +98,7 @@ methods
             
             fileMenu = uimenu(hf, 'Label', '&Files');
             addPlugin(fileMenu, mv.plugins.file.CreateNewSceneFrame(), 'New Empty Scene');
-            addPlugin(fileMenu, mv.plugins.file.OpenFileOFF(), 'Open OFF File...');
-            addPlugin(fileMenu, mv.plugins.file.OpenFilePLY(), 'Open PLY File...');
+            addPlugin(fileMenu, mv.plugins.file.OpenMeshFile(), 'Open Mesh File...', 'Separator', 'on');
             addPlugin(fileMenu, mv.plugins.file.OpenMeshAsStructure(), 'Open MeshViewer Mesh File...');
             importMeshesMenu = uimenu(fileMenu, 'Label', 'Import');
             addPlugin(importMeshesMenu, mv.plugins.file.ImportMeshFromStruct(), 'Mesh struct from Workspace');
@@ -139,7 +138,8 @@ methods
             
             viewMenu = uimenu(hf, 'Label', '&View');
             addPlugin(viewMenu, mv.plugins.view.SetSceneAxisBounds(), 'Setup Scene Bounds');
-            addPlugin(viewMenu, mv.plugins.view.ToggleLight(), 'Toggle Light');
+            addPlugin(viewMenu, mv.plugins.view.SetSceneAxisBoundsToBoundingBox(), 'Set Scene Bounds To Bounding Box');
+            addPlugin(viewMenu, mv.plugins.view.ToggleLight(), 'Toggle Light', 'Separator', 'on');
             addPlugin(viewMenu, mv.plugins.view.ToggleAxisLinesDisplay(), 'Toggle Axis Lines Display');
             addPlugin(viewMenu, mv.plugins.view.PrintAxisProperties(), 'Print Axis Properties', true);
 
@@ -284,13 +284,21 @@ end % end constructors
 
 %% General methods
 methods
-    function addNewMesh(obj, mesh, meshName)
+    function addNewMesh(obj, mesh, varargin)
         % Add a new mesh to the scene, and update displays.
+        %
+        % Usage:
+        %   addNewMesh(frame, mesh, name);
         
         % add new mesh to the scene
-        mh = createMeshHandle(obj.Scene, mesh, meshName);
+        mh = createMeshHandle(obj.Scene, mesh, varargin{:});
         obj.Scene.addMeshHandle(mh);
-        
+
+        % update scene view box to enclose new mesh
+        box = viewBox(obj.Scene.DisplayOptions);
+        box = mergeBoxes3d(box, boundingBox3d(mh.Mesh.Vertices));
+        setViewBox(obj.Scene.DisplayOptions, box);
+
         % update display
         updateDisplay(obj);
         updateMeshList(obj);
