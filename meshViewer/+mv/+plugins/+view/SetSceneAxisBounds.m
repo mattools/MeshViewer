@@ -40,8 +40,6 @@ methods
 
         % retrieve current bounds
         bbox = viewBox(frame.Scene.DisplayOptions);
-        % xlims = frame.Scene.DisplayOptions.XAxis.Limits;
-        % ylims = frame.Scene.DisplayOptions.YAxis.Limits;    
         
         % create figure
         obj.Frame = frame;
@@ -49,29 +47,47 @@ methods
         obj.Handles.figure = hFig;
 
         % setup layout
-        grid = uix.Grid('Parent', hFig, 'Spacing', 5, 'Padding', 10);
-        uix.Empty('Parent', grid);
-        uicontrol('Parent', grid, 'Style', 'Text', 'String', 'X-Axis');
-        uicontrol('Parent', grid, 'Style', 'Text', 'String', 'Y-Axis');
-        uicontrol('Parent', grid, 'Style', 'Text', 'String', 'Z-Axis');
-        uix.Empty('Parent', grid);
+        allLines = uix.VBox('Parent', hFig, 'Spacing', 0, 'Padding', 10);
 
-        uicontrol('Parent', grid, 'Style', 'Text', 'String', 'Min.');
-        obj.Handles.editXMin = uicontrol('Parent', grid, 'Style', 'edit', 'String', num2str(bbox(1)));
-        obj.Handles.editYMin = uicontrol('Parent', grid, 'Style', 'edit', 'String', num2str(bbox(3)));
-        obj.Handles.editZMin = uicontrol('Parent', grid, 'Style', 'edit', 'String', num2str(bbox(5)));
-        obj.Handles.OKButton = uicontrol('Parent', grid, ...
+        lineHeader = uix.HBox('Parent', allLines, 'Spacing', 5, 'Padding', 10);
+        uix.Empty('Parent', lineHeader);
+        uicontrol('Parent', lineHeader, 'Style', 'Text', 'String', 'Min.');
+        uicontrol('Parent', lineHeader, 'Style', 'Text', 'String', 'Max.');
+        set(lineHeader, 'Widths', [-3 -2 -2]);
+
+        lineX = uix.HBox('Parent', allLines, 'Spacing', 10, 'Padding', 2);
+        uicontrol('Parent', lineX, 'Style', 'Text', 'String', 'X-Axis');
+        obj.Handles.editXMin = uicontrol('Parent', lineX, 'Style', 'edit', 'String', num2str(bbox(1)));
+        obj.Handles.editXMax = uicontrol('Parent', lineX, 'Style', 'edit', 'String', num2str(bbox(2)));
+        set(lineX, 'Widths', [-3 -2 -2]);
+
+        lineY = uix.HBox('Parent', allLines, 'Spacing', 10, 'Padding', 2);
+        uicontrol('Parent', lineY, 'Style', 'Text', 'String', 'Y-Axis');
+        obj.Handles.editYMin = uicontrol('Parent', lineY, 'Style', 'edit', 'String', num2str(bbox(3)));
+        obj.Handles.editYMax = uicontrol('Parent', lineY, 'Style', 'edit', 'String', num2str(bbox(4)));
+        set(lineY, 'Widths', [-3 -2 -2]);
+
+        lineZ = uix.HBox('Parent', allLines, 'Spacing', 10, 'Padding', 2);
+        uicontrol('Parent', lineZ, 'Style', 'Text', 'String', 'Z-Axis');
+        obj.Handles.editZMin = uicontrol('Parent', lineZ, 'Style', 'edit', 'String', num2str(bbox(5)));
+        obj.Handles.editZMax = uicontrol('Parent', lineZ, 'Style', 'edit', 'String', num2str(bbox(6)));
+        set(lineZ, 'Widths', [-3 -2 -2]);
+
+        lineButtons = uix.HButtonBox('Parent', allLines, 'Spacing', 10, 'Padding', 2);
+        obj.Handles.OKButton = uicontrol('Parent', lineButtons, ...
             'Style', 'pushbutton', ...
             'String', 'OK', ...
             'Callback', @obj.onButtonOK);
+        obj.Handles.CancelButton = uicontrol('Parent', lineButtons, ...
+            'Style', 'pushbutton', ...
+            'String', 'Cancel', ...
+            'Callback', @obj.onButtonCancel);
+        set(lineButtons, 'ButtonSize', [130 35]);
 
-        uicontrol('Parent', grid, 'Style', 'Text', 'String', 'Max.');
-        obj.Handles.editXMax = uicontrol('Parent', grid, 'Style', 'edit', 'String', num2str(bbox(2)));
-        obj.Handles.editYMax = uicontrol('Parent', grid, 'Style', 'edit', 'String', num2str(bbox(4)));
-        obj.Handles.editZMax = uicontrol('Parent', grid, 'Style', 'edit', 'String', num2str(bbox(6)));
-        uix.Empty('Parent', grid);
-
-        set(grid, 'Widths', [-3 -2 -2], 'Heights', [-1 -1 -1 -1 -1]);
+        set(allLines, 'Heights', [40 40 40 40 50]);
+        pos = get(hFig, 'Position');
+        pos(3:4) = [450 250];
+        set(hFig, 'Position', pos);
     end
 
 end % end methods
@@ -94,6 +110,10 @@ methods
         obj.Frame.Scene.DisplayOptions.ZAxis.Limits = [zmin zmax];
 
         refreshDisplay(obj.Frame.SceneRenderer);
+    end
+
+    function onButtonCancel(obj, varargin)
+        close(obj.Handles.figure);
     end
 end
 
