@@ -140,8 +140,14 @@ methods
             return;
         end
         
+        % default name for mesh
+        name = '[NoName]';
+
         % in case of a struct, try convert to mesh
         if isstruct(mesh)
+            if isfield(mesh, 'name')
+                name = mesh.name;
+            end
             mesh = mv.TriMesh(mesh);
         end
 
@@ -150,9 +156,7 @@ methods
         end
         
         % Checks if mesh name was specified
-        if length(varargin) < 2
-            name = '[NoName]';
-        else
+        if length(varargin) > 1
             name = varargin{2};
         end
 
