@@ -64,6 +64,7 @@ methods
         scene = mv.app.Scene();
         if ~isempty(mh)
             scene.addMeshHandle(mh);
+            updateBoundingBox(scene);
         end
         
         % creates the new frame
