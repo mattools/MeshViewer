@@ -25,6 +25,7 @@ if nargin == 0
     mesh = [];
 
 elseif nargin == 1
+    % single argument -> assume a mesh, either as struct or as Mesh class
     mesh = varargin{1};
     if isa(mesh, 'mv.TriMesh')
         % nothing to do!
@@ -33,6 +34,7 @@ elseif nargin == 1
         v = mesh.vertices;
         f = mesh.faces;
         mesh = mv.TriMesh(v, f);
+        % retrieve name of input argument to initialize mesh name
         meshName = inputname(1);
     else
         error('Requires the input to be a mesh structure or a Mesh class instance');

@@ -142,6 +142,7 @@ methods
             addPlugin(viewMenu, mv.plugins.view.ToggleLight(), 'Toggle Light', 'Separator', 'on');
             addPlugin(viewMenu, mv.plugins.view.ToggleAxisLinesDisplay(), 'Toggle Axis Lines Display');
             addPlugin(viewMenu, mv.plugins.view.PrintAxisProperties(), 'Print Axis Properties', true);
+            addPlugin(viewMenu, mv.plugins.view.ViewXYSlice(), 'View XY Slice', true);
 
             
             % Process Menu Definition 
@@ -428,5 +429,6 @@ methods
 %         updateMeshSelectionDisplay(obj);
     end
 end
+
 end % end classdef
 
