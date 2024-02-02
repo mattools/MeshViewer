@@ -118,21 +118,137 @@ methods
 end
 
 
-%% Basic information about mesh
+%% Vertex management methods
 methods
     function nv = vertexCount(obj)
         % Return the number of vertices within the mesh.
         nv = size(obj.Vertices, 1);
     end
-    
+end
+
+
+%% Edge management methods
+methods
+    function ne = edgeCount(obj)
+        % Return the number of edges within the mesh.
+        ne = size(obj.Edges, 1);
+    end
+
+    function ensureValidEdges(obj)
+        % Compute the Edges property if it is empty.
+        if isempty(obj.Edges)
+            computeEdges(obj);
+        end
+    end
+
+    function ensureValidEdgeFaces(obj)
+        % Compute the EdgeFaces property if it is empty.
+        if isempty(obj.EdgeFaces)
+            computeEdgeFaces(obj);
+        end
+    end
+end
+
+
+
+%% Face management methods
+methods
     function nf = faceCount(obj)
         % Return the number of faces within the mesh.
         nf = size(obj.Faces, 1);
     end
     
-    function ne = edgeCount(obj)
-        % Return the number of edges within the mesh.
-        ne = size(obj.Edges, 1);
+    function ensureValidFaceEdges(obj)
+        % Compute the FaceEdges property if it is empty.
+        if isempty(obj.FaceEdges)
+            computeFaceEdges(obj);
+        end
+    end
+end
+
+
+%% private topology computation methods
+methods (Access = private)
+    function computeEdges(obj)
+        % Update the property Edges.
+        
+        % create initial edge array (including duplicates)
+        edges = [...
+            obj.Faces(:,1) obj.Faces(:,2) ; ...
+            obj.Faces(:,2) obj.Faces(:,3) ; ...
+            obj.Faces(:,3) obj.Faces(:,1)];
+        
+        % remove duplicate edges, and sort the result
+        obj.Edges = sortrows(unique(sort(edges, 2), 'rows'));
+    end
+    
+    function edgeFaces = computeEdgeFaces(obj)
+        % Update the property EdgeFaces.
+        
+        % ensure edge array is computed
+        ensureValidEdges(obj);
+        
+        % allocate memory for result
+        nEdges = size(obj.Edges, 1);
+        obj.EdgeFaces = cell(1, nEdges);
+        
+        % iterate on faces
+        nFaces = size(obj.Faces, 1);
+        for iFace = 1:nFaces
+            face = obj.Faces(iFace, :);
+            
+            % iterate on edges of current face
+            for j = 1:3
+                % vertex indices of current edge
+                iv1 = face(j);
+                iv2 = face(mod(j, 3) + 1);
+                
+                % do not process edges with same vertices
+                if iv1 == iv2
+                    continue;
+                end
+                
+                iEdge = all(ismember(obj.Edges, [iv1 iv2]), 2);
+                obj.EdgeFaces{iEdge} = [obj.EdgeFaces{iEdge} iFace];
+            end
+        end
+        
+        edgeFaces = obj.EdgeFaces;
+    end
+    
+    function computeFaceEdges(obj)
+        % Update the property FaceEdges.
+        %
+        % Used by:
+        %   subdivide
+        
+        % ensure edge array is computed (edges are sorted)
+        ensureValidEdges(obj);
+        
+        % allocate result
+        nFaces = faceCount(obj);
+        obj.FaceEdges = zeros(nFaces, 3);
+        
+        % compute edge indices for each face
+        for iFace = 1:nFaces
+            % extract vertex indices of current face
+            face = obj.Faces(iFace, :);
+            
+            % for each pair of adjacent vertices, find the index of the matching
+            % row in the edges array
+            fei = zeros(1, 3);
+            for iEdge = 1:3
+                % compute index of each edge vertex
+                edge = sort([face(iEdge) face(mod(iEdge, 3) + 1)]);
+                v1 = edge(1);
+                v2 = edge(2);
+                
+                % find the matching row
+                ind = find(obj.Edges(:,1) == v1 & obj.Edges(:,2) == v2);
+                fei(iEdge) = ind;
+            end
+            obj.FaceEdges(iFace, :) = fei;
+        end
     end
 end
 
