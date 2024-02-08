@@ -35,7 +35,7 @@ end % end constructors
 methods
     function run(obj, frame, src, evt) %#ok<INUSL>
         
-        addNewMeshFrame(frame.gui);
+        addNewMeshFrame(frame.Gui);
     end
     
 end % end methods

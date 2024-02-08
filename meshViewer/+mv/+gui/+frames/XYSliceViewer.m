@@ -78,7 +78,7 @@ methods
         function setupMenu(hf)
             
             % File Menu Definition 
-            fileMenu = uimenu(hf, 'Label', '&Files');
+            % fileMenu = uimenu(hf, 'Label', '&Files');
         end
 
 
@@ -102,13 +102,11 @@ methods
             % slider for slice
             zmin = box(5);
             zmax = box(6);
-            zExtent = zmax - zmin;
-            zstep1 = 1/zExtent;
-            zstep2 = min(10/zExtent, .5);
+            zsteps = [0.005 0.05]; % 1/200 and 1/20
             obj.Handles.ZSlider = uicontrol('Style', 'slider', ...
                 'Parent', mainPanel, ...
                 'Min', zmin, 'Max', zmax', ...
-                'SliderStep', [zstep1 zstep2], ...
+                'SliderStep', zsteps, ...
                 'Value', obj.SlicePosition, ...
                 'Callback', @obj.onSliceSliderChanged, ...
                 'BackgroundColor', [1 1 1]);
@@ -157,36 +155,19 @@ methods
         cla(ax);
         hold on;
 
-        % % remove handles from struct
-        % names = fieldnames(obj.Handles);
-        % for i = 1:length(names)
-        %     obj.Handles.(names{i}) = [];
-        % end
-        
-        % % compute bounding box that encloses all meshes
-        % % updateBoundingBox(obj.Scene);
-        % bbox = viewBox(obj.Scene.DisplayOptions);
-        
-        % % update axis bouding box
-        % set(ax, 'XLim', bbox(1:2));
-        % set(ax, 'YLim', bbox(3:4));
-        % set(ax, 'ZLim', bbox(5:6));
-
         plane = [0 0 obj.SlicePosition   1 0 0   0 1 0];
 
         % display the meshes
         for i = 1:length(obj.Scene.MeshHandleList)
             mh = obj.Scene.MeshHandleList{i};
             mesh = mh.Mesh;
-            slice = intersectPlaneMesh(plane, mesh.Vertices, mesh.Faces);
-            drawPolygon3d(ax, slice);
-            % h = drawMesh(ax, mesh.Vertices, mesh.Faces);
-            % apply(mh.DisplayOptions, h);
-            % mh.Handles.Patch = h;
+            [polys, closedFlags] = planeIntersection(mesh, plane);
+
+            % display intersections using face color for drawing polylines
+            drawPolygon3d(ax, polys(closedFlags), 'color', mh.DisplayOptions.FaceColor);
         end
 
         % updateAxisLinesDisplay(obj);
-        
         % annotateAxis(obj);
 
         obj.Computing = false;
@@ -198,11 +179,10 @@ methods
     function onSliceSliderChanged(obj, hObject, eventdata) %#ok<*INUSD>
         
         zslice = get(hObject, 'Value');
-        
-        fprintf('Udpdate slice position: %f\n', zslice);
         obj.SlicePosition = zslice;
 
         refreshDisplay(obj);
+
         % % propagate change of current slice event to ImageDisplayListeners
         % evt = struct('Source', obj, 'EventName', 'CurrentSliceChanged');
         % processCurrentSliceChanged(obj, obj.Handles.Figure, evt);

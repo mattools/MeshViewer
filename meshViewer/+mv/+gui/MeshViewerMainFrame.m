@@ -112,7 +112,6 @@ methods
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateRhombododecahedron(), 'RhomboDodecahedron', true);
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateTetrakaidecahedron(), 'Tetrakaidecahedron');
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateSoccerBall(), 'Soccer Ball');
-%             uimenu(fileMenu, 'Label', 'Save', 'Separator', 'on');
             addPlugin(fileMenu, mv.plugins.file.SaveMeshAsStructure(), 'Save as .mat File...', true);
             addPlugin(fileMenu, mv.plugins.file.CloseCurrentFrame(), 'Close', true);
 %             addPlugin(fileMenu, mv.plugins.file.Quit(), 'Quit');
