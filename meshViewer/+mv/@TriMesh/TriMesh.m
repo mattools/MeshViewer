@@ -1,7 +1,9 @@
 classdef TriMesh < handle
 %TRIMESH Class for representing a triangular 3D mesh.
 %
-%   output = TriMesh(input)
+%   MESH = TriMesh(V, F)
+%
+%   Restricted to manifold triangular meshes. Can have boundaries.
 %
 %   Example
 %   TriMesh
@@ -25,10 +27,15 @@ properties
     % optionnal information about edges, as a Ne-by-2 array of integers.
     Edges = [];
     
-    % more topological information
+    % The list of faces adjacent to each vertex.
     VertexFaces = {};
+    % The list of edges adjacent to each vertex.
     VertexEdges = {};
+
+    % The two faces around each edge, as a NE-by-2 array of face indices.
     EdgeFaces = [];
+
+    % The three edges around each fave, as a NF-by-3 array of edge indices.
     FaceEdges = [];
     
     % some geometrical informations
@@ -36,6 +43,7 @@ properties
     EdgeNormals = [];
     VertexNormals = [];
 end
+
 
 %% Constructor
 methods
@@ -58,6 +66,7 @@ methods
         end
     end
 end
+
 
 %% Geometric inforamtion about mesh
 methods
@@ -178,10 +187,44 @@ methods (Access = private)
             obj.Faces(:,2) obj.Faces(:,3) ; ...
             obj.Faces(:,3) obj.Faces(:,1)];
         
-        % remove duplicate edges, and sort the result
-        obj.Edges = sortrows(unique(sort(edges, 2), 'rows'));
+        % remove duplicate edges (result is sorted)
+        obj.Edges = unique(sort(edges, 2), 'rows');
     end
     
+    function computeEdgesAndFaces(obj)
+        % Update the properties Edges, EdgeFaces and FaceEdges.
+        %
+        % Making the initialization togehter allows to make it slightly
+        % faster than separately.
+        
+        % create initial edge array (including duplicates)
+        edges = [...
+            obj.Faces(:,1) obj.Faces(:,2) ; ...
+            obj.Faces(:,2) obj.Faces(:,3) ; ...
+            obj.Faces(:,3) obj.Faces(:,1)];
+        
+        % identify unique edges
+        [obj.Edges, ~, ib] = unique(sort(edges, 2), 'rows');
+        nEdges = size(obj.Edges, 1);
+        
+        % create linear array of face index for each edge in initial array
+        nFaces = size(obj.Faces, 1);
+        edgeFaces0 = repmat((1:nFaces)', 3, 1);
+        
+        % For each edge, retrieve index of the 1 or 2 adjacent face(s)
+        obj.EdgeFaces = zeros(nEdges,2);
+        for ie = 1:nEdges
+            inds = edgeFaces0(ib == ie);
+            obj.EdgeFaces(ie, 1:length(inds)) = inds;
+        end
+
+        % For each face, retrieve index of the 3 adjacent edges
+        obj.FaceEdges = zeros(nFaces,3);
+        for iFace = 1:nFaces
+            obj.FaceEdges(iFace, :) = ib(edgeFaces0 == iFace);
+        end
+    end
+
     function edgeFaces = computeEdgeFaces(obj)
         % Update the property EdgeFaces.
         
