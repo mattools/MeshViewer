@@ -114,14 +114,21 @@ methods
         % Return a formatted mesh handle or empty.
         %
         % Usages
-        %   createMeshHandle(gui)
-        %   createMeshHandle(gui, mesh)
-        %   createMeshHandle(gui, mesh, initName)
+        %   MH = createMeshHandle(obj)
+        %   MH = createMeshHandle(obj, mesh)
+        %   MH = createMeshHandle(obj, mesh, initName)
         %
-        % mesh: an instance of TriMesh or MeshHandle
-        % initName: initial proposal for name. If already exists within the
-        %   scene, appends a suffix
-        
+        % Input arguments:
+        %   obj: the instance of Scene
+        %   mesh: an instance of TriMesh or MeshHandle
+        %   initName: initial proposal for name. If already exists within the
+        %     scene, appends a suffix
+        % Output:
+        %   MH is an instance of mv.app.MeshHandle
+        %
+        % See also
+        %   mv.app.MeshHandle, mv.TriMesh
+
         % special case of no mesh
         if isempty(varargin)
             mh = [];

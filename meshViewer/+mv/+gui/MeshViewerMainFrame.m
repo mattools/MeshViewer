@@ -284,12 +284,27 @@ end % end constructors
 
 %% General methods
 methods
-    function addNewMesh(obj, mesh, varargin)
+    function mh = addNewMesh(obj, mesh, varargin)
         % Add a new mesh to the scene, and update displays.
         %
         % Usage:
+        %   addNewMesh(frame, mesh);
         %   addNewMesh(frame, mesh, name);
-        
+        %   MH = addNewMesh(...);
+        %
+        %   addNewMesh(frame, mesh);
+        %   Adds a new mesh, using a default name.
+        %
+        %   addNewMesh(frame, mesh, name);
+        %   Adds a new mesh, using the specified name.
+        %
+        %   MH = addNewMesh(...);
+        %   Also returns a handle on the created mesh object. The MH object
+        %   is an instance of mv.app.MeshHandle.
+        %
+        %   See Also
+        %     mv.app.Scene.createMeshHandle
+
         % add new mesh to the scene
         mh = createMeshHandle(obj.Scene, mesh, varargin{:});
         obj.Scene.addMeshHandle(mh);
