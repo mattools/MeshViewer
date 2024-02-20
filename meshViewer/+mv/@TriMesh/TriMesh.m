@@ -29,6 +29,7 @@ properties
     
     % The list of faces adjacent to each vertex.
     VertexFaces = {};
+    
     % The list of edges adjacent to each vertex.
     VertexEdges = {};
 

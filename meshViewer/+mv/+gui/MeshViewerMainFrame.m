@@ -142,6 +142,8 @@ methods
             addPlugin(viewMenu, mv.plugins.view.ToggleAxisLinesDisplay(), 'Toggle Axis Lines Display');
             addPlugin(viewMenu, mv.plugins.view.PrintAxisProperties(), 'Print Axis Properties', true);
             addPlugin(viewMenu, mv.plugins.view.ViewXYSlice(), 'View XY Slice', true);
+            addPlugin(viewMenu, mv.plugins.view.ViewXZSlice(), 'View XZ Slice');
+            addPlugin(viewMenu, mv.plugins.view.ViewYZSlice(), 'View YZ Slice');
 
             
             % Process Menu Definition 
@@ -166,7 +168,7 @@ methods
             
             % Analyze Menu Definition 
             
-            analyzeMenu = uimenu(hf, 'Label', '&Analyze');
+            analyzeMenu = uimenu(hf, 'Label', '&Measures');
             addPlugin(analyzeMenu, mv.plugins.analyze.ComputeMeshVolume(), 'Volume');
             addPlugin(analyzeMenu, mv.plugins.analyze.ComputeMeshArea(), 'Surface Area');
             addPlugin(analyzeMenu, mv.plugins.analyze.ComputeMeshMeanBreadth(), 'Mean Breadth');

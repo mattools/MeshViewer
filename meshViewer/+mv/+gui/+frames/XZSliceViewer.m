@@ -1,10 +1,10 @@
-classdef XYSliceViewer < handle
+classdef XZSliceViewer < handle
 % One-line description here, please.
 %
-%   Class XYSliceViewer
+%   Class XZSliceViewer
 %
 %   Example
-%   XYSliceViewer
+%   XZSliceViewer
 %
 %   See also
 %
@@ -38,21 +38,21 @@ end % end properties
 
 %% Constructor
 methods
-    function obj = XYSliceViewer(gui, scene)
+    function obj = XZSliceViewer(gui, scene)
         % Constructor for XYSliceViewer class.
         obj.Gui = gui;
         obj.Scene = scene;
 
         box = viewBox(scene.DisplayOptions);
-        zPlane = mean([box(5) box(6)]);
-        obj.SlicePosition = zPlane;
+        yPlane = mean([box(3) box(4)]);
+        obj.SlicePosition = yPlane;
         
         % create default figure
         fig = figure(...
             'MenuBar', 'none', ...
             'NumberTitle', 'off', ...
             'NextPlot', 'new', ...
-            'Name', 'XY Slice Viewer');
+            'Name', 'XZ Slice Viewer');
         
         % create main figure menu
         setupMenu(fig);
@@ -100,20 +100,20 @@ methods
                 'Position', [0 0 1 1]);
             
             % slider for slice
-            zmin = box(5);
-            zmax = box(6);
-            zsteps = [0.005 0.05]; % 1/200 and 1/20
-            obj.Handles.ZSlider = uicontrol('Style', 'slider', ...
+            ymin = box(3);
+            ymax = box(4);
+            ysteps = [0.005 0.05]; % 1/200 and 1/20
+            obj.Handles.YSlider = uicontrol('Style', 'slider', ...
                 'Parent', mainPanel, ...
-                'Min', zmin, 'Max', zmax', ...
-                'SliderStep', zsteps, ...
+                'Min', ymin, 'Max', ymax', ...
+                'SliderStep', ysteps, ...
                 'Value', obj.SlicePosition, ...
                 'Callback', @obj.onSliceSliderChanged, ...
                 'BackgroundColor', [1 1 1]);
 
             % code for dragging the slider thumb
             % @see http://undocumentedmatlab.com/blog/continuous-slider-callback
-            addlistener(obj.Handles.ZSlider, ...
+            addlistener(obj.Handles.YSlider, ...
                 'ContinuousValueChange', @obj.onSliceSliderChanged);
 
             % panel for scene display
@@ -125,13 +125,13 @@ methods
                 'Units', 'normalized', ...
                 'Position', [0 0 1 1], ...
             	'XLim', box([1 2]), ...
-            	'YLim', box([3 4]), ...
+            	'YLim', box([5 6]), ...
                 'DataAspectRatio', [1 1 1], ...
             	'XTick', [], ...
             	'YTick', [], ...
             	'Box', 'off');
             axis(ax, 'equal');
-            axis(ax, box(1:4));
+            axis(ax, box([1 2 5 6]));
 
             % keep widgets handles
             obj.Handles.MainAxis = ax;
@@ -155,7 +155,7 @@ methods
         cla(ax);
         hold on;
 
-        plane = [0 0 obj.SlicePosition   1 0 0   0 1 0];
+        plane = [0 obj.SlicePosition 0   1 0 0   0 0 1];
 
         % display the meshes
         for i = 1:length(obj.Scene.MeshHandleList)
@@ -164,7 +164,14 @@ methods
             [polys, closedFlags] = planeIntersection(mesh, plane);
 
             % display intersections using face color for drawing polylines
-            drawPolygon3d(ax, polys(closedFlags), 'color', mh.DisplayOptions.FaceColor, 'LineWidth', 2);
+            slices = cellfun(@(x) {x(:,[1 3])}, polys(closedFlags));
+            if ~isempty(slices)
+                drawPolygon(ax, slices, 'color', mh.DisplayOptions.FaceColor, 'LineWidth', 2);
+            end
+            slices = cellfun(@(x) {x(:,[1 3])}, polys(~closedFlags));
+            if ~isempty(slices)
+                drawPolyline(ax, slices, 'color', mh.DisplayOptions.FaceColor, 'LineWidth', 2);
+            end
         end
 
         % updateAxisLinesDisplay(obj);
@@ -178,8 +185,8 @@ end
 methods
     function onSliceSliderChanged(obj, hObject, eventdata) %#ok<*INUSD>
         
-        zslice = get(hObject, 'Value');
-        obj.SlicePosition = zslice;
+        yslice = get(hObject, 'Value');
+        obj.SlicePosition = yslice;
 
         refreshDisplay(obj);
 
