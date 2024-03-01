@@ -98,7 +98,8 @@ methods
             
             fileMenu = uimenu(hf, 'Label', '&Files');
             addPlugin(fileMenu, mv.plugins.file.CreateNewSceneFrame(), 'New Empty Scene');
-            addPlugin(fileMenu, mv.plugins.file.OpenMeshFile(), 'Open Mesh File...', 'Separator', 'on');
+            addPlugin(fileMenu, mv.plugins.file.OpenSceneAsStructure(), 'Open MeshViewer Scene File...');
+            addPlugin(fileMenu, mv.plugins.file.OpenMeshFile(), 'Open Mesh File...', true);
             addPlugin(fileMenu, mv.plugins.file.OpenMeshAsStructure(), 'Open MeshViewer Mesh File...');
             importMeshesMenu = uimenu(fileMenu, 'Label', 'Import');
             addPlugin(importMeshesMenu, mv.plugins.file.ImportMeshFromStruct(), 'Mesh struct from Workspace');
@@ -112,6 +113,7 @@ methods
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateRhombododecahedron(), 'RhomboDodecahedron', true);
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateTetrakaidecahedron(), 'Tetrakaidecahedron');
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateSoccerBall(), 'Soccer Ball');
+            addPlugin(fileMenu, mv.plugins.file.SaveSceneAsStructure(), 'Save Scene as .mat File...', true);
             addPlugin(fileMenu, mv.plugins.file.SaveMeshAsStructure(), 'Save current mesh as .mat File...', true);
             addPlugin(fileMenu, mv.plugins.file.CloseCurrentFrame(), 'Close', true);
 %             addPlugin(fileMenu, mv.plugins.file.Quit(), 'Quit');
@@ -386,7 +388,7 @@ methods
     end
     
     function updateTitle(obj)
-        % set up title of the figure, containing name of doc
+        % set up title of the figure, containing name of the scene.
         title = sprintf('%s - MeshViewer', obj.Scene.Name);
         set(obj.Handles.Figure, 'Name', title);
     end

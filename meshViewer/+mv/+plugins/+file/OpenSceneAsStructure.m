@@ -1,10 +1,10 @@
-classdef OpenMeshAsStructure < mv.gui.Plugin
-% Opens mesh file and import into current frame.
+classdef OpenSceneAsStructure < mv.gui.Plugin
+% Opens scene file and display it into a new frame.
 %
-%   Class OpenMeshAsStructure
+%   Class OpenSceneAsStructure
 %
 %   Example
-%   OpenMeshAsStructure
+%   OpenSceneAsStructure
 %
 %   See also
 %     SaveMeshAsStructure
@@ -23,8 +23,8 @@ end % end properties
 
 %% Constructor
 methods
-    function obj = OpenMeshAsStructure(varargin)
-    % Constructor for the OpenMeshAsStructure class
+    function obj = OpenSceneAsStructure(varargin)
+    % Constructor for the OpenSceneAsStructure class
     end
 end % end constructors
 
@@ -34,8 +34,8 @@ methods
     function run(obj, frame, src, evt) %#ok<INUSL>
        
         % Opens a dialog to choose a mesh file
-        pattern = fullfile(frame.Gui.LastPathOpen, '*.mesh');
-        [fileName, filePath] = uigetfile(pattern, 'Read .mat Mesh file');
+        pattern = fullfile(frame.Gui.LastPathOpen, '*.mat');
+        [fileName, filePath] = uigetfile(pattern, 'Read .mat Scene file');
         
         % check if cancel
         if fileName == 0
@@ -51,24 +51,22 @@ methods
         str = load(fullfile(filePath, fileName), '-mat');
         
         % check input file validity
-        if ~isfield(str, 'type')
+        if ~isfield(str, 'Type')
             error('input file does not contain any "type" field');
         end
-        if ~strcmp(str.type, 'MeshHandle')
-            error('Requires mat file containing structure with MeshHandle type');
+        if ~strcmp(str.Type, 'mv.app.Scene')
+            error('Requires mat file containing structure with mv.app.Scene type');
         end
         
         % parse mesh handle from loaded structure
-        meshHandle = mv.app.MeshHandle.fromStruct(str);
+        scene = mv.app.Scene.fromStruct(str);
         
         % display timing
         t = toc;
         fprintf(' (done in %8.3f ms)\n', t*1000);
 
-        [path, name] = fileparts(fileName); %#ok<ASGLU>
-        addNewMesh(frame, meshHandle, name);
+        mv.gui.MeshViewerMainFrame(frame.Gui, scene);
     end
-    
 end % end methods
 
 end % end classdef

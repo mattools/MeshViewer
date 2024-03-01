@@ -1,5 +1,5 @@
 classdef SaveMeshAsStructure < mv.gui.Plugin
-% Save selected mesh as a structure in a mat file
+% Save selected mesh as a structure in a mat file.
 %
 %   Class SaveMeshAsStructure
 %
@@ -7,7 +7,7 @@ classdef SaveMeshAsStructure < mv.gui.Plugin
 %   SaveMeshAsStructure
 %
 %   See also
-%
+%     OpenMeshAsStructure
 
 % ------
 % Author: David Legland

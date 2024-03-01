@@ -227,6 +227,7 @@ methods
         % Convert to a structure to facilitate serialization.
         
         % create structure with necessary fields
+        str.Type = 'mv.app.Scene';
         str.Name = obj.Name;
         str.BaseDir = obj.BaseDir;
         str.DisplayOptions = toStruct(obj.DisplayOptions);
@@ -250,7 +251,9 @@ methods (Static)
         names = fieldnames(str);
         for i = 1:length(names)
             name = names{i};
-            if strcmpi(name, 'Name')
+            if strcmpi(name, 'Type')
+                % do nothing
+            elseif strcmpi(name, 'Name')
                 scene.Name = str.(name);
             elseif strcmpi(name, 'MeshHandleList')
                 meshStructs = str.(name);
