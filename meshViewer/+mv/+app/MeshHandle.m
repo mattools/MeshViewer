@@ -42,7 +42,7 @@ end % end properties
 %% Constructor
 methods
     function obj = MeshHandle(mesh, name)
-        % Constructor for MeshHandle class
+        % Constructor for MeshHandle class.
         
         % store the data and ID
         obj.Mesh = mesh;
@@ -50,7 +50,6 @@ methods
         
         % create new display options
         obj.DisplayOptions = mv.app.MeshDisplayOptions;
-        
     end
 
 end % end constructors
@@ -64,25 +63,34 @@ end % end methods
 %% Serialization methods
 methods
     function str = toStruct(obj)
-        % Convert to a structure to facilitate serialization
-        str = struct('type', 'MeshHandle', ...
-            'name', obj.Name, ...
-            'displayOptions', toStruct(obj.DisplayOptions), ...
-            'mesh', toStruct(obj.Mesh));
+        % Convert to a structure to facilitate serialization.
+        str = struct('Type', 'mv.app.MeshHandle', ...
+            'Name', obj.Name, ...
+            'DisplayOptions', toStruct(obj.DisplayOptions), ...
+            'Mesh', toStruct(obj.Mesh));
+        % Note: do not store references to graphical handles nor to
+        % modification flag.
     end
 end
+
 methods (Static)
     function mh = fromStruct(str)
-        % Create a new instance from a structure
-        if ~(isfield(str, 'name') && isfield(str, 'mesh'))
+        % Create a new instance from a structure.
+
+        names = fieldnames(str);
+        indName = find(strcmpi(names, 'Name'), 1);
+        indMesh = find(strcmpi(names, 'Mesh'), 1);
+        if isempty(indName) || isempty(indMesh)
             error('Requires fields name and mesh');
         end
         
-        mesh = mv.TriMesh.fromStruct(str.mesh);
-        mh = mv.app.MeshHandle(mesh, str.name);
+        mesh = mv.TriMesh.fromStruct(str.(names{indMesh}));
+        name = str.(names{indName});
+        mh = mv.app.MeshHandle(mesh, name);
         
-        if isfield(str, 'displayOptions')
-            mh.displayOptions = mv.app.MeshDisplayOptions.fromStruct(str.displayOptions);
+        indOptions = find(strcmpi(names, 'DisplayOptions'), 1);
+        if isempty(indOptions)
+            mh.DisplayOptions = mv.app.MeshDisplayOptions.fromStruct(str.(names{indOptions}));
         end
     end
 end

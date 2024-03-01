@@ -36,7 +36,7 @@ end % end properties
 %% Constructor
 methods
     function obj = SceneAxis(varargin)
-        % Constructor for SceneAxis class
+        % Constructor for SceneAxis class.
         
         % copy constructor
         if ~isempty(varargin) && isa(varargin{1}, 'SceneAxis')
@@ -73,38 +73,40 @@ end % end constructors
 methods
 end % end methods
 
+
 %% Serialization methods
 methods
     function str = toStruct(obj)
-        % Convert to a structure to facilitate serialization
+        % Convert to a structure to facilitate serialization.
 
         % create a structure containing all fields that differ from default
         if ~isempty(obj.Limits)
-            str.limits = obj.Limits;
+            str.Limits = obj.Limits;
         end
         if obj.Reverse
-            str.reverse = obj.Reverse;
+            str.Reverse = obj.Reverse;
         end
         if ~isempty(obj.Label)
-            str.label = obj.Label;
+            str.Label = obj.Label;
         end
         if ~isempty(obj.UnitName)
-            str.unitName = obj.UnitName;
+            str.UnitName = obj.UnitName;
         end
     end
     
     function write(obj, fileName, varargin)
-        % Write into a JSON file
+        % Write into a JSON file.
+        % (requires the jsonlab library)
         savejson('', toStruct(obj), 'FileName', fileName, varargin{:});
     end
 end
 
 methods (Static)
     function axis = fromStruct(str)
-        % Create a new instance from a structure
+        % Create a new instance from a structure.
         
         % create an empty scene
-        axis = SceneAxis();
+        axis = mv.app.SceneAxis();
         
         % parse optionnal fields
         names = fieldnames(str);
@@ -126,8 +128,8 @@ methods (Static)
     end
     
     function axis = read(fileName)
-        % Read a sceneAxis from a file in JSON format
-        axis = SceneAxis.fromStruct(loadjson(fileName));
+        % Read a sceneAxis from a file in JSON format.
+        axis = mv.app.SceneAxis.fromStruct(loadjson(fileName));
     end
 end
 

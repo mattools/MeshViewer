@@ -67,5 +67,64 @@ methods
     end
 end % end methods
 
+
+%% Serialization methods
+methods
+    function str = toStruct(obj)
+        % Convert to a structure to facilitate serialization.
+        
+        % create structure with necessary fields
+        str.XAxis = toStruct(obj.XAxis);
+        str.YAxis = toStruct(obj.YAxis);
+        str.ZAxis = toStruct(obj.ZAxis);
+        
+        % add fields in structure when they differ from default
+        if ~obj.AxisLinesVisible
+            str.AxisLinesVisible = obj.AxisLinesVisible;
+        end
+        if ~obj.LightVisible
+            str.LightVisible = obj.LightVisible;
+        end
+    end
+    
+    function write(obj, fileName, varargin)
+        % Write into a JSON file.
+        savejson('', toStruct(obj), 'FileName', fileName, varargin{:});
+    end
+end
+
+methods (Static)
+    function options = fromStruct(str)
+        % Create a new instance from a structure.
+        
+        % create an empty options object
+        options = mv.app.SceneDisplayOptions();
+
+        % parse optionnal fields
+        names = fieldnames(str);
+        for i = 1:length(names)
+            name = names{i};
+            if strcmpi(name, 'XAxis')
+                options.XAxis = mv.app.SceneAxis.fromStruct(str.(name));
+            elseif strcmpi(name, 'YAxis')
+                options.YAxis = mv.app.SceneAxis.fromStruct(str.(name));
+            elseif strcmpi(name, 'ZAxis')
+                options.ZAxis = mv.app.SceneAxis.fromStruct(str.(name));
+            elseif strcmpi(name, 'AxisLinesVisible')
+                options.AxisLinesVisible = str.(name);
+            elseif strcmpi(name, 'LightVisible')
+                options.LightVisible = str.(name);
+            else
+                warning(['Unknown SceneAxis parameter: ' name]);
+            end
+        end
+    end
+    
+    function axis = read(fileName)
+        % Read a SceneDisplayOptions object from a file in JSON format.
+        axis = mv.app.SceneDisplayOptions.fromStruct(loadjson(fileName));
+    end
+end
+
 end % end classdef
 

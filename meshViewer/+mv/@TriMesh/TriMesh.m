@@ -301,9 +301,9 @@ end
 methods
     function str = toStruct(obj)
         % Convert to a structure to facilitate serialization.
-        str = struct('type', 'mv.TriMesh', ...
-            'vertices', obj.Vertices, ...
-            'faces', obj.Faces);
+        str = struct('Type', 'mv.TriMesh', ...
+            'Vertices', obj.Vertices, ...
+            'Faces', obj.Faces);
         if ~isempty(obj.Edges)
             str.edges = obj.Edges;
         end
@@ -313,13 +313,19 @@ end
 methods (Static)
     function mesh = fromStruct(str)
         % Create a new instance from a structure.
-        if ~(isfield(str, 'vertices') && isfield(str, 'faces'))
+        
+        names = fieldnames(str);
+        indV = find(strcmpi(names, 'vertices'), 1);
+        indF = find(strcmpi(names, 'faces'), 1);
+        
+        if isempty(indV) || isempty(indF)
             error('Requires struct with two fields "vertices" and "faces"');
         end
-        if size(str.faces, 2) ~= 3
+        if size(str.(names{indF}), 2) ~= 3
             error('Requires a triangular face array');
         end
-        mesh = mv.TriMesh(str);
+
+        mesh = mv.TriMesh(str.(names{indV}), str.(names{indF}));
     end
 end
 

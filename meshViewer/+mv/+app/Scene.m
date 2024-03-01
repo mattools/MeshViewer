@@ -220,5 +220,61 @@ methods
     end
 end
 
+
+%% Serialization methods
+methods
+    function str = toStruct(obj)
+        % Convert to a structure to facilitate serialization.
+        
+        % create structure with necessary fields
+        str.Name = obj.Name;
+        str.BaseDir = obj.BaseDir;
+        str.DisplayOptions = toStruct(obj.DisplayOptions);
+        str.MeshHandleList = cellfun(@toStruct, obj.MeshHandleList);
+    end
+    
+    function write(obj, fileName, varargin)
+        % Write into a JSON file.
+        savejson('', toStruct(obj), 'FileName', fileName, varargin{:});
+    end
+end
+
+methods (Static)
+    function scene = fromStruct(str)
+        % Create a new instance from a structure.
+        
+        % create an empty options object
+        scene = mv.app.Scene();
+
+        % parse optionnal fields
+        names = fieldnames(str);
+        for i = 1:length(names)
+            name = names{i};
+            if strcmpi(name, 'Name')
+                scene.Name = str.(name);
+            elseif strcmpi(name, 'MeshHandleList')
+                meshStructs = str.(name);
+                nMeshes = length(meshStructs);
+                scene.MeshHandleList = cell(1, nMeshes);
+                for iMesh = 1:nMeshes
+                    mh = mv.app.MeshHandle.fromStruct(meshStructs(iMesh));
+                    scene.MeshHandleList{iMesh} = mh;
+                end
+            elseif strcmpi(name, 'DisplayOptions')
+                scene.DisplayOptions = mv.app.SceneDisplayOptions.fromStruct(str.(name));
+            elseif strcmpi(name, 'BaseDir')
+                scene.BaseDir = str.(name);
+            else
+                warning(['Unknown Scene parameter: ' name]);
+            end
+        end
+    end
+    
+    function axis = read(fileName)
+        % Read a SceneDisplayOptions object from a file in JSON format.
+        axis = mv.app.Scene.fromStruct(loadjson(fileName));
+    end
+end
+
 end % end classdef
 
