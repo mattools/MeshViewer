@@ -112,7 +112,7 @@ methods
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateRhombododecahedron(), 'RhomboDodecahedron', true);
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateTetrakaidecahedron(), 'Tetrakaidecahedron');
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateSoccerBall(), 'Soccer Ball');
-            addPlugin(fileMenu, mv.plugins.file.SaveMeshAsStructure(), 'Save as .mat File...', true);
+            addPlugin(fileMenu, mv.plugins.file.SaveMeshAsStructure(), 'Save current mesh as .mat File...', true);
             addPlugin(fileMenu, mv.plugins.file.CloseCurrentFrame(), 'Close', true);
 %             addPlugin(fileMenu, mv.plugins.file.Quit(), 'Quit');
             
@@ -120,8 +120,9 @@ methods
             % Edit Menu Definition 
             
             editMenu = uimenu(hf, 'Label', '&Edit');
-            addPlugin(editMenu, mv.plugins.edit.RenameMesh(), 'Rename');
-            addPlugin(editMenu, mv.plugins.edit.DuplicateMesh(), 'Duplicate', true);
+            addPlugin(editMenu, mv.plugins.edit.RenameScene(), 'Rename Scene');
+            addPlugin(editMenu, mv.plugins.edit.RenameMesh(), 'Rename Mesh', true);
+            addPlugin(editMenu, mv.plugins.edit.DuplicateMesh(), 'Duplicate');
             addPlugin(editMenu, mv.plugins.edit.RemoveMesh(), 'Delete');
             addPlugin(editMenu, mv.plugins.edit.SelectAll(), 'Select All', true);
             addPlugin(editMenu, mv.plugins.edit.SelectNone(), 'Select None');
@@ -386,8 +387,7 @@ methods
     
     function updateTitle(obj)
         % set up title of the figure, containing name of doc
-        title = 'MeshViewer';
-%         title = sprintf('%s - MeshViewer', obj.doc.name);
+        title = sprintf('%s - MeshViewer', obj.Scene.Name);
         set(obj.Handles.Figure, 'Name', title);
     end
     

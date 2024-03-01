@@ -18,6 +18,9 @@ classdef Scene < handle
 
 %% Properties
 properties
+    % A name for the scene.
+    Name;
+
     % set of mesh handles within this scene, as a cell array.
     MeshHandleList;
     

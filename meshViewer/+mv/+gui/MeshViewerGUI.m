@@ -51,7 +51,7 @@ end % construction function
 %% General methods
 methods
     function frame = addNewMeshFrame(obj, varargin)
-        % Create a new frame, eventually containing the specified mesh
+        % Create a new frame, eventually containing the specified mesh.
         %
         % usage:
         %   frame = addNewMeshFrame(gui);
@@ -62,6 +62,9 @@ methods
         
         % creates a new scene containing the mesh
         scene = mv.app.Scene();
+        scene.Name = 'NoName';
+
+        % if mesh is specifiesd, add it to the scene
         if ~isempty(mh)
             scene.addMeshHandle(mh);
             updateBoundingBox(scene);
