@@ -1,12 +1,36 @@
 function varargout = MeshViewer(varargin)
 %MESHVIEWER Launcher for the MeshViewer application.
 %
-%   output = MeshViewer(input)
+%   Launch a new MeshViewer frame. The frame can be initialized with a mesh
+%   to quickly display it.
 %
-%   Example
-%   MeshViewer
+%   Syntax
+%     MeshViewer;
+%     MeshViewer(MESH);
+%     MeshViewer(V, F);
+%     viewer = MeshViewer(...);
+%
+%   Input Arguments
+%     MESH - A Matlab struct containing fields 'vertices' and 'faces'.
+%     'vertices' field is a NV-by-3 numeric array containing  vertex
+%     coordinates. 'faces' field is a NF-by-3 or NF-by-4 numeric array, or
+%     a NF-by-1 cell array containing the vertex indices of each face. 
+%     V,F - The vertices and faces of the mesh specified as two distinct
+%     input arguments. 
+%
+%   Output Arguments
+%     viewer - the handle to the newly created frame.
+%
+%   Examples
+%     % creates a new empty frame.
+%     MeshViewer
+%
+%     % creates a new frame initialized with a default mesh
+%     [v, f] = createIcosahedron;
+%     MeshViewer(v, f);
 %
 %   See also
+%     mv.app.MeshViewerAppData, mv.gui.MeshViewerMainFrame
 %
  
 % ------
@@ -18,21 +42,23 @@ function varargout = MeshViewer(varargin)
 
 %% Parse input argument(s)
 
-meshName = '';
+% default values for initial mesh
+mesh = [];
+meshName = 'Mesh';
 
-if nargin == 0
-    % no argument -> create a new empty viewer
-    mesh = [];
+% check if a mesh is provided as input
+if nargin == 1
+    % single argument -> assume a mesh is provided, either as a Matlab
+    % struct or as Mesh class 
+    var1 = varargin{1};
+    if isa(var1, 'mv.TriMesh')
+        % keep reference to mesh
+        mesh = var1;
 
-elseif nargin == 1
-    % single argument -> assume a mesh, either as struct or as Mesh class
-    mesh = varargin{1};
-    if isa(mesh, 'mv.TriMesh')
-        % nothing to do!
-    elseif isstruct(mesh)
+    elseif isstruct(var1)
         % parses vertices and faces from structure
-        v = mesh.vertices;
-        f = mesh.faces;
+        v = var1.vertices;
+        f = var1.faces;
         mesh = mv.TriMesh(v, f);
         % retrieve name of input argument to initialize mesh name
         meshName = inputname(1);
@@ -46,13 +72,8 @@ elseif nargin == 2
     v = varargin{1};
     f = varargin{2};
     mesh = mv.TriMesh(v, f);
-else
-    error('Unable to process input arguments');
 end
 
-if isempty(meshName)
-    meshName = 'Mesh';
-end
 
 %% Create data for applicatino
 
@@ -66,6 +87,7 @@ else
     viewer = addNewMeshFrame(gui);
 end
 
+% return handleto current viewer if requested
 if nargout > 0
     varargout = {viewer};
 end
