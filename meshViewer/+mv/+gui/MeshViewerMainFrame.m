@@ -99,9 +99,10 @@ methods
             fileMenu = uimenu(hf, 'Label', '&Files');
             addPlugin(fileMenu, mv.plugins.file.CreateNewSceneFrame(), 'New Empty Scene');
             addPlugin(fileMenu, mv.plugins.file.OpenSceneAsStructure(), 'Open MeshViewer Scene File...');
+            addPlugin(fileMenu, mv.plugins.file.SaveSceneAsStructure(), 'Save MeshViewer Scene File...');
             addPlugin(fileMenu, mv.plugins.file.OpenMeshFile(), 'Open Mesh File...', true);
             addPlugin(fileMenu, mv.plugins.file.OpenMeshAsStructure(), 'Open MeshViewer Mesh File...');
-            importMeshesMenu = uimenu(fileMenu, 'Label', 'Import');
+            importMeshesMenu = uimenu(fileMenu, 'Label', 'Import Mesh');
             addPlugin(importMeshesMenu, mv.plugins.file.ImportMeshFromStruct(), 'Mesh struct from Workspace');
             addPlugin(importMeshesMenu, mv.plugins.file.ImportMeshVFFromWorkspace(), 'Vertices+Faces from Workspace');
             demoMeshesMenu = uimenu(fileMenu, 'Label', 'Sample Meshes');
@@ -113,8 +114,7 @@ methods
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateRhombododecahedron(), 'RhomboDodecahedron', true);
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateTetrakaidecahedron(), 'Tetrakaidecahedron');
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateSoccerBall(), 'Soccer Ball');
-            addPlugin(fileMenu, mv.plugins.file.SaveSceneAsStructure(), 'Save Scene as .mat File...', true);
-            addPlugin(fileMenu, mv.plugins.file.SaveMeshAsStructure(), 'Save current mesh as .mat File...', true);
+            addPlugin(fileMenu, mv.plugins.file.SaveMeshAsStructure(), 'Save current mesh as .mat File...');
             addPlugin(fileMenu, mv.plugins.file.CloseCurrentFrame(), 'Close', true);
 %             addPlugin(fileMenu, mv.plugins.file.Quit(), 'Quit');
             

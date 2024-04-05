@@ -34,8 +34,12 @@ methods
     function run(obj, frame, src, evt) %#ok<INUSL>
        
         % Opens a dialog to choose a mesh file
-        pattern = fullfile(frame.Gui.LastPathOpen, '*.mat');
-        [fileName, filePath] = uigetfile(pattern, 'Read .mat Scene file');
+        filters = {...
+            '*.mvsb', 'MeshViewer binary scene (*.mvsb)'; ...
+            '*.mat','MAT-files (*.mat)'; ...
+            '*.*', 'All Files (*.*)'};
+        default = fullfile(frame.Gui.LastPathOpen, '*.mvsb');
+        [fileName, filePath] = uigetfile(filters, 'Read Binary Scene file', default);
         
         % check if cancel
         if fileName == 0

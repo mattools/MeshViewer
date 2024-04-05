@@ -37,8 +37,12 @@ methods
         scene = frame.Scene;
 
         % Opens a dialog to choose a file
-        pattern = fullfile(frame.Gui.LastPathSave, '*.mat');
-        [fileName, filePath] = uiputfile(pattern, 'Save Scene as mat-file');
+        filters = {...
+            '*.mvsb', 'MeshViewer binary scene (*.mvsb)'; ...
+            '*.mat','MAT-files (*.mat)'; ...
+            '*.*', 'All Files (*.*)'};
+        default = fullfile(frame.Gui.LastPathSave, sprintf('%s.mvsb', scene.Name));
+        [fileName, filePath] = uiputfile(filters, 'Save Scene (binary)', default);
         
         % check if cancel
         if fileName == 0
