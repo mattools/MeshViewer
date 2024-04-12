@@ -41,28 +41,41 @@ methods
             '*.obj', 'OBJ files(*.obj)'; ...
             '*.stl', 'STL files(*.stl)'; ...
             '*.*',  'All Files (*.*)'};
-        [fileName, filePath] = uigetfile(filters, 'Read Mesh file', frame.Gui.LastPathOpen);
+        [fileNames, filePath] = uigetfile(filters, 'Read Mesh file', ...
+            frame.Gui.LastPathOpen, ...
+            'MultiSelect', 'on');
         
         % check if cancel
-        if fileName == 0
+        if iscell(fileNames) && isempty(fileNames)
+            return;
+        end
+        if isnumeric(fileNames) && fileNames == 0
             return;
         end
         
         % setup last path used for opening
         frame.Gui.LastPathOpen = filePath;
         
-        % read the mesh contained in the selected file
-        fprintf('Reading mesh file...');
-        tic;
-        mesh = readMesh(fullfile(filePath, fileName));
-        t = toc;
-        fprintf(' (done in %8.3f ms)\n', t*1000);
-        
-        % Create mesh data structure
-        mesh = mv.TriMesh(mesh);
+        if ~iscell(fileNames)
+            fileNames = {fileNames};
+        end
 
-        [path, name] = fileparts(fileName); %#ok<ASGLU>
-        addNewMesh(frame, mesh, name);
+        % iterate over the file list to read
+        for iFile = 1:length(fileNames)
+            % read the mesh contained in the selected file
+            fileName = fileNames{iFile};
+            fprintf('Reading mesh file: %s', fileName);
+            tic;
+            mesh = readMesh(fullfile(filePath, fileName));
+            t = toc;
+            fprintf(' (done in %8.3f ms)\n', t*1000);
+
+            % Create mesh data structure
+            mesh = mv.TriMesh(mesh);
+
+            [path, name] = fileparts(fileName); %#ok<ASGLU>
+            addNewMesh(frame, mesh, name);
+        end
     end
     
 end % end methods
