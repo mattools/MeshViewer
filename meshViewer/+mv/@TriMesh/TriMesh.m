@@ -218,6 +218,10 @@ methods (Access = private)
             inds = edgeFaces0(ib == ie);
             obj.EdgeFaces(ie, 1:length(inds)) = inds;
         end
+        % check manifold-ness of the mesh
+        if size(obj.EdgeFaces, 2) > 2
+            error('Non-manifold mesh: some edges are adjacent to more than two faces.');
+        end
 
         % For each face, retrieve index of the 3 adjacent edges
         obj.FaceEdges = zeros(nFaces,3);
