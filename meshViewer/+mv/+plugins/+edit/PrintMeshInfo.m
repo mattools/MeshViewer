@@ -40,6 +40,7 @@ methods
        
         inds = frame.SelectedMeshIndices;
         if length(inds) < 1
+            helpdlg("Requires to select input mesh(es).", "Selection Required");
             return;
         end
         
@@ -48,16 +49,19 @@ methods
             mh = meshList{inds(i)};
             mesh = mh.Mesh;
             
-            nv = size(mesh.Vertices, 1);
-            nf = meshFaceNumber(mesh.Vertices, mesh.Faces);
-            
             disp('mesh info:');
-            fprintf('  mesh name: %12s\n', mh.Name);
-            fprintf('  vertex number:   %6d\n', nv);
-            fprintf('  face number:     %6d\n', nf);
+            fprintf('  mesh name:         %12s\n', mh.Name);
+            fprintf('  vertex number:           %6d\n', vertexCount(mesh));
+            ne = edgeCount(mesh);
+            if ne > 0
+                fprintf('  edge number:             %6d\n', ne);
+            else
+                fprintf('  edge number:       not computed\n');
+            end
+            fprintf('  face number:             %6d\n', faceCount(mesh));
             
             bbox = boundingBox3d(mesh.Vertices);
-            fprintf('  bounding box:  (%g %g  %g %g  %g %g)\n', bbox);
+            fprintf('  bounding box:  [%g %g  %g %g  %g %g]\n', bbox);
         end
     end
 end % end methods
