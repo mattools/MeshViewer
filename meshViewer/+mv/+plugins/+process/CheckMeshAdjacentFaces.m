@@ -35,6 +35,7 @@ methods
         
         meshList = frame.Scene.MeshHandleList;
         if length(meshList) < 1
+            helpdlg("Requires to select input mesh(es).", "Selection Required");
             return;
         end
        

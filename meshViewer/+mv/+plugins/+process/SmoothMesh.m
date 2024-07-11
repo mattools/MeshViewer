@@ -33,8 +33,9 @@ end % end constructors
 methods
     function run(obj, frame, src, evt) %#ok<INUSL>
         
-        meshList =  selectedMeshHandleList(frame);
+        meshList = selectedMeshHandleList(frame);
         if length(meshList) < 1
+            helpdlg("Requires to select input mesh(es).", "Selection Required");
             return;
         end
         
