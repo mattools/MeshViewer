@@ -46,7 +46,7 @@ methods
         edges = meshEdges(mesh.Faces);
         
         % allocate memory for result
-        nV = vertexNumber(mesh);
+        nV = vertexCount(mesh);
         deg = zeros(nV,1);
 
         % compute degree of each vertex
@@ -57,14 +57,18 @@ methods
         % compute discrete histogram by computing occurence of each unique
         % value 
         [B, I, J] = unique(deg); %#ok<ASGLU>
-        N = hist(J, 1:max(J));
-
+        Jmax = max(J);
+        N = zeros(1, Jmax);
+        for ij = 1:Jmax
+            N(ij) = sum(J==ij);
+        end
+        
         % Display histogram
         figure; 
         bar(B, N);
         set(gca, 'xtick', B);
         xlabel('Vertex degree');
-        ylabel('Frequency');
+        ylabel('Frequency (Count)');
         title('Vertex Degree Histogram');
     end
     
