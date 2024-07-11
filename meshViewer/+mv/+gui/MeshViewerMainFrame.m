@@ -139,9 +139,11 @@ methods
             % Edit Menu Definition 
             
             viewMenu = uimenu(hf, 'Label', '&View');
-            addPlugin(viewMenu, mv.plugins.view.SetSceneAxisBounds(), 'Setup Scene Bounds');
-            addPlugin(viewMenu, mv.plugins.view.SetSceneAxisBoundsToBoundingBox(), 'Set Scene Bounds To Bounding Box');
-            addPlugin(viewMenu, mv.plugins.view.ToggleLight(), 'Toggle Light', 'Separator', 'on');
+            boundsMenu = uimenu(viewMenu, 'Label', 'Scene Bounds');
+            addPlugin(boundsMenu, mv.plugins.view.SetSceneAxisBounds(), 'Setup Scene Bounds');
+            addPlugin(boundsMenu, mv.plugins.view.SetSceneAxisBoundsToBoundingBox(), 'Set Scene Bounds To Bounding Box');
+            addPlugin(viewMenu, mv.plugins.view.SetAxisViewAngle(), 'Set View Angles...');
+            addPlugin(viewMenu, mv.plugins.view.ToggleLight(), 'Toggle Light');
             addPlugin(viewMenu, mv.plugins.view.ToggleAxisLinesDisplay(), 'Toggle Axis Lines Display');
             addPlugin(viewMenu, mv.plugins.view.PrintAxisProperties(), 'Print Axis Properties', true);
             addPlugin(viewMenu, mv.plugins.view.ViewXYSlice(), 'View XY Slice', true);
