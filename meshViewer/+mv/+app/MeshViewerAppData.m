@@ -18,8 +18,12 @@ classdef MeshViewerAppData < handle
 
 %% Properties
 properties
-    % set of mesh handles managed by obj application
+    % The set of mesh handles managed by obj application, as a cell array.
     MeshList;
+
+    % a flag for debugging.
+    Debug = false;
+
 end % end properties
 
 
@@ -36,7 +40,7 @@ end % end constructors
 %% Management of mesh handles
 methods
     function addMeshHandle(obj, mh)
-        obj.MeshList = [obj.meshList {mh}];
+        obj.MeshList = [obj.MeshList {mh}];
     end
     
     function removeMeshHandle(obj, mh)

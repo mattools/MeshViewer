@@ -28,15 +28,9 @@ properties
     % Contains a collection of meshes.
     Scene;
     
+    % Utility class that manages the display of the scene on an axis.
     SceneRenderer;
-%     
-%     % the set of mouse listeners.
-%     % Stored as an array of svui.app.Shape instances
-%     mouseListeners = [];
-%     
-%     % the currently selected tool
-%     currentTool = [];
-%     
+
     % the set of selected meshes, stored as an index array
     SelectedMeshIndices = [];
     
@@ -65,7 +59,6 @@ methods
         
         obj.Handles.Figure = fig;
         
-%         updateDisplay(obj);
         refreshDisplay(obj.SceneRenderer);
         
         updateMeshList(obj);
@@ -75,20 +68,6 @@ methods
         set(fig, ...
             'CloseRequestFcn', @obj.close, ...
             'ResizeFcn', @obj.onFigureResized);
-        
-%         % setup mouse listeners associated to the figure
-%         set(fig, 'WindowButtonDownFcn',     @obj.processMouseButtonPressed);
-%         set(fig, 'WindowButtonUpFcn',       @obj.processMouseButtonReleased);
-%         set(fig, 'WindowButtonMotionFcn',   @obj.processMouseMoved);
-% 
-%         % setup mouse listener for display of mouse coordinates
-%         tool = svui.Gui.tools.ShowCursorPositionTool(obj, 'showMousePosition');
-%         addMouseListener(obj, tool);
-%         
-%         tool = svui.Gui.tools.SelectionTool(obj, 'selection');
-%         addMouseListener(obj, tool);
-%         obj.currentTool = tool;
-        
         
         set(fig, 'UserData', obj);
         
@@ -247,7 +226,6 @@ methods
             obj.Handles.DisplayOptionsPanel = displayOptionsPanel;
             
 
-
             % panel for scene display
             displayPanel = uix.VBox('Parent', horzPanel);
             % use a container to prevent layout changes during 3D rotate
@@ -362,7 +340,9 @@ methods
         % Refresh document display.
         % -> clear axis, draw each shape, udpate axis
         
-        disp('update Display');
+        if obj.Gui.App.Debug
+            disp('update Display');
+        end
         
         refreshDisplay(obj.SceneRenderer);
     end
@@ -399,8 +379,10 @@ methods
     function updateMeshList(obj)
         % Refresh the shape tree when a shape is added or removed.
 
-        disp('update shape list');
-        
+        if obj.Gui.App.Debug
+            disp('update shape list');
+        end
+
         nMeshes = length(obj.Scene.MeshHandleList);
         shapeNames = cell(nMeshes, 1);
         inds = [];
@@ -431,8 +413,10 @@ methods
         % determines which names are selected and updates index of mesh
         % handles accordingly
         
-        disp('mesh selection list updated');
-        
+        if obj.Gui.App.Debug
+            disp('mesh selection list updated');
+        end
+
         inds = get(obj.Handles.ShapeList, 'Value');
         obj.SelectedMeshIndices = inds;
     end
@@ -441,7 +425,6 @@ end
 %% Figure management
 methods
     function close(obj, varargin)
-%         disp('Close shape viewer frame');
         delete(obj.Handles.Figure);
     end
     

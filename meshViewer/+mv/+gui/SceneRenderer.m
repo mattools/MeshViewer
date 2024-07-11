@@ -1,5 +1,5 @@
 classdef SceneRenderer < handle
-%SCENERENDERER Manages the representation of a scene on an axis
+%SCENERENDERER Manages the representation of a scene on an axis.
 %
 %   Class SceneRenderer
 %
@@ -50,8 +50,6 @@ end % end constructors
 methods
     function refreshDisplay(obj)
         % refresh document display: clear axis, draw each shape, udpate axis
-        
-        disp('update Display from renderer');
         
         % remove all existing children
         ax = obj.AxisHandle;
