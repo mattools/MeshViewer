@@ -195,7 +195,7 @@ methods (Access = private)
     function computeEdgesAndFaces(obj)
         % Update the properties Edges, EdgeFaces and FaceEdges.
         %
-        % Making the initialization togehter allows to make it slightly
+        % Making the initialization together allows to make it slightly
         % faster than separately.
         
         % create initial edge array (including duplicates)

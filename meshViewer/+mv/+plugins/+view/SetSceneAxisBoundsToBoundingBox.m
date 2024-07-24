@@ -35,7 +35,7 @@ end % end constructors
 methods
     function run(obj, frame, src, evt) %#ok<INUSL>
 
-        % update bounding box of
+        % update bounding box of view box from scene content
         bbox = computeBoundingBox(frame.Scene);
         setViewBox(frame.Scene.DisplayOptions, bbox);
 

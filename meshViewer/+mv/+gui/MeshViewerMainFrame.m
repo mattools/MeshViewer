@@ -85,7 +85,10 @@ methods
             addPlugin(importMeshesMenu, mv.plugins.file.ImportMeshFromStruct(), 'Mesh struct from Workspace');
             addPlugin(importMeshesMenu, mv.plugins.file.ImportMeshVFFromWorkspace(), 'Vertices+Faces from Workspace');
             demoMeshesMenu = uimenu(fileMenu, 'Label', 'Sample Meshes');
-            addPlugin(demoMeshesMenu, mv.plugins.file.CreateTetrahedron(), 'Tetrahedron');
+            addPlugin(demoMeshesMenu, mv.plugins.file.ImportSampleMesh('teapot.obj', 'teapot'), 'Tea pot');
+            addPlugin(demoMeshesMenu, mv.plugins.file.ImportSampleMesh('bunny_F1k.ply', 'bunny_1k'), 'Stanford Bunny (1000 faces)');
+            addPlugin(demoMeshesMenu, mv.plugins.file.ImportSampleMesh('bunny_F5k.ply', 'bunny_5k'), 'Stanford Bunny (5000 faces)');
+            addPlugin(demoMeshesMenu, mv.plugins.file.CreateTetrahedron(), 'Tetrahedron', true);
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateCube(), 'Cube');
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateOctahedron(), 'Octahedron');
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateIcosahedron(), 'Icosahedron');
