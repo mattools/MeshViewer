@@ -27,6 +27,9 @@ properties
     % The boundary of the mesh, as a collection of 3D polygons.
     % If not computed, value is empty.
     BoundaryPolygons = {};
+
+    % a collection of vertex rings
+    VertexRings = {};
     
     % a list of display options, instance of MeshDisplayOptions
     DisplayOptions;
