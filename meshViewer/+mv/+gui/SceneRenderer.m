@@ -79,6 +79,12 @@ methods
             h = drawMesh(ax, mesh.Vertices, mesh.Faces);
             apply(mh.DisplayOptions, h);
             mh.Handles.Patch = h;
+
+            if ~isempty(mh.BoundaryPolygons)
+                bnd = mh.BoundaryPolygons;
+                hb = drawPolygon3d(bnd, 'linewidth', 2, 'color', 'b');
+                mh.Handles.BoundaryPolygons = hb;
+            end
         end
 
         updateAxisLinesDisplay(obj);

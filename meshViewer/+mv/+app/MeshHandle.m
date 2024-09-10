@@ -23,6 +23,10 @@ properties
 
     % reference to the mesh, instance of TriMesh (or more generic class)
     Mesh;
+
+    % The boundary of the mesh, as a collection of 3D polygons.
+    % If not computed, value is empty.
+    BoundaryPolygons = {};
     
     % a list of display options, instance of MeshDisplayOptions
     DisplayOptions;
@@ -32,8 +36,9 @@ properties
     
     % handles to the graphical object(s) used  to display the mesh
     % sub structures: 
-    % * patch
-    % * vertices
+    % * Patch
+    % * Vertices
+    % * BoundaryPolygons
     Handles;
     
 end % end properties

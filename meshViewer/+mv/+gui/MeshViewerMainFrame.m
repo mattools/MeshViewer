@@ -128,6 +128,8 @@ methods
             addPlugin(viewMenu, mv.plugins.view.ToggleLight(), 'Toggle Light');
             addPlugin(viewMenu, mv.plugins.view.ToggleAxisLinesDisplay(), 'Toggle Axis Lines Display');
             addPlugin(viewMenu, mv.plugins.view.PrintAxisProperties(), 'Print Axis Properties', true);
+            addPlugin(viewMenu, mv.plugins.view.ComputeMeshBoundaryPolygons(), 'Compute Boundaries', true);
+            addPlugin(viewMenu, mv.plugins.view.ClearMeshBoundary(), 'Clear Boundaries');
             addPlugin(viewMenu, mv.plugins.view.ViewXYSlice(), 'View XY Slice', true);
             addPlugin(viewMenu, mv.plugins.view.ViewXZSlice(), 'View XZ Slice');
             addPlugin(viewMenu, mv.plugins.view.ViewYZSlice(), 'View YZ Slice');

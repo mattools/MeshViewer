@@ -35,7 +35,7 @@ methods
         
         meshList = selectedMeshHandleList(frame);
         if length(meshList) < 1
-            helpdlg("Requires to select input mesh(es).", "Selection Required");
+            helpdlg("Requires to select at least one input mesh(es).", "Selection Required");
             return;
         end
        
