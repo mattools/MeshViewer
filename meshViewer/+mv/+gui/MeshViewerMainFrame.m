@@ -98,7 +98,6 @@ methods
             addPlugin(demoMeshesMenu, mv.plugins.file.CreateSoccerBall(), 'Soccer Ball');
             addPlugin(fileMenu, mv.plugins.file.SaveMeshAsStructure(), 'Save current mesh as .mat File...');
             addPlugin(fileMenu, mv.plugins.file.CloseCurrentFrame(), 'Close', true);
-%             addPlugin(fileMenu, mv.plugins.file.Quit(), 'Quit');
             
             
             % Edit Menu Definition 
@@ -115,10 +114,11 @@ methods
             addPlugin(editMenu, mv.plugins.edit.SetFaceOpacity(), 'Set Face Opacity');
             addPlugin(editMenu, mv.plugins.edit.SetEdgeStyle(), 'Set Edge Style');
             addPlugin(editMenu, mv.plugins.edit.PrintMeshList(), 'Print Mesh List');
+            addPlugin(editMenu, mv.plugins.edit.FindClosestVertex(), 'Find Closest Vertex...', true);
             addPlugin(editMenu, mv.plugins.edit.PrintMeshInfo(), 'Mesh Info', true);
             
             
-            % Edit Menu Definition 
+            % View Menu Definition 
             
             viewMenu = uimenu(hf, 'Label', '&View');
             boundsMenu = uimenu(viewMenu, 'Label', 'Scene Bounds');
@@ -128,8 +128,8 @@ methods
             addPlugin(viewMenu, mv.plugins.view.ToggleLight(), 'Toggle Light');
             addPlugin(viewMenu, mv.plugins.view.ToggleAxisLinesDisplay(), 'Toggle Axis Lines Display');
             addPlugin(viewMenu, mv.plugins.view.PrintAxisProperties(), 'Print Axis Properties', true);
-            addPlugin(viewMenu, mv.plugins.view.ComputeMeshBoundaryPolygons(), 'Compute Boundaries', true);
-            addPlugin(viewMenu, mv.plugins.view.ClearMeshBoundary(), 'Clear Boundaries');
+            addPlugin(viewMenu, mv.plugins.view.ComputeMeshBoundaryPolygons(), 'Compute Mesh Boundaries', true);
+            addPlugin(viewMenu, mv.plugins.view.ClearMeshBoundary(), 'Clear Mesh Boundaries');
             addPlugin(viewMenu, mv.plugins.view.ViewXYSlice(), 'View XY Slice', true);
             addPlugin(viewMenu, mv.plugins.view.ViewXZSlice(), 'View XZ Slice');
             addPlugin(viewMenu, mv.plugins.view.ViewYZSlice(), 'View YZ Slice');

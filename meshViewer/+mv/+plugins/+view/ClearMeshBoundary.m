@@ -1,4 +1,4 @@
-classdef ClearMeshBoundary < handle
+classdef ClearMeshBoundary < mv.gui.Plugin
 % One-line description here, please.
 %
 %   Class ClearMeshBoundary
