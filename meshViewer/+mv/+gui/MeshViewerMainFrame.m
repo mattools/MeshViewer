@@ -201,37 +201,42 @@ methods
                 'Units', 'normalized', ...
                 'Position', [0 0 1 1]);
             
-            % horizontal panel: main view middle, options left and right
+            % horizontal panel: main view in the middle, options panels in
+            % left (and right?) sides
             horzPanel = uix.HBoxFlex('Parent', mainPanel);
             
             % panel for doc info
             docInfoPanel = uix.VBoxFlex('Parent', horzPanel);
 
-            % create a default uittree
-            treePanel = uipanel(...
+            % create a default panel containing the list
+            shapeListPanel = uipanel(...
                 'Parent', docInfoPanel, ...
                 'Position', [0 0 1 1], ...
                 'BorderType', 'none', ...
                 'BorderWidth', 0);
-            
             obj.Handles.ShapeList = uicontrol(...
                 'Style', 'listbox', ...
-                'Parent', treePanel, ...
+                'Parent', shapeListPanel, ...
                 'Units', 'normalized', ...
                 'Position', [0 0 1 1], ...
                 'Max', 2, 'Min', 0, ... % to allow empty selection
                 'Callback', @obj.onMeshListModified);
 
-            displayOptionsPanel = uitable(...
-                'parent', docInfoPanel, ...
+            % add another panel for display of current selection
+            selectionInfoPanel = uipanel(...
+                'Parent', docInfoPanel, ...
+                'Position', [0 0 1 1], ...
+                'BorderType', 'none', ...
+                'BorderWidth', 0);
+            obj.Handles.SelectionInfo = uicontrol(...
+                'Style', 'listbox', ...
+                'Parent', selectionInfoPanel, ...
+                'Units', 'normalized', ...
                 'Position', [0 0 1 1] );
             
-                        
             docInfoPanel.Heights = [-2 -1];
             
             obj.Handles.DocInfoPanel = docInfoPanel;
-            obj.Handles.DisplayOptionsPanel = displayOptionsPanel;
-            
 
             % panel for scene display
             displayPanel = uix.VBox('Parent', horzPanel);
@@ -242,7 +247,7 @@ methods
                 'ActivePositionProperty', 'outerposition', ...
                 'Units', 'normalized', ...
                 'Position', [0 0 1 1], ...
-            	'XLim', [-1 1], ...
+            	'XLim', [-1 1], ... % Default bounds
             	'YLim', [-1 1], ...
             	'ZLim', [-1 1], ...
                 'DataAspectRatio', [1 1 1], ...
@@ -268,9 +273,7 @@ methods
             % set up relative sizes of layouts
             mainPanel.Heights = [-1 20];
         end
-      
     end
-    
 end % end constructors
 
 
@@ -354,26 +357,28 @@ methods
         refreshDisplay(obj.SceneRenderer);
     end
     
-    function updateMeshSelectionDisplay(obj) %#ok<MANU>
+    function updateMeshSelectionDisplay(obj)
         % update the selected state of each shape.
         
-%         % extract the list of handles in current axis
-%         ax = obj.Handles.MainAxis;
-%         children = get(ax, 'Children');
-%         
-%         % iterate over children
-%         for i = 1:length(children)
-%             % Extract shape referenced by current handle, if any
-%             shape = get(children(i), 'UserData');
-%             
-%             % update selection state of current shape
-%             if any(shape == obj.selectedMeshIndices)
-%                 set(children(i), 'Selected', 'on');
-%             else
-%                 set(children(i), 'Selected', 'off');
-%             end
-%         end
-        
+        inds = obj.SelectedMeshIndices;
+        if isempty(inds)
+            % clear the panel showing mesh info
+            set(obj.Handles.SelectionInfo, 'String', '');
+
+        elseif isscalar(inds)
+            % Display info about selected mesh
+            mh = obj.Scene.MeshHandleList{inds(1)};
+            mesh = mh.Mesh;
+            strings = {mh.Name};
+            strings = [strings {sprintf('vertices: %d', vertexCount(mesh))}];
+            if ~isempty(mesh.Edges)
+                strings = [strings {sprintf('edges: %d', edgeCount(mesh))}];
+            end
+            strings = [strings {sprintf('faces: %d', faceCount(mesh))}];
+            set(obj.Handles.SelectionInfo, 'String', strings);
+        else
+            % if several meshes are selected, do nothing.
+        end
     end
     
     function updateTitle(obj)
@@ -381,7 +386,6 @@ methods
         title = sprintf('%s - MeshViewer', obj.Scene.Name);
         set(obj.Handles.Figure, 'Name', title);
     end
-    
     
     function updateMeshList(obj)
         % Refresh the shape tree when a shape is added or removed.
@@ -426,6 +430,9 @@ methods
 
         inds = get(obj.Handles.ShapeList, 'Value');
         obj.SelectedMeshIndices = inds;
+        if length(inds) < 2
+            updateMeshSelectionDisplay(obj)
+        end
     end
 end
 
@@ -436,7 +443,7 @@ methods
     end
     
     function onFigureResized(obj, varargin) %#ok<INUSD>
-%         updateMeshSelectionDisplay(obj);
+        % Can be used to update display when containing figure is resized.
     end
 end
 
