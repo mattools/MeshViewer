@@ -40,12 +40,7 @@ methods
         mesh = mv.TriMesh(v, f);
         
         % add new mesh to the current scene
-        mh = createMeshHandle(frame.Scene, mesh, 'cubeOctahedron');
-        frame.Scene.addMeshHandle(mh);
-        
-        % update widgets and display
-        updateMeshList(frame);
-        updateDisplay(frame);
+        addNewMesh(frame, mesh, 'cubeOctahedron');
     end
     
 end % end methods

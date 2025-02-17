@@ -58,16 +58,17 @@ methods
         mesh = mv.TriMesh(v, f);
         
         % add new mesh to the current scene
-        mh = createMeshHandle(frame.Scene, mesh, obj.MeshName);
-        frame.Scene.addMeshHandle(mh);
-        
-        % update bounding box of view box from scene content
-        bbox = computeBoundingBox(frame.Scene);
-        setViewBox(frame.Scene.DisplayOptions, bbox);
-        
-        % update widgets and display
-        updateMeshList(frame);
-        updateDisplay(frame);
+        addNewMesh(frame, mesh, obj.MeshName);
+        % mh = createMeshHandle(frame.Scene, mesh, obj.MeshName);
+        % frame.Scene.addMeshHandle(mh);
+        % 
+        % % update bounding box of view box from scene content
+        % bbox = computeBoundingBox(frame.Scene);
+        % setViewBox(frame.Scene.DisplayOptions, bbox);
+        % 
+        % % update widgets and display
+        % updateMeshList(frame);
+        % updateDisplay(frame);
     end
     
 end % end methods

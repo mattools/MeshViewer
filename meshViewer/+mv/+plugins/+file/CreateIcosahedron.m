@@ -39,13 +39,7 @@ methods
         [v, f] = createIcosahedron;
         mesh = mv.TriMesh(v, f);
         
-        % add new mesh to the current scene
-        mh = createMeshHandle(frame.Scene, mesh, 'icosahedron');
-        frame.Scene.addMeshHandle(mh);
-        
-        % update widgets and display
-        updateMeshList(frame);
-        updateDisplay(frame);
+        addNewMesh(frame, mesh, 'icosahedron');
     end
     
 end % end methods
