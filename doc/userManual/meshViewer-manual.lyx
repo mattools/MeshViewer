@@ -1,0 +1,753 @@
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass scrartcl
+\begin_preamble
+\usepackage[dvipsnames]{xcolor}
+\usepackage[T1]{fontenc}
+
+\usepackage{hyperref}
+
+\definecolor{bl}{rgb}{0.0,0.2,0.6} 
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\hypersetup{colorlinks=true, citecolor=blue, linkcolor=blue}
+
+% package that modifies style of section headers
+\addtokomafont{section}{\color{bl}\scshape \selectfont}
+\addtokomafont{subsection}{\color{bl}\scshape \selectfont}
+\addtokomafont{subsubsection}{\color{bl}\scshape \selectfont}
+
+% setup font style for different title elements
+\setkomafont{title}{\color{bl} \bfseries \scshape}
+\setkomafont{author}{\centering \small}
+\setkomafont{date}{\centering \small}
+
+
+% Change the abstract environment
+\usepackage[runin]{abstract}		% runin option for a run-in title
+\setlength\absleftindent{30pt}		% left margin
+\setlength\absrightindent{30pt}		% right margin
+\abslabeldelim{\quad }			
+\setlength{\abstitleskip}{-10pt}
+\renewcommand{\abstractname}{}
+\renewcommand{\abstracttextfont}{\color{bl} \small \slshape }	% slanted text
+
+
+% Custom headers and adapted to KOMA-Script
+\usepackage{scrlayer-scrpage}
+\usepackage{lastpage}	
+
+% header
+\lehead*{\slshape\rightmark}
+\rohead*{\slshape\rightmark}
+
+% footer
+\KOMAoptions{footsepline=on}
+\ofoot{\footnotesize page \thepage\ / \pageref{LastPage}}
+\ifoot{\footnotesize \jobname}
+
+% right section with number
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+
+
+% Added by lyx2lyx
+\usepackage[charter]{mathdesign}
+
+% setup of figure captions 
+\usepackage[format=plain,font=it,labelfont=bf]{caption}
+
+% enhance the typesetting of matlab code
+\usepackage{matlab-prettifier}
+
+
+% some info for populating document title page
+\author{D. Legland}
+\date{\today}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children no
+\language english
+\language_package default
+\inputencoding auto-legacy
+\fontencoding auto
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format pdf2
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize a4
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plainnat
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_formatted_ref 0
+\use_minted 0
+\use_lineno 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tablestyle default
+\listings_params "language=Matlab,style={Matlab-editor},numbers=left,tabsize=2,frame=single,breaklines=true,basicstyle={\scriptsize\mlttfamily},aboveskip=5pt,showspaces=false"
+\tracking_changes false
+\output_changes false
+\change_bars false
+\postpone_fragile_content false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
+\end_header
+
+\begin_body
+
+\begin_layout Title
+MeshViewer:
+ display and processing of 3D meshes within Matlab
+\end_layout
+
+\begin_layout Abstract
+User manual for the MeshViewer application,
+ a graphical user interface for display and processing of 3D meshes.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename images/meshViewer-snapShot.png
+	lyxscale 70
+	width 70text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+TODO :
+ quick tour
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Installation
+\end_layout
+
+\begin_layout Subsection
+App installation
+\end_layout
+
+\begin_layout Standard
+From the Matworks FileExchange,
+ download the 
+\begin_inset Quotes eld
+\end_inset
+
+MeshViewer.mlapp
+\begin_inset Quotes erd
+\end_inset
+
+ file.
+ This will automatically download and extract the required file into the appropriate directory.
+\end_layout
+
+\begin_layout Subsection
+Manual installation
+\end_layout
+
+\begin_layout Standard
+It is also possible to download and extract the archive containing the files,
+ or to clone the content of the project from the GitHub project page.
+ After decompression / clone,
+ there is a 
+\begin_inset Quotes eld
+\end_inset
+
+meshViewer
+\begin_inset Quotes erd
+\end_inset
+
+ directory that contains a 
+\begin_inset Quotes eld
+\end_inset
+
+MeshViewer.m
+\begin_inset Quotes erd
+\end_inset
+
+ file.
+ Add this directory to the path,
+ and the MeshViewer application will be installed.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Startup
+\end_layout
+
+\begin_layout Subsection
+Fresh start
+\end_layout
+
+\begin_layout Standard
+To run a new instance without any mesh,
+ simply type 
+\begin_inset Quotes eld
+\end_inset
+
+MeshViewer
+\begin_inset Quotes erd
+\end_inset
+
+ from the Matlab prompt.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+% Open an empty MeshViewer frame
+\end_layout
+
+\begin_layout Plain Layout
+
+MeshViewer;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This opens a new frame,
+ without any mesh.
+ A menu bar provides several options to load,
+ or to create sample meshes corresponding to typical polyhedra.
+\end_layout
+
+\begin_layout Subsection
+Display a mesh
+\end_layout
+
+\begin_layout Standard
+An alternative syntax is to provide the mesh to display as first argument of the command line:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+% read a mesh and display it
+\end_layout
+
+\begin_layout Plain Layout
+
+mesh = readMesh('sampleMesh.ply');
+\end_layout
+
+\begin_layout Plain Layout
+
+MeshViewer(mesh);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/meshViewer-snapShot.png
+	lyxscale 70
+	width 70text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The MeshViewer frame displaying a mesh.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This opens a new frame with a menu bar and different panels:
+\end_layout
+
+\begin_layout Itemize
+a list of meshes within the current viewer
+\end_layout
+
+\begin_layout Itemize
+a panel to display information about the selected mesh (under development)
+\end_layout
+
+\begin_layout Itemize
+a panel to display the meshes
+\end_layout
+
+\begin_layout Itemize
+a status bar (under development)
+\end_layout
+
+\begin_layout Standard
+If a mesh was given as input argument,
+ it is displayed in the right panel.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Menu Options
+\end_layout
+
+\begin_layout Standard
+This sections lists the different actions available from the menu bar.
+\end_layout
+
+\begin_layout Subsection
+File menu
+\end_layout
+
+\begin_layout Minisec
+New Empty Scene
+\end_layout
+
+\begin_layout Standard
+Opens a new empty frame.
+\end_layout
+
+\begin_layout Minisec
+Open OFF File...
+\end_layout
+
+\begin_layout Standard
+Opens a file containing a mesh stored in OFF format,
+ and displays it.
+\end_layout
+
+\begin_layout Minisec
+Open PLY File...
+\end_layout
+
+\begin_layout Standard
+Opens a file containing a mesh stored in PLY format,
+ and displays it.
+\end_layout
+
+\begin_layout Minisec
+Open MeshViewer mesh file
+\end_layout
+
+\begin_layout Standard
+Export current into a hierarchical data structure containing geometrical data together with display data.
+\end_layout
+
+\begin_layout Minisec
+Import mesh struct
+\end_layout
+
+\begin_layout Standard
+Select a variable from the workspace as mesh to import.
+ The variable must be a struct with at least two fields 
+\begin_inset Quotes eld
+\end_inset
+
+vertices
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+faces
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Minisec
+Import mesh vertices and face
+\end_layout
+
+\begin_layout Standard
+Select two variables from the workspace that will be used as vertices and meshes of a new mesh.
+\end_layout
+
+\begin_layout Minisec
+Sample Meshes
+\end_layout
+
+\begin_layout Standard
+Provides a variety of sample meshes representing simple polygonal meshes.
+ Mostly used for debugging purposes.
+\end_layout
+
+\begin_layout Minisec
+Close
+\end_layout
+
+\begin_layout Standard
+Closes the current frame.
+\end_layout
+
+\begin_layout Subsection
+Edit menu
+\end_layout
+
+\begin_layout Standard
+Provides several options to update the selected mesh.
+\end_layout
+
+\begin_layout Minisec
+Rename
+\end_layout
+
+\begin_layout Standard
+Changes the name of the selected mesh.
+\end_layout
+
+\begin_layout Minisec
+Duplicate
+\end_layout
+
+\begin_layout Standard
+Creates a copy of the selected mesh.
+\end_layout
+
+\begin_layout Minisec
+Delete
+\end_layout
+
+\begin_layout Standard
+Deletes the selected mesh:
+ removes it from the display,
+ and from the list of meshes within the viewer.
+\end_layout
+
+\begin_layout Minisec
+Set Face Color / Opacity
+\end_layout
+
+\begin_layout Standard
+Changes the display settings for the faces of the selected mesh(es).
+\end_layout
+
+\begin_layout Minisec
+Set Edge Style
+\end_layout
+
+\begin_layout Standard
+Changes the display settings for the edges of the selected mesh(es).
+\end_layout
+
+\begin_layout Minisec
+Print Mesh List 
+\end_layout
+
+\begin_layout Standard
+Prints the list of meshes within the current viwer.
+ Used mostly for debugging purpose.
+\end_layout
+
+\begin_layout Minisec
+Mesh Info
+\end_layout
+
+\begin_layout Standard
+Prints some info about the current mesh on the console.
+\end_layout
+
+\begin_layout Subsection
+View menu
+\end_layout
+
+\begin_layout Standard
+Changes the global display options.
+\end_layout
+
+\begin_layout Minisec
+Toggle light
+\end_layout
+
+\begin_layout Standard
+Toggles the presence of light within the scene.
+ This affects the rendering of the mesh.
+\end_layout
+
+\begin_layout Minisec
+Toggle Axis Lines Display
+\end_layout
+
+\begin_layout Standard
+Toggles the display of lines representing the three main axes.
+ This may be useful for locating the relative position of a mesh with respect to the origin or to the main axes.
+\end_layout
+
+\begin_layout Minisec
+Print Axis Properties
+\end_layout
+
+\begin_layout Standard
+Equivalent to the command 
+\begin_inset Quotes eld
+\end_inset
+
+get(gca)
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Used for debugging.
+\end_layout
+
+\begin_layout Subsection
+Process menu
+\end_layout
+
+\begin_layout Standard
+Several mesh processing operations are provided from menu options:
+\end_layout
+
+\begin_layout Minisec
+Recenter
+\end_layout
+
+\begin_layout Standard
+Computes the centroid of the mesh,
+ and translates the current mesh such that its centroid is located at the origin of the scene.
+\end_layout
+
+\begin_layout Minisec
+Translate...
+\end_layout
+
+\begin_layout Standard
+Applies a translation to the current mesh.
+\end_layout
+
+\begin_layout Minisec
+Rotate...
+\end_layout
+
+\begin_layout Standard
+Applies a rotation around one of the main axes to the current mesh.
+\end_layout
+
+\begin_layout Minisec
+Scale...
+\end_layout
+
+\begin_layout Standard
+Applies a scaling transformation to the current mesh.
+\end_layout
+
+\begin_layout Minisec
+Flip...
+\end_layout
+
+\begin_layout Standard
+Applies a flip along one the main planes to the current mesh.
+\end_layout
+
+\begin_layout Minisec
+Triangulate
+\end_layout
+
+\begin_layout Standard
+Ensure the current mesh is a triangulation.
+\end_layout
+
+\begin_layout Minisec
+Smooth
+\end_layout
+
+\begin_layout Standard
+Applies a smoothing operation to the current mesh.
+\end_layout
+
+\begin_layout Minisec
+Subdivide
+\end_layout
+
+\begin_layout Standard
+Recursively divides each face of the mesh.
+\end_layout
+
+\begin_layout Subsection
+Analysis Menu
+\end_layout
+
+\begin_layout Standard
+Computes geometric measures on the selected mesh.
+\end_layout
+
+\begin_layout Minisec
+Volume
+\end_layout
+
+\begin_layout Standard
+Computes the volume of the selected mesh.
+\end_layout
+
+\begin_layout Minisec
+Surface Area
+\end_layout
+
+\begin_layout Standard
+Computes the surface area of the selected mesh,
+ by computing the sum of the area of each face.
+\end_layout
+
+\begin_layout Minisec
+Mean Breadth
+\end_layout
+
+\begin_layout Standard
+Computes the mean breadth of the selected mesh.
+ Obtained by computing average curvature over each edge,
+ and cumputing the sum weighted by the length of each edge.
+\end_layout
+
+\begin_layout Minisec
+Vertex Degree Histogram
+\end_layout
+
+\begin_layout Standard
+Computes the number of neighbors of each vertex,
+ and computes the histogram.
+\end_layout
+
+\end_body
+\end_document
