@@ -1,5 +1,5 @@
 # MeshViewer
-Matlab GUI for visualization and manipulation of 3D meshes
+Matlab GUI for the visualization and manipulation of 3D polygonal meshes.
 
 This GUI aims at facilitate the visualization and the manipulation of 3D meshes that can be generated during researches. 
 It also provides few processing operations to avoid calling specialized software (e.g. MeshLab). 
