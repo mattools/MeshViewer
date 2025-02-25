@@ -1,0 +1,259 @@
+<deployment-project plugin="plugin.apptool" plugin-version="1.0">
+  <configuration build-checksum="670616813" file="D:\dlegland\dev\matlab\geometry\meshViewer\dev\MeshViewer.prj" location="D:\dlegland\dev\matlab\geometry\meshViewer\dev" name="MeshViewer" target="target.mlapps" target-name="Package App">
+    <param.appname>MeshViewer</param.appname>
+    <param.authnamewatermark>D. Legland</param.authnamewatermark>
+    <param.email>david.legland@inrae.fr</param.email>
+    <param.company>INRAE</param.company>
+    <param.icon>${PROJECT_ROOT}\MeshViewer_resources\icon_24.png</param.icon>
+    <param.icons>
+      <file>${PROJECT_ROOT}\MeshViewer_resources\icon_48.png</file>
+      <file>${PROJECT_ROOT}\MeshViewer_resources\icon_24.png</file>
+      <file>${PROJECT_ROOT}\MeshViewer_resources\icon_16.png</file>
+    </param.icons>
+    <param.summary>A GUI for display and processing of 3D meshes</param.summary>
+    <param.description>This GUI aims at facilitate the visualization and the manipulation of 3D meshes that can be generated during researches. It also provides few processing operations to avoid calling specialized software (e.g. MeshLab).</param.description>
+    <param.screenshot>${PROJECT_ROOT}\doc\images\MeshViewer-screenshot.png</param.screenshot>
+    <param.version>1.0</param.version>
+    <param.products.name />
+    <param.products.id />
+    <param.products.version />
+    <param.platforms />
+    <param.output>${PROJECT_ROOT}</param.output>
+    <param.guid>44e3b890-e659-4e9f-b902-d7dfc34d248a</param.guid>
+    <unset>
+      <param.authnamewatermark />
+      <param.email />
+      <param.company />
+      <param.version />
+      <param.products.name />
+      <param.products.id />
+      <param.products.version />
+      <param.platforms />
+      <param.output />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}\meshViewer\MeshViewer.m</file>
+    </fileset.main>
+    <fileset.depfun>
+      <file>${MATLAB_ROOT}\toolbox\matlab\demos\bucky.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\+mixin\Container.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\+mixin\Flex.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\Box.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\ButtonBox.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\calcPixelSizes.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\ChildEvent.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\ChildObserver.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\Divider.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\Empty.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\FigureData.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\FigureObserver.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\getPosition.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\HBox.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\HBoxFlex.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\HButtonBox.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\Node.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\PointerManager.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\set.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\setPosition.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\VBox.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\GUI Layout Toolbox\layout\+uix\VBoxFlex.m</file>
+      <file>C:\Users\dlegland\AppData\Roaming\MathWorks\MATLAB Add-Ons\Toolboxes\Widgets Toolbox - Compatibility Support\resource\+uix\Container.m</file>
+      <file>${PROJECT_ROOT}\lib\genericDialog\dev\GenericDialog.m</file>
+      <file>${PROJECT_ROOT}\lib\jsonlab\jsonopt.m</file>
+      <file>${PROJECT_ROOT}\lib\jsonlab\loadjson.m</file>
+      <file>${PROJECT_ROOT}\lib\jsonlab\mergestruct.m</file>
+      <file>${PROJECT_ROOT}\lib\jsonlab\savejson.m</file>
+      <file>${PROJECT_ROOT}\lib\jsonlab\struct2jdata.m</file>
+      <file>${PROJECT_ROOT}\lib\jsonlab\varargin2struct.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom2d\centroid.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom2d\minDistancePoints.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\angleSort3d.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\boundingBox3d.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\clipLine3d.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\createLine3d.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\createPlane.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\createRotationOx.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\createRotationOy.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\createRotationOz.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\createScaling3d.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\createTranslation3d.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\crossProduct3d.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\drawEdge3d.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\drawLine3d.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\drawPolygon3d.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\fitPlane.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\intersectEdgePlane.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\intersectLinePlane.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\isBelowPlane.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\isCoplanar.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\line3dPosition.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\mergeBoxes3d.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\normalizePlane.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\normalizeVector3d.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\planeNormal.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\planePoint.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\planePosition.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\polygonCentroid3d.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\projPointOnPlane.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\recenterTransform3d.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\sph2cart2.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\transformPoint3d.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\vectorAngle3d.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\geom3d\vectorNorm3d.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\checkMeshAdjacentFaces.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\collapseEdgesWithManyFaces.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\createCube.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\createDodecahedron.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\createIcosahedron.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\createOctahedron.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\createRhombododecahedron.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\createSoccerBall.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\createTetrahedron.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\createTetrakaidecahedron.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\drawMesh.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\ensureManifoldMesh.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\intersectPlaneMesh.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\mergeMeshVertices.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\meshAdjacencyMatrix.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\meshBoundary.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\meshBoundaryEdgeIndices.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\meshEdgeFaces.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\meshEdgeLength.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\meshEdges.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\meshFace.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\meshFaceCentroids.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\meshFaceEdges.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\meshFaceNormals.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\meshFaceNumber.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\meshVertexClustering.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\meshVertexRing.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\minConvexHull.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\private\formatMeshOutput.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\private\parseMeshData.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\readMesh.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\readMesh_obj.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\readMesh_off.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\readMesh_ply.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\readMesh_stl.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\removeDuplicateFaces.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\removeDuplicateVertices.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\removeMeshFaces.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\removeUnreferencedVertices.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\smoothMesh.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\subdivideMesh.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\triangulateFaces.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\trimeshEdgeFaces.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\trimeshMeanBreadth.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\meshes3d\trimMesh.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\polygons2d\drawPolygon.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\polygons2d\drawPolyline.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\polygons2d\parsePolygon.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\polygons2d\polygonCentroid.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\polygons2d\splitPolygons.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\utils\isAxisHandle.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\utils\parseAxisHandle.m</file>
+      <file>${PROJECT_ROOT}\lib\matGeom\utils\parseDrawInput.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+app\MeshDisplayOptions.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+app\MeshHandle.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+app\MeshViewerAppData.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+app\Scene.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+app\SceneAxis.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+app\SceneDisplayOptions.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+gui\+frames\XYSliceViewer.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+gui\+frames\XZSliceViewer.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+gui\+frames\YZSliceViewer.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+gui\MeshViewerGUI.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+gui\MeshViewerMainFrame.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+gui\Plugin.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+gui\SceneRenderer.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+analyze\ComputeMeshArea.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+analyze\ComputeMeshMeanBreadth.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+analyze\ComputeMeshVolume.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+analyze\PlotMeshVertexDegreeHistogram.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+edit\DuplicateMesh.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+edit\FindClosestVertex.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+edit\PrintMeshInfo.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+edit\PrintMeshList.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+edit\RemoveMesh.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+edit\RenameMesh.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+edit\RenameScene.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+edit\SelectAll.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+edit\SelectInverse.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+edit\SelectNone.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+edit\SetEdgeStyle.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+edit\SetFaceOpacity.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+edit\SetSelectionFaceColor.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+file\CloseCurrentFrame.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+file\CreateCube.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+file\CreateDodecahedron.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+file\CreateIcosahedron.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+file\CreateNewSceneFrame.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+file\CreateOctahedron.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+file\CreateRhombododecahedron.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+file\CreateSoccerBall.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+file\CreateTetrahedron.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+file\CreateTetrakaidecahedron.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+file\ImportMeshFromStruct.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+file\ImportMeshVFFromWorkspace.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+file\ImportSampleMesh.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+file\OpenMeshAsStructure.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+file\OpenMeshFile.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+file\OpenSceneAsStructure.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+file\SaveMeshAsStructure.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+file\SaveSceneAsStructure.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+process\CheckMeshAdjacentFaces.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+process\EnsureManifoldMesh.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+process\FlipMesh.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+process\IntersectPlaneMesh.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+process\RecenterMesh.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+process\RotateMeshMainAxes.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+process\SimplifyMeshByReducePatch.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+process\SimplifyMeshByVertexClustering.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+process\SmoothMesh.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+process\SubdivideMesh.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+process\TranslateMesh.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+process\TriangulateMesh.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+process\UniformScalingMesh.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+view\ClearMeshBoundary.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+view\ClearMeshVertexRings.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+view\ComputeMeshBoundaryPolygons.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+view\DrawMeshVertexRing.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+view\PrintAxisProperties.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+view\SetAxisViewAngle.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+view\SetSceneAxisBounds.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+view\SetSceneAxisBoundsToBoundingBox.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+view\ToggleAxisLinesDisplay.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+view\ToggleLight.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+view\ViewXYSlice.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+view\ViewXZSlice.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\+plugins\+view\ViewYZSlice.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\@TriMesh\planeIntersection.m</file>
+      <file>${PROJECT_ROOT}\meshViewer\+mv\@TriMesh\TriMesh.m</file>
+    </fileset.depfun>
+    <fileset.resources />
+    <fileset.package />
+    <build-deliverables>
+      <file location="D:\dlegland\dev\matlab\geometry\meshViewer" name="dev" optional="false">D:\dlegland\dev\matlab\geometry\meshViewer\dev</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\R2024b</root>
+      <toolboxes />
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>10.0</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>
