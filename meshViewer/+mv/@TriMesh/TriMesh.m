@@ -39,16 +39,28 @@ properties
     % The three edges around each fave, as a NF-by-3 array of edge indices.
     FaceEdges = [];
     
-    % some geometrical informations
+    % Some geometrical informations (may be managed by properties)
     FaceNormals = [];
     EdgeNormals = [];
     VertexNormals = [];
+
+    % A map of properties for each vertex
+    VertexProperties;
+    % A map of properties for each edge
+    EdgeProperties;
+    % A map of properties for each face
+    FaceProperties;
 end
 
 
 %% Constructor
 methods
     function obj = TriMesh(varargin)
+        % Create a new mesh.
+        %
+        %  Usage:
+        %   MESH = mv.TriMesh(V, F);
+        %   MESH = mv.TriMesh(MESHSTRUCT);
         
         % Parse input arguments
         if isnumeric(varargin{1})
@@ -65,11 +77,16 @@ methods
         if size(obj.Faces, 2) > 3
             obj.Faces = triangulateFaces(obj.Faces);
         end
+
+        % initialize properties
+        obj.VertexProperties = containers.Map;
+        obj.EdgeProperties = containers.Map;
+        obj.FaceProperties = containers.Map;
     end
 end
 
 
-%% Geometric inforamtion about mesh
+%% Geometric information about mesh
 methods
     function vol = volume(obj)
         % (signed) volume enclosed by this mesh.
@@ -124,6 +141,232 @@ methods
         %   trimeshMeanBreadth
         
         mb = trimeshMeanBreadth(obj.Vertices, obj.Faces);
+    end
+end
+
+
+%% Management of Edge properties
+
+methods
+    function setEdgeProperties(obj, propName, propValues)
+        % Set an edge property for all edges in the mesh.
+        % 
+        % Usage:
+        %   setEdgeProperties(MESH, PROPNAME, VALUES);
+        % PROPNAME must be a char array. VALUES must be either a numeric
+        % array or a cell array with a size in the first dimension equal to
+        % the number of edges. 
+        %
+        % Example:
+        %  normals = randn(edgeCount(mesh),3);
+        %  setEdgeProperties(mesh, 'normal', normals);
+        ensureValidEdges(obj);
+        obj.EdgeProperties(propName) = propValues;
+    end
+
+    function value = getEdgeProperty(obj, propName, iEdge)
+        % Return the property value of a given edge.
+        %
+        % Usage:
+        %   VALUE = getEdgeProperty(MESH, PROPNAME, IEDGE);
+        % PROPNAME must be a char array. IEDGE is the index of the edge,
+        % between 1 and the edge count.
+        
+        if ~isKey(obj.EdgeProperties, propName)
+            error('Mesh has no edge property with name %s', propName);
+        end
+        props = obj.EdgeProperties(propName);
+        if isnumeric(props)
+            value = props(iEdge, :);
+        elseif iscell(props)
+            value = props{iEdge};
+        else
+            error('Property must by either a numeric or a cell array');
+        end
+    end
+
+    function setEdgeProperty(obj, propName, iEdge, value)
+        % Change the property value of a given edge.
+        %
+        % Usage:
+        %   setEdgeProperty(MESH, PROPNAME, IEDGE, NEWVALUE);
+        % PROPNAME must be a char array. IEDGE is the index of the edge,
+        % between 1 and the edge count. NEWVALUE is the new value of the
+        % property for the selected edge.
+
+        ensureValidEdges(obj);
+
+        if isKey(obj.EdgeProperties, propName)
+            props = obj.EdgeProperties(propName);
+            if isnumeric(value)
+                props(iEdge, :) = value;
+            elseif iscell(value)
+                props(iEdge) = value;
+            else
+                error('Property value must by either a numeric or a cell');
+            end
+            obj.EdgeProperties(propName) = props;
+        else
+            % initialize default property
+            ne = edgeCount(obj);
+            if isnumeric(value)
+                props = zeros(ne, size(value, 2));
+                props(iEdge, :) = value;
+            elseif iscell(value)
+                props = cell(ne, 1);
+                props(iEdge) = value;
+            else
+                error('Property value must by either a numeric or a cell');
+            end
+            obj.EdgeProperties(propName) = props;
+        end
+    end
+end
+
+%% Management of Vertex properties
+
+methods
+    function setVertexProperties(obj, propName, propValues)
+        % Set a vertex property for all vertices in the mesh.
+        % 
+        % Usage:
+        %   setVertexProperties(MESH, PROPNAME, VALUES);
+        % PROPNAME must be a char array. VALUES must be either a numeric
+        % array or a cell array with a size in the first dimension equal to
+        % the number of vertices. 
+        %
+        % Example:
+        %  normals = randn(vertexCount(mesh),3);
+        %  setVertexProperties(mesh, 'normal', normals);
+        obj.VertexProperties(propName) = propValues;
+    end
+
+    function value = getVertexProperty(obj, propName, iVertex)
+        % Return the property value of a given vertex.
+        %
+        % Usage:
+        %   VALUE = getVertexProperty(MESH, PROPNAME, IVERTEX);
+        % PROPNAME must be a char array. IVERTEX is the index of the vertex,
+        % between 1 and the vertex count.
+        if ~isKey(obj.VertexProperties, propName)
+            error('Mesh has no vertex property with name %s', propName);
+        end
+        props = obj.VertexProperties(propName);
+        if isnumeric(props)
+            value = props(iVertex, :);
+        elseif iscell(props)
+            value = props{iVertex};
+        else
+            error('Property must by either a numeric or a cell array');
+        end
+    end
+
+    function setVertexProperty(obj, propName, iVertex, value)
+        % Change the property value of a given vertex.
+        %
+        % Usage:
+        %   setVertexProperty(MESH, PROPNAME, IVERTEX, NEWVALUE);
+        % PROPNAME must be a char array. IVERTEX is the index of the vertex,
+        % between 1 and the vertex count. NEWVALUE is the new value of the
+        % property for the selected vertex.
+        if isKey(obj.VertexProperties, propName)
+            props = obj.VertexProperties(propName);
+            if isnumeric(value)
+                props(iVertex, :) = value;
+            elseif iscell(value)
+                props(iVertex) = value;
+            else
+                error('Property value must by either a numeric or a cell');
+            end
+            obj.VertexProperties(propName) = props;
+        else
+            % initialize default property
+            nv = vertexCount(obj);
+            if isnumeric(value)
+                props = zeros(nv, size(value, 2));
+                props(iVertex, :) = value;
+            elseif iscell(value)
+                props = cell(nv, 1);
+                props(iVertex) = value;
+            else
+                error('Property value must by either a numeric or a cell');
+            end
+            obj.VertexProperties(propName) = props;
+        end
+    end
+end
+
+
+%% Management of Face properties
+
+methods
+    function setFaceProperties(obj, propName, propValues)
+        % Set a face property for all faces in the mesh.
+        % 
+        % Usage:
+        %   setFaceProperties(MESH, PROPNAME, VALUES);
+        % PROPNAME must be a char array. VALUES must be either a numeric
+        % array or a cell array with a size in the first dimension equal to
+        % the number of faces. 
+        %
+        % Example:
+        %  normals = randn(faceCount(mesh),3);
+        %  setFaceProperties(mesh, 'normal', normals);
+        obj.FaceProperties(propName) = propValues;
+    end
+
+    function value = getFaceProperty(obj, propName, iFace)
+        % Return the property value of a given face.
+        %
+        % Usage:
+        %   VALUE = getFaceProperty(MESH, PROPNAME, IFACE);
+        % PROPNAME must be a char array. IFACE is the index of the face,
+        % between 1 and the face count.
+        if ~isKey(obj.FaceProperties, propName)
+            error('Mesh has no face property with name %s', propName);
+        end
+        props = obj.FaceProperties(propName);
+        if isnumeric(props)
+            value = props(iFace, :);
+        elseif iscell(props)
+            value = props{iFace};
+        else
+            error('Property must by either a numeric or a cell array');
+        end
+    end
+
+    function setFaceProperty(obj, propName, iFace, value)
+        % Change the property value of a given face.
+        %
+        % Usage:
+        %   setFaceProperty(MESH, PROPNAME, IFACE, NEWVALUE);
+        % PROPNAME must be a char array. IFACE is the index of the face,
+        % between 1 and the face count. NEWVALUE is the new value of the
+        % property for the selected face.
+        if isKey(obj.FaceProperties, propName)
+            props = obj.FaceProperties(propName);
+            if isnumeric(value)
+                props(iFace, :) = value;
+            elseif iscell(value)
+                props(iFace) = value;
+            else
+                error('Property value must by either a numeric or a cell');
+            end
+            obj.FaceProperties(propName) = props;
+        else
+            % initialize default property
+            nf = faceCount(obj);
+            if isnumeric(value)
+                props = zeros(nf, size(value, 2));
+                props(iFace, :) = value;
+            elseif iscell(value)
+                props = cell(nf, 1);
+                props(iFace) = value;
+            else
+                error('Property value must by either a numeric or a cell');
+            end
+            obj.FaceProperties(propName) = props;
+        end
     end
 end
 
