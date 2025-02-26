@@ -96,6 +96,12 @@ methods
             end
         end
 
+        % display the other items
+        for i = 1:length(obj.Scene.DrawItems)
+            item = obj.Scene.DrawItems{i};
+            item.Handles.Main = draw(ax, item);
+        end
+
         updateAxisLinesDisplay(obj);
         updateLightDisplay(obj);
         

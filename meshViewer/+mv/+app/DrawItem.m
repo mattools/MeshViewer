@@ -1,4 +1,4 @@
-classdef DrawItem < handle
+classdef (InferiorClasses = {?matlab.graphics.axis.Axes}) DrawItem < handle
 % Container for an item that can be drawn on an axis.
 %
 %   Class DrawItem
@@ -70,6 +70,33 @@ end % end constructors
 
 %% Methods
 methods
+    function h = draw(varargin)
+        % Draw this item.
+
+        % extract first argument
+        var1 = varargin{1};
+        varargin(1) = [];
+
+        % Check if first input argument is an axes handle
+        if isAxisHandle(var1)
+            ax = var1;
+            var1 = varargin{1};
+        else
+            ax = gca;
+        end
+
+        obj = var1;
+
+        if strcmpi(obj.Type, 'Polygon3D')
+            h = drawPolygon3d(ax, obj.Data);
+        elseif strcmpi(obj.Type, 'Polyline3D')
+            h = drawPolyline3d(ax, obj.Data);
+        else
+            warning('currently no code for drawing items with type: %s', obj.Type)
+        end
+        apply(obj.DisplayOptions, h);
+    end
+
 end % end methods
 
 

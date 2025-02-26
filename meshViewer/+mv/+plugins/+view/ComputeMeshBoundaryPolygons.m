@@ -44,7 +44,12 @@ methods
             
             bnd = meshBoundary(v, f);
             
-            mh.BoundaryPolygons = bnd;
+            % mh.BoundaryPolygons = bnd;
+            item = mv.app.DrawItem('boundary', 'Polygon3D', bnd);
+            item.DisplayOptions.LineWidth = 2;
+            item.DisplayOptions.LineColor = [1 0 1];
+
+            addDrawItem(frame.Scene, item);
         end
         
         updateDisplay(frame);

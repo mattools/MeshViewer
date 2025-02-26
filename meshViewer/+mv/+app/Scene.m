@@ -24,6 +24,9 @@ properties
     % set of mesh handles within this scene, as a cell array.
     MeshHandleList;
     
+    % set of items to draw, as a cell array.
+    DrawItems = {};
+    
     % the set of display options for the scene, as an instance of
     % mv.app.SceneDisplayOptions.
     % Used to initialize the axis.
@@ -144,9 +147,12 @@ methods
             mh = mesh;
             
             % check name validity
-            if hasMeshWithName(obj, mh.Name)
-                mh.name = getNextFreeName(obj, mh.Name);
+            if hasItemWithName(obj.MeshHandleList, mh.Name)
+                mh.name = getNextFreeName(obj.MeshHandleList, mh.Name);
             end
+            % if hasMeshWithName(obj, mh.Name)
+            %     mh.name = getNextFreeName(obj, mh.Name);
+            % end
             return;
         end
         
@@ -171,52 +177,29 @@ methods
         end
 
         % choose a unique name
-        name = getNextFreeName(obj, name);
+        name = getNextFreeName(obj.MeshHandleList, name);
+        % name = getNextFreeName(obj, name);
 
         % encapsulate the mesh into MeshHandle
         mh = mv.app.MeshHandle(mesh, name);
     end
     
-    function newName = getNextFreeName(obj, baseName)
-        % Find a new name ensuring it is unique within the scene.
-        
-        newName = baseName;
-        if hasMeshWithName(obj, newName)
-            % remove trailing digits if any
-            baseName = removeTrailingDigits(baseName);
-            pattern = '%s-%d';
-            index = 1;
+    function addDrawItem(obj, item)
+        % Add a draw item to the scene.
+        % The name of the item could be updated to ensure uniqueness.
+
+        % check mesh is already mesh handle
+        if ~isa(item, 'mv.app.DrawItem')
+            error('Input must be an instance of DrawItem');
+        end
             
-            % find the first index such that no mesh already exist with the
-            % name: "[baseName]-[index]"
-            while true
-                newName = sprintf(pattern, baseName, index);
-                if ~hasMeshWithName(obj, newName)
-                    break;
-                end
-                index = index + 1;
-            end
+        % check name validity
+        if hasItemWithName(obj.DrawItems, item.Name)
+            item.Name = getNextFreeName(obj.DrawItems, item.Name);
         end
-        
-        function name = removeTrailingDigits(name)
-            while ismember(name(end), '1234567890')
-                name(end) = [];
-            end
-            if name(end) == '-'
-                name(end) = [];
-            end
-        end
-    end
-    
-    function tf = hasMeshWithName(obj, name)
-        tf = false;
-        for i = 1:length(obj.MeshHandleList)
-            mh = obj.MeshHandleList{i};
-            if strcmp(mh.Name, name)
-                tf = true;
-                return;
-            end
-        end
+
+        % add item to the list
+        obj.DrawItems = [obj.DrawItems {item}];
     end
 end
 
@@ -281,3 +264,48 @@ end
 
 end % end classdef
 
+%% Utility classes
+
+function newName = getNextFreeName(itemList, baseName)
+    % Find a new name ensuring it is unique within the scene.
+    
+    newName = baseName;
+    if hasItemWithName(itemList, newName)
+        % remove trailing digits if any
+        baseName = removeTrailingDigits(baseName);
+        pattern = '%s-%d';
+        index = 1;
+        
+        % find the first index such that no item already exist with the
+        % name: "[baseName]-[index]"
+        while true
+            newName = sprintf(pattern, baseName, index);
+            if ~hasItemWithName(itemList, newName)
+                break;
+            end
+            index = index + 1;
+        end
+    end
+end
+
+function tf = hasItemWithName(itemList, name)
+% Check whether the input list of item has one with the specified name.
+    tf = false;
+    for i = 1:length(itemList)
+        item = itemList{i};
+        if strcmp(item.Name, name)
+            tf = true;
+            return;
+        end
+    end
+end
+
+function name = removeTrailingDigits(name)
+    % Remove trailing digits (and dash symbol if any) of a name.
+    while ismember(name(end), '1234567890')
+        name(end) = [];
+    end
+    if name(end) == '-'
+        name(end) = [];
+    end
+end
