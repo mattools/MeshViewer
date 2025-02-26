@@ -1,5 +1,16 @@
 function mesh = createIcosahedron(varargin)
 % Create a new mesh representing an icosahedron.
+%
+%   MESH = mv.TriMesh.createIcosahedron;
+%   Create an icosahedron, based on 12 vertices and 20 triangular faces.
+%
+%   Example
+%   mesh = mv.TriMesh.createIcosahedron;
+%   figure; axis equal; hold on; draw(mesh); view(3);
+%   
+%   See also 
+%   draw, createCube, createOctahedron
+%
 theta = 2*pi/5;
 l = 1/sin(theta/2)/2;
 z1 = sqrt(1-l*l);

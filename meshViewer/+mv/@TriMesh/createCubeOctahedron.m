@@ -1,16 +1,16 @@
 function mesh = createCubeOctahedron()
 %CREATECUBEOCTAHEDRON Create a 3D mesh representing a cube-octahedron.
 %
-%   mesh = mv.TriMesh.createCubeOctahedron;
+%   MESH = mv.TriMesh.createCubeOctahedron;
 %   Cubeoctahedron can be seen either as a truncated cube, or as a
 %   truncated octahedron.
 %
 %   Example
-%   [n, e, f] = createCubeOctahedron;
-%   drawMesh(n, f);
+%   mesh = mv.TriMesh.createCubeOctahedron;
+%   figure; axis equal; hold on; draw(mesh); view(3);
 %   
 %   See also 
-%   meshes3d, drawMesh, createCube, createOctahedron
+%   draw, createCube, createOctahedron
 %
 
 % ------

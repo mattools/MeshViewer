@@ -1,16 +1,18 @@
 function mesh = createSoccerBall()
 %CREATESOCCERBALL Create a 3D mesh representing a soccer ball.
 %
-%   It is basically a wrapper of the 'bucky' function in Matlab.
 %   mesh = mv.TriMesh.createSoccerBall
 %   Returns a new mesh composed of 60 vertices.
+%   It is basically a wrapper of the 'bucky' function in Matlab.
+%
 %
 %   Example
-%   [v, f] = createSoccerBall;
-%   drawMesh(v, f);
-%
+%   mesh = mv.TriMesh.createSoccerBall;
+%   figure; axis equal; hold on; draw(mesh); view(3);
+%   
 %   See also 
-%   meshes, drawMesh, bucky
+%   draw, createCube, createOctahedron
+%
 
 % ------
 % Author: David Legland

@@ -1,19 +1,22 @@
 function mesh = createDodecahedron()
 %CREATEDODECAHEDRON Create a 3D mesh representing a dodecahedron.
 %
-%   mesh = mv.TriMesh.createDodecahedron;
-%   Create a 3D mesh representing a dodecahedron
-%   V is the 20-by-3 array of vertex coordinates
-%   E is the 30-by-2 array of edge vertex indices
-%   F is the 12-by-5 array of face vertex indices
+%   MESH = mv.TriMesh.createDodecahedron;
+%   Create a 3D mesh representing a dodecahedron, composed of 20 vertices
+%   and 36 faces (12 pentagons, each of them divided into three triangles).
 %
 %   Use values given by P. Bourke, see:
 %   http://local.wasp.uwa.edu.au/~pbourke/geometry/platonic/
 %   faces are re-oriented to have normals pointing outwards.
 %
+%
+%   Example
+%   mesh = mv.TriMesh.createDodecahedron;
+%   figure; axis equal; hold on; draw(mesh); view(3);
+%   
 %   See also 
-%   meshes3d, drawMesh
-%   createCube, createOctahedron, createIcosahedron, createTetrahedron
+%   draw, createCube, createOctahedron
+%
 %
 
 % ------

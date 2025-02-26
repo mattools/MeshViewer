@@ -1,5 +1,13 @@
 function mesh = createCube()
 % Create a mesh representing a unit cube.
+%
+%   Example
+%   mesh = mv.TriMesh.createCube;
+%   figure; axis equal; hold on; draw(mesh); view(3);
+%   
+%   See also 
+%   draw, createOctahedron, createDodecahedron
+%
 vertices = [...
     0 0 0; ...
     1 0 0; ...

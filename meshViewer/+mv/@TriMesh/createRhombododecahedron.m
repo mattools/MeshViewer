@@ -1,25 +1,18 @@
 function mesh = createRhombododecahedron()
 %CREATERHOMBODODECAHEDRON Create a 3D mesh representing a rhombododecahedron.
 %
-%   [V, E, F] = createRhombododecahedron
+%   MESH = mv.TriMesh.createRhombododecahedron
 %   V is a 14-by-3 array with vertex coordinate, 
 %   E is a 12-by-2 array containing indices of neighbour vertices,
 %   F is a 8-by-3 array containing vertices array of each face.
 %
-%   [V, F] = createRhombododecahedron;
-%   Returns only the vertices and the face vertex indices.
-%
-%   MESH = createRhombododecahedron;
-%   Returns the data as a mesh structure, with fields 'vertices', 'edges'
-%   and 'faces'.
-%
 %   Example
-%   [v, e, f] = createRhombododecahedron;
-%   drawMesh(v, f);
-%
-%
+%   mesh = mv.TriMesh.createRhombododecahedron;
+%   figure; axis equal; hold on; draw(mesh); view(3);
+%   
 %   See also 
-%   meshes3d, drawMesh
+%   draw, createCube, createOctahedron
+%
 
 % ------
 % Author: David Legland 

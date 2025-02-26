@@ -6,10 +6,13 @@ function mesh = createTruncatedOctahedron(varargin)
 %   octahedron is composed of 14 faces and 24 vertices. Conversion to
 %   triangular mesh increases the number of faces.
 %
-%   Example
-%   createTruncatedOctahedron
 %
-%   See also
+%   Example
+%   mesh = mv.TriMesh.createTruncatedOctahedron;
+%   figure; axis equal; hold on; draw(mesh); view(3);
+%   
+%   See also 
+%   draw, createCube, createOctahedron
 %
  
 % ------

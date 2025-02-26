@@ -559,6 +559,70 @@ methods (Access = private)
 end
 
 
+%% Display methods
+% (Mostly used for debugging purpose)
+methods
+    function varargout = draw(varargin)
+        % Display the mesh.
+        %
+        %   draw(MESH)
+        %   Display the mesh with default settings.
+        %
+        %   draw(MESH, COLOR)
+        %   Display the mesh using the specified color for faces.
+        %
+        %   draw(AX, ...)
+        %   Display the mesh on the specified axis.
+        
+
+        % extract first argument
+        var1 = varargin{1};
+        varargin(1) = [];
+
+        % Check if first input argument is an axes handle
+        if isAxisHandle(var1)
+            ax = var1;
+            var1 = varargin{1};
+            varargin(1) = [];
+        else
+            ax = gca;
+        end
+
+        obj = var1;
+
+        % default color for drawing mesh
+        faceColor = [0.7 0.7 0.7];
+        % combine default face color with varargin
+        if isempty(varargin)
+            varargin = [{'FaceColor'}, faceColor];
+        elseif isscalar(varargin)
+            % if only one optional argument is provided, it is assumed to be color
+            faceColor = varargin{1};
+            varargin = [{'FaceColor'}, faceColor];
+        elseif length(varargin) > 1
+            % check if FaceColor option is specified,
+            % and if not use default face color
+            indFC = strcmpi(varargin(1:2:end), 'FaceColor');
+            if ~any(indFC)
+                varargin = [{'FaceColor'}, {faceColor}, varargin];
+            end
+        end
+
+        % overwrite on current figure
+        hold(ax, 'on');
+
+        h = patch('Parent', ax, ...
+            'vertices', obj.Vertices, 'faces', obj.Faces, ...
+            varargin{:});
+
+        % format output parameters
+        if nargout > 0
+            varargout = {h};
+        end
+    end
+end
+
+
 %% Serialization methods
 methods
     function str = toStruct(obj)

@@ -1,18 +1,18 @@
 function mesh = createTetrahedron()
 %CREATETETRAHEDRON Create a 3D mesh representing a tetrahedron.
 %
-%   mesh = createTetrahedron
+%   MESH = mv.TriMesh.createTetrahedron
 %   create a simple tetrahedron, using mesh representation. The tetrahedron
 %   is inscribed in the unit cube.
 %
-%   Example
-%   % Create and display a tetrahedron
-%   [V, E, F] = createTetrahedron;
-%   drawMesh(V, F);
 %
+%   Example
+%   mesh = mv.TriMesh.createTetrahedron;
+%   figure; axis equal; hold on; draw(mesh); view(3);
+%   
 %   See also 
-%   meshes3d, drawMesh
-%   createCube, createOctahedron, createDodecahedron, createIcosahedron
+%   draw, createCube, createOctahedron
+%
 
 % ------
 % Author: David Legland 
