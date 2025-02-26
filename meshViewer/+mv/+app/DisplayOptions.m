@@ -60,29 +60,34 @@ end % end constructors
 
 %% Methods
 methods
-    function apply(obj, handle)
+    function apply(obj, handles)
         % Apply this set of options to the graphical handle.
 
         % switch processing depending on nature of handle
-        if strcmpi(handle.Type, 'Patch')
-            % Process a handle associated to a mesh.
+        for i = 1:length(handles)
+            handle = handles(i);
 
-            % setup edges
-            if obj.LineVisible
-                set(handle, 'EdgeColor', obj.LineColor);
-                set(handle, 'LineWidth', obj.LineWidth);
+            if strcmpi(handle.Type, 'Patch')
+                % Process a handle associated to a mesh.
+
+                % setup edges
+                if obj.LineVisible
+                    set(handle, 'EdgeColor', obj.LineColor);
+                    set(handle, 'LineWidth', obj.LineWidth);
+                else
+                    set(handle, 'EdgeColor', 'none');
+                end
+
+                % setup faces
+                set(handle, 'faceColor', obj.FaceColor);
+                set(handle, 'faceAlpha', obj.FaceOpacity);
+
             else
-                set(handle, 'EdgeColor', 'none');
+                % General handle
+                set(handle, 'Color', obj.LineColor);
+                set(handle, 'LineWidth', obj.LineWidth);
             end
-    
-            % setup faces
-            set(handle, 'faceColor', obj.FaceColor);
-            set(handle, 'faceAlpha', obj.FaceOpacity);
-
-        else
-            % General handle
         end
-
     end
 end % end methods
 
