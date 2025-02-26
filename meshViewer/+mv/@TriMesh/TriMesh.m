@@ -17,6 +17,21 @@ classdef TriMesh < handle
 % Created: 2018-05-03,    using Matlab 9.4.0.813654 (R2018a)
 % Copyright 2018 INRA - Cepia Software Platform.
 
+%% Static factories
+methods (Static)
+    mesh = createCube()
+    mesh = createOctahedron(varargin)
+    mesh = createIcosahedron(varargin)
+    mesh = createDodecahedron(varargin)
+    mesh = createTetrahedron(varargin)
+    mesh = createCubeOctahedron(varargin)
+    mesh = createRhombododecahedron(varargin)
+    mesh = createTruncatedOctahedron(varargin)
+    mesh = createSoccerBall(varargin)
+end
+
+
+%% Properties
 properties
     % Coordinates of mesh vertices, as a Nv-by-3 array.
     Vertices;
@@ -74,7 +89,7 @@ methods
         end
        
         % ensure faces is N-by-3
-        if size(obj.Faces, 2) > 3
+        if size(obj.Faces, 2) > 3 || iscell(obj.Faces)
             obj.Faces = triangulateFaces(obj.Faces);
         end
 
