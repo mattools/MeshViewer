@@ -130,6 +130,7 @@ methods
             addPlugin(viewMenu, mv.plugins.view.PrintAxisProperties(), 'Print Axis Properties', true);
             addPlugin(viewMenu, mv.plugins.view.ComputeMeshBoundaryPolygons(), 'Compute Mesh Boundaries', true);
             addPlugin(viewMenu, mv.plugins.view.ClearMeshBoundary(), 'Clear Mesh Boundaries');
+            addPlugin(viewMenu, mv.plugins.view.DrawMeshBoundingBox(), 'Draw Mesh Bounding Box');
             addPlugin(viewMenu, mv.plugins.view.DrawMeshVertexRing(), 'Draw Mesh Vertex Ring', true);
             addPlugin(viewMenu, mv.plugins.view.ClearMeshVertexRings(), 'Clear Mesh Vertex Ring');
             addPlugin(viewMenu, mv.plugins.view.ViewXYSlice(), 'View XY Slice', true);

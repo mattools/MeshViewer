@@ -63,6 +63,10 @@ methods
     function apply(obj, handles)
         % Apply this set of options to the graphical handle.
 
+        if isnumeric(handles)
+            handles = get(handles, 'Children');
+        end
+
         % switch processing depending on nature of handle
         for i = 1:length(handles)
             handle = handles(i);

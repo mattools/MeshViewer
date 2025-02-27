@@ -91,6 +91,8 @@ methods
             h = drawPolygon3d(ax, obj.Data);
         elseif strcmpi(obj.Type, 'Polyline3D')
             h = drawPolyline3d(ax, obj.Data);
+        elseif strcmpi(obj.Type, 'BoundingBox3D')
+            h = drawBox3d(ax, obj.Data);
         else
             warning('currently no code for drawing items with type: %s', obj.Type)
         end
