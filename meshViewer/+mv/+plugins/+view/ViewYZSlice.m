@@ -34,7 +34,7 @@ end % end constructors
 %% Methods
 methods
     function run(obj, frame, src, evt) %#ok<INUSL>
-        mv.gui.frames.YZSliceViewer(frame.Gui, frame.Scene);
+        mv.gui.frames.YZSliceViewer(frame);
     end
 end % end methods
 

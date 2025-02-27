@@ -18,18 +18,25 @@ classdef XYSliceViewer < handle
 
 %% Properties
 properties
-    % reference to the main GUI instance
-    Gui;
+    % Keep reference to parent frame (must be MainFrame)
+    ParentFrame;
    
-    % list of handles to the various gui items
-    Handles;
-    
     % The scene displayed by this frame, as an instance of mv.app.Scene.
     % Contains a collection of meshes.
     Scene;
 
-    % The z-position of the xy-plane
+    % The Z-position of the XY-plane
     SlicePosition = 0;
+
+    % Results of plane-mesh intersection computation (one element per mesh).
+    Polygons = {};
+    ClosedFlags = {};
+
+    % list of handles to the various gui items
+    Handles;
+    
+    % The display of items on the 3D view
+    DrawItems3D = [];
 
     Computing = false;
 
@@ -38,12 +45,17 @@ end % end properties
 
 %% Constructor
 methods
-    function obj = XYSliceViewer(gui, scene)
+    function obj = XYSliceViewer(frame)
         % Constructor for XYSliceViewer class.
-        obj.Gui = gui;
-        obj.Scene = scene;
 
-        box = viewBox(scene.DisplayOptions);
+        if ~isa(frame, 'mv.gui.MeshViewerMainFrame')
+            error('input argument must be an instance of MeshViewerMainFrame');
+        end
+        obj.ParentFrame = frame;
+        obj.Scene = frame.Scene;
+
+        % initialize plane position in the middle of the bounding box
+        box = viewBox(obj.Scene.DisplayOptions);
         zPlane = mean([box(5) box(6)]);
         obj.SlicePosition = zPlane;
         
@@ -146,29 +158,49 @@ end % end constructors
 methods
     function refreshDisplay(obj)
 
-        if obj.Computing 
+        if obj.Computing
             return;
         end
-        obj.Computing = true;
+        computeIntersections(obj);
         
         ax = obj.Handles.MainAxis;
         cla(ax);
         hold on;
 
-        plane = [0 0 obj.SlicePosition   1 0 0   0 1 0];
-
         % display the meshes
         for i = 1:length(obj.Scene.MeshHandleList)
             mh = obj.Scene.MeshHandleList{i};
-            mesh = mh.Mesh;
-            [polys, closedFlags] = planeIntersection(mesh, plane);
+            polys = obj.Polygons{i};
+            closedFlags = obj.ClosedFlags{i};
 
             % display intersections using face color for drawing polylines
             drawPolygon3d(ax, polys(closedFlags), 'color', mh.DisplayOptions.FaceColor, 'LineWidth', 2);
+            drawPolyline3d(ax, polys(~closedFlags), 'color', mh.DisplayOptions.FaceColor, 'LineWidth', 2);
         end
+    end
 
-        % updateAxisLinesDisplay(obj);
-        % annotateAxis(obj);
+    function computeIntersections(obj)
+        % Compute the intersection polygons.
+
+        % avoid multiple computations
+        if obj.Computing 
+            return;
+        end
+        obj.Computing = true;
+
+        % allocate memory
+        nMeshes = length(obj.Scene.MeshHandleList);
+        obj.Polygons = cell(1, nMeshes);
+        obj.ClosedFlags = cell(1, nMeshes);
+
+        % create plane
+        plane = [0 0 obj.SlicePosition   1 0 0   0 1 0];
+
+        % compute intersection for each mesh
+        for i = 1:nMeshes
+            mh = obj.Scene.MeshHandleList{i};
+            [obj.Polygons{i}, obj.ClosedFlags{i}] = planeIntersection(mh.Mesh, plane);
+        end
 
         obj.Computing = false;
     end
@@ -182,10 +214,6 @@ methods
         obj.SlicePosition = zslice;
 
         refreshDisplay(obj);
-
-        % % propagate change of current slice event to ImageDisplayListeners
-        % evt = struct('Source', obj, 'EventName', 'CurrentSliceChanged');
-        % processCurrentSliceChanged(obj, obj.Handles.Figure, evt);
     end
 end
 

@@ -18,19 +18,19 @@ classdef XZSliceViewer < handle
 
 %% Properties
 properties
-    % reference to the main GUI instance
-    Gui;
+    % Keep reference to parent frame (must be MainFrame)
+    ParentFrame;
    
-    % list of handles to the various gui items
-    Handles;
-    
     % The scene displayed by this frame, as an instance of mv.app.Scene.
     % Contains a collection of meshes.
     Scene;
 
-    % The z-position of the xy-plane
+    % The Y-position of the XZ-plane
     SlicePosition = 0;
 
+    % list of handles to the various gui items
+    Handles;
+    
     Computing = false;
 
 end % end properties
@@ -38,12 +38,17 @@ end % end properties
 
 %% Constructor
 methods
-    function obj = XZSliceViewer(gui, scene)
+    function obj = XZSliceViewer(frame)
         % Constructor for XYSliceViewer class.
-        obj.Gui = gui;
-        obj.Scene = scene;
 
-        box = viewBox(scene.DisplayOptions);
+        if ~isa(frame, 'mv.gui.MeshViewerMainFrame')
+            error('input argument must be an instance of MeshViewerMainFrame');
+        end
+        obj.ParentFrame = frame;
+        obj.Scene = frame.Scene;
+
+        % initialize plane position in the middle of the bounding box
+        box = viewBox(obj.Scene.DisplayOptions);
         yPlane = mean([box(3) box(4)]);
         obj.SlicePosition = yPlane;
         
