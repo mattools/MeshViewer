@@ -132,12 +132,13 @@ methods
             addPlugin(viewMenu, mv.plugins.view.ToggleAxisLinesDisplay(), 'Toggle Axis Lines Display');
             addPlugin(viewMenu, mv.plugins.view.PrintAxisProperties(), 'Print Axis Properties', true);
             addPlugin(viewMenu, mv.plugins.view.ComputeMeshBoundaryPolygons(), 'Compute Mesh Boundaries', true);
-            addPlugin(viewMenu, mv.plugins.view.ClearMeshBoundary(), 'Clear Mesh Boundaries');
+            % addPlugin(viewMenu, mv.plugins.view.ClearMeshBoundary(), 'Clear Mesh Boundaries');
             addPlugin(viewMenu, mv.plugins.view.DrawMeshBoundingBox(), 'Draw Mesh Bounding Box');
             addItemsMenu = uimenu(viewMenu, 'Label', 'Add Items');
             addPlugin(addItemsMenu, mv.plugins.view.AddPlaneDrawItem(), 'Add Plane Item');
             addPlugin(addItemsMenu, mv.plugins.view.DrawMeshVertexRing(), 'Draw Mesh Vertex Ring');
-            addPlugin(addItemsMenu, mv.plugins.view.ClearMeshVertexRings(), 'Clear Mesh Vertex Ring');
+            % addPlugin(addItemsMenu, mv.plugins.view.ClearMeshVertexRings(), 'Clear Mesh Vertex Ring');
+            addPlugin(viewMenu, mv.plugins.view.RemoveAllDrawItems(), 'Remove All Items');
             addPlugin(viewMenu, mv.plugins.view.ViewXYSlice(), 'View XY Slice', true);
             addPlugin(viewMenu, mv.plugins.view.ViewXZSlice(), 'View XZ Slice');
             addPlugin(viewMenu, mv.plugins.view.ViewYZSlice(), 'View YZ Slice');

@@ -1,4 +1,4 @@
-classdef AddPlaneDrawItem < handle
+classdef AddPlaneDrawItem < mv.gui.Plugin
 % One-line description here, please.
 %
 %   Class AddPlaneDrawItem
@@ -14,12 +14,6 @@ classdef AddPlaneDrawItem < handle
 % e-mail: david.legland@inrae.fr
 % Created: 2025-02-27,    using Matlab 24.2.0.2712019 (R2024b)
 % Copyright 2025 INRAE - BIA-BIBS.
-
-
-%% Properties
-properties
-end % end properties
-
 
 %% Constructor
 methods
