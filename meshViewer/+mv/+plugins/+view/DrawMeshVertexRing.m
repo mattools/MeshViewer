@@ -58,8 +58,16 @@ methods
         inds = meshVertexRing(mh.Mesh.Vertices, mh.Mesh.Faces, index);
         poly = mh.Mesh.Vertices(inds, :);
 
-        mh.VertexRings = [mh.VertexRings {poly}];
+        % mh.VertexRings = [mh.VertexRings {poly}];
 
+        % create draw item
+        name = sprintf('%s-ringV%04d', mh.Name, index);
+        item = mv.app.DrawItem(name, 'Polygon3D', poly);
+        item.DisplayOptions.FaceColor = [0 1 1];
+        item.DisplayOptions.FaceOpacity = 0.5;
+        addDrawItem(frame.Scene, item);
+        
+        updateDrawItemList(frame);
         updateDisplay(frame);
     end
     

@@ -79,21 +79,6 @@ methods
             h = drawMesh(ax, mesh.Vertices, mesh.Faces);
             apply(mh.DisplayOptions, h);
             mh.Handles.Patch = h;
-
-            if ~isempty(mh.BoundaryPolygons)
-                bnd = mh.BoundaryPolygons;
-                hb = drawPolygon3d(ax, bnd, 'linewidth', 2, 'color', 'b');
-                mh.Handles.BoundaryPolygons = hb;
-            end
-
-            if ~isempty(mh.VertexRings)
-                hr = [];
-                for iRing = 1:length(mh.VertexRings)
-                    ring = mh.VertexRings{iRing};
-                    hr(iRing) = drawPolygon3d(ax, ring, 'linewidth', 2, 'color', 'm'); %#ok<AGROW>
-                end
-                mh.Handles.VertexRings = hr;
-            end
         end
 
         % display the other items
