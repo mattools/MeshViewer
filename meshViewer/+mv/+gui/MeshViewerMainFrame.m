@@ -34,6 +34,9 @@ properties
     % the set of selected meshes, stored as an index array
     SelectedMeshIndices = [];
     
+    % the set of selected draw items, stored as an index array
+    SelectedDrawItemIndices = [];
+    
 end % end properties
 
 
@@ -211,19 +214,40 @@ methods
             % panel for doc info
             docInfoPanel = uix.VBoxFlex('Parent', horzPanel);
 
-            % create a default panel containing the list
-            shapeListPanel = uipanel(...
+            listsTabPanel = uix.TabPanel(...
                 'Parent', docInfoPanel, ...
+                'Position', [0 0 1 1]);
+
+            % create a panel for the list of meshes
+            meshListPanel = uipanel(...
+                'Parent', listsTabPanel, ...
                 'Position', [0 0 1 1], ...
                 'BorderType', 'none', ...
                 'BorderWidth', 0);
             obj.Handles.ShapeList = uicontrol(...
                 'Style', 'listbox', ...
-                'Parent', shapeListPanel, ...
+                'Parent', meshListPanel, ...
                 'Units', 'normalized', ...
                 'Position', [0 0 1 1], ...
                 'Max', 2, 'Min', 0, ... % to allow empty selection
                 'Callback', @obj.onMeshListModified);
+
+            % create a panel for the list of items
+            itemListPanel = uipanel(...
+                'Parent', listsTabPanel, ...
+                'Position', [0 0 1 1], ...
+                'BorderType', 'none', ...
+                'BorderWidth', 0);
+            obj.Handles.DrawItemList = uicontrol(...
+                'Style', 'listbox', ...
+                'Parent', itemListPanel, ...
+                'Units', 'normalized', ...
+                'Position', [0 0 1 1], ...
+                'Max', 2, 'Min', 0, ... % to allow empty selection
+                'Callback', @obj.onDrawItemListModified);
+
+            % finalize setup of tab panel
+            listsTabPanel.TabTitles = {'Meshes', 'Items'};
 
             % add another panel for display of current selection
             selectionInfoPanel = uipanel(...
@@ -363,7 +387,7 @@ methods
     end
     
     function updateMeshSelectionDisplay(obj)
-        % update the selected state of each shape.
+        % Update the info panel based on current selected mesh.
         
         inds = obj.SelectedMeshIndices;
         if isempty(inds)
@@ -386,6 +410,27 @@ methods
         end
     end
     
+    function updateDrawItemSelectionDisplay(obj)
+        % Update the info panel based on current selected draw item.
+        
+        inds = obj.SelectedDrawItemIndices;
+        if isempty(inds)
+            % clear the panel showing mesh info
+            set(obj.Handles.SelectionInfo, 'String', '');
+
+        elseif isscalar(inds)
+            % Display info about selected item
+            item = obj.Scene.DrawItems{inds(1)};
+            strings = {item.Name};
+            strings = [strings {sprintf('type: %d', item.Type)}];
+            strings = [strings {sprintf('visible: %d', item.Visible)}];
+            set(obj.Handles.SelectionInfo, 'String', strings);
+        else
+            % if several items are selected, do nothing.
+        end
+    end
+
+
     function updateTitle(obj)
         % set up title of the figure, containing name of the scene.
         title = sprintf('%s - MeshViewer', obj.Scene.Name);
@@ -418,6 +463,33 @@ methods
             'Min', 0, 'Max', nMeshes+2, ...
             'Value', inds);
     end
+
+    function updateDrawItemList(obj)
+        % Refresh the widgets when a DrawItem is added or removed.
+
+        if obj.Gui.App.Debug
+            disp('update DrawItem list');
+        end
+
+        nItems = length(obj.Scene.DrawItems);
+        itemNames = cell(nItems, 1);
+        inds = [];
+        for i = 1:nItems
+            mh = obj.Scene.DrawItems{i};
+
+            % create name for current shape
+            name = mh.Name;
+            if isempty(mh.Name)
+                name = '(draw item)';
+            end
+            itemNames{i} = name;
+        end
+        
+        set(obj.Handles.DrawItemList, ...
+            'String', itemNames, ...
+            'Min', 0, 'Max', nItems+2, ...
+            'Value', inds);
+    end
 end
 
 
@@ -437,6 +509,20 @@ methods
         obj.SelectedMeshIndices = inds;
         if length(inds) < 2
             updateMeshSelectionDisplay(obj)
+        end
+    end
+
+    function onDrawItemListModified(obj, varargin)
+        % when user click on panel containing list of item handles.
+        
+        if obj.Gui.App.Debug
+            disp('item selection list updated');
+        end
+
+        inds = get(obj.Handles.DrawItemList, 'Value');
+        obj.SelectedDrawItemIndices = inds;
+        if length(inds) < 2
+            updateDrawItemSelectionDisplay(obj)
         end
     end
 end
