@@ -342,6 +342,17 @@ methods
         updateDisplay(obj);
         updateMeshList(obj);
     end
+
+    function addDrawItem(obj, item, varargin)
+        % Add a new mesh to the scene, and update displays.
+        %
+
+        addDrawItem(obj.Scene, item);
+
+        % update display
+        updateDrawItemList(obj);
+        updateDisplay(obj);
+    end
 end
 
 
@@ -421,9 +432,10 @@ methods
         elseif isscalar(inds)
             % Display info about selected item
             item = obj.Scene.DrawItems{inds(1)};
-            strings = {item.Name};
-            strings = [strings {sprintf('type: %d', item.Type)}];
-            strings = [strings {sprintf('visible: %d', item.Visible)}];
+            strings = {sprintf('Name: %s', item.Name)};
+            strings = [strings {sprintf('Type: %s', item.Type)}];
+            visibleString = 'true'; if ~item.Visible, visibleString = 'false'; end
+            strings = [strings {sprintf('Visible: %s', visibleString)}];
             set(obj.Handles.SelectionInfo, 'String', strings);
         else
             % if several items are selected, do nothing.

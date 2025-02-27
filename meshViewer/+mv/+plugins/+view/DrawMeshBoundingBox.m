@@ -50,6 +50,7 @@ methods
             addDrawItem(frame.Scene, item);
         end
         
+        updateDrawItemList(frame);
         updateDisplay(frame);
     end        
 end % end methods

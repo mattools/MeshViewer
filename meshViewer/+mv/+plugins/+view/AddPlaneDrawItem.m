@@ -76,6 +76,7 @@ methods
         item.DisplayOptions.FaceOpacity = 0.5;
         addDrawItem(frame.Scene, item);
         
+        updateDrawItemList(frame);
         updateDisplay(frame);
     end
     
