@@ -133,20 +133,25 @@ methods
         % Surface area of mesh faces.
         %
         % See Also
+        %   faceArea, volume, meanBreadth, 
         %   meshSurfaceArea
         
-        % compute two direction vectors of each trinagular face, using the
+        % sum up and normalize
+        area = sum(faceArea(obj));
+    end
+    
+    function areas = faceArea(obj)
+        % Compute the area of each face within the mesh.
+
+        % compute two direction vectors of each triangular face, using the
         % first vertex of each face as origin
         v1 = obj.Vertices(obj.Faces(:, 2), :) - obj.Vertices(obj.Faces(:, 1), :);
         v2 = obj.Vertices(obj.Faces(:, 3), :) - obj.Vertices(obj.Faces(:, 1), :);
         
         % area of each triangle is half the cross product norm
-        vn = vectorNorm3d(crossProduct3d(v1, v2));
-        
-        % sum up and normalize
-        area = sum(vn) / 2;
+        areas = vectorNorm3d(crossProduct3d(v1, v2)) / 2;
     end
-    
+
     function mb = meanBreadth(obj)
         % Mean breadth of this mesh.
         %
